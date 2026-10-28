@@ -1,0 +1,82 @@
+﻿---
+const stars = Array.from({ length: 28 }, (_, i) => ({
+  x: (i * 37 + 7) % 100,
+  y: (i * 23 + 5) % 100,
+  delay: -(i % 9),
+  duration: 5 + i % 5,
+  size: i % 4 === 0 ? 10 : 4,
+  color: ['#eba7bf', '#8bcbed', '#b997ed'][i % 3],
+}));
+---
+<div class="fairy-atmosphere" aria-hidden="true">
+  <span class="fairy-glow fairy-glow-pink"></span>
+  <span class="fairy-glow fairy-glow-blue"></span>
+  <span class="fairy-glow fairy-glow-violet"></span>
+  {stars.map(star => <i class="fairy-star" style={`--sx:${star.x}%;--sy:${star.y}%;--delay:${star.delay}s;--duration:${star.duration}s;--size:${star.size}px;--star-color:${star.color}`} />)}
+</div>
+<script>
+  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const targets = document.querySelectorAll<HTMLElement>('.gallery-intro, .gallery-illustration, .gallery-selection-heading, .gallery-outro, .hero-copy, .hero-art, .expertise-band, .section-heading, .project, .about-inner > *, .contact-section, .footer-main');
+  let observer: IntersectionObserver | undefined;
+  const revealAll = () => {
+    observer?.disconnect();
+    targets.forEach(target => { target.classList.remove('fairy-reveal'); target.classList.add('fairy-visible'); });
+  };
+  const setup = () => {
+    revealAll();
+    if (motion.matches || document.documentElement.dataset.motion === 'off' || !('IntersectionObserver' in window)) return;
+    observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fairy-visible');
+          observer?.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .08 });
+    targets.forEach(target => {
+      // Leave content already on screen visible on initial load or preference changes.
+      if (target.getBoundingClientRect().top < window.innerHeight) return;
+      target.classList.remove('fairy-visible');
+      target.classList.add('fairy-reveal');
+      observer?.observe(target);
+    });
+  };
+  setup();
+  motion.addEventListener('change', setup);
+  window.addEventListener('portfolio-preferences', setup);
+  document.querySelectorAll<HTMLElement>('.project').forEach(card => {
+    let frame = 0;
+    let pointerX = 0, pointerY = 0;
+    const reset = () => {
+      cancelAnimationFrame(frame);
+      frame = 0;
+      card.style.removeProperty('--tilt-x');
+      card.style.removeProperty('--tilt-y');
+      card.style.removeProperty('--shine-x');
+      card.style.removeProperty('--shine-y');
+    };
+    card.addEventListener('pointermove', event => {
+      if (motion.matches || document.documentElement.dataset.motion === 'off' || !finePointer.matches || event.pointerType !== 'mouse') return;
+      pointerX = event.clientX; pointerY = event.clientY;
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        const bounds = card.getBoundingClientRect();
+        const x = (pointerX - bounds.left) / bounds.width;
+        const y = (pointerY - bounds.top) / bounds.height;
+        card.style.setProperty('--tilt-x', `${(0.5 - y) * 5}deg`);
+        card.style.setProperty('--tilt-y', `${(x - 0.5) * 5}deg`);
+        card.style.setProperty('--shine-x', `${x * 100}%`);
+        card.style.setProperty('--shine-y', `${y * 100}%`);
+        frame = 0;
+      });
+    }, { passive: true });
+    card.addEventListener('pointerleave', reset);
+    window.addEventListener('blur', reset);
+    motion.addEventListener('change', reset);
+    window.addEventListener('portfolio-preferences', reset);
+    finePointer.addEventListener('change', reset);
+  });
+</script>
+
+

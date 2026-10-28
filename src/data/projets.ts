@@ -1,0 +1,6 @@
+﻿// Ajoutez les chemins des images depuis public/ (ex. /images/olyvia.webp).
+export const projets = [
+  { id: 'olyvia', nom: 'Olyvia', categorie: 'Identité visuelle · UI/UX', annee: '2026', image: '', style: 'olyvia', accroche: 'Un regard doux sur une nouvelle étape.', description: 'Un site internet autour de la ménopause, dans un univers doux, naturel et rassurant. Logo, identité visuelle, maquettes et mockups composent ce projet.', livrables: 'Logo · Identité visuelle · Maquettes UI · Mockups' },
+  { id: 'nunc', nom: 'NÜNC', categorie: 'Identité visuelle · Application', annee: '2026', image: '', style: 'nunc', accroche: 'Les bonnes soirées commencent ici.', description: 'Une webapp pensée pour organiser des soirées entre amis en toute sécurité. Une identité chaleureuse et expressive, déclinée en maquettes et supports graphiques.', livrables: 'Identité visuelle · Maquettes · Supports graphiques' },
+  { id: 'lumimix', nom: 'LUMIMIX', categorie: 'Web design · Développement', annee: '2026', image: '', style: 'lumimix', accroche: 'Faire vibrer la lumière et le son.', description: 'L’intégration d’un site de festival électro à partir d’une maquette existante. Un site développé avec Astro et Tailwind, avec une adaptation imaginée pour le desktop.', livrables: 'Intégration web · Adaptation desktop · Astro & Tailwind' },
+];

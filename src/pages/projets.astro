@@ -1,0 +1,83 @@
+﻿---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projets } from '../data/projets';
+// Ajoutez votre illustration dans public/images/ puis son chemin ici.
+const galleryImage = '';
+const filters = [
+  { id: 'all', label: 'Tous les projets' },
+  { id: 'identite', label: 'Identité visuelle' },
+  { id: 'interface', label: 'UI / UX' },
+  { id: 'web', label: 'Web design' },
+];
+const categories: Record<string, string> = { olyvia: 'identite interface', nunc: 'identite interface', lumimix: 'web' };
+---
+<Layout title="Galerie de projets — Estelle Coulon" description="Explorez les projets d’Estelle Coulon : identité visuelle, interfaces et web design. Trois univers créatifs, une même attention aux détails.">
+  <main id="contenu" class="gallery-page">
+    <section class="gallery-hero container" aria-labelledby="gallery-title">
+      <div class="gallery-intro">
+        <a class="gallery-back" href="/">Accueil <span aria-hidden="true">/</span> Galerie</a>
+        <p class="eyebrow">Les idées prennent forme</p>
+        <h1 id="gallery-title">Trois projets,<br /><span>trois univers.</span></h1>
+        <p class="gallery-description">Des identités qui racontent, des interfaces qui rapprochent et des expériences qui vibrent. Entre dans mon terrain de création.</p>
+        <a class="gallery-jump" href="#galerie">Explorer la sélection <span aria-hidden="true">✧</span></a>
+      </div>
+      <div class="gallery-illustration" aria-hidden="true">
+        {galleryImage ? <img src={galleryImage} alt="" width="460" height="460" fetchpriority="high" /> : <div class="gallery-constellation"><span class="constellation-ring"></span><span class="constellation-star">✳</span><span class="constellation-small">✧</span><span class="constellation-note">Un peu de magie,<br />beaucoup d’idées.</span></div>}
+      </div>
+    </section>
+    <section class="gallery-selection container" id="galerie" aria-labelledby="selection-title">
+      <div class="gallery-selection-heading"><div><p class="eyebrow">La sélection — 2026</p><h2 id="selection-title">Mes projets <span class="handwritten">créatifs.</span></h2></div><p class="gallery-count" aria-live="polite" aria-atomic="true"><span data-project-count>{projets.length}</span> projets à découvrir</p></div>
+      <div class="gallery-filters" role="group" aria-label="Filtrer les projets par discipline">
+        {filters.map(filter => <button type="button" data-filter={filter.id} aria-pressed={filter.id === 'all'}>{filter.label}</button>)}
+      </div>
+      <div class="gallery-grid">
+        {projets.map((projet, index) => <div class="gallery-item" data-categories={categories[projet.id] || ''}><ProjectCard projet={projet} index={index} /></div>)}
+      </div>
+    </section>
+    <section class="gallery-outro container"><span aria-hidden="true">✧</span><p>La prochaine idée pourrait être <em>la tienne.</em></p><a class="button button-primary" href="/#contact">Parlons de ton projet</a></section>
+  </main>
+</Layout>
+<script>
+  const filters = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const items = document.querySelectorAll<HTMLElement>('.gallery-item');
+  filters.forEach(button => button.addEventListener('click', () => {
+    const filter = button.dataset.filter;
+    let count = 0;
+    items.forEach(item => {
+      const visible = filter === 'all' || (item.dataset.categories || '').split(' ').includes(filter || '');
+      item.hidden = !visible;
+      if (visible) count++;
+    });
+    filters.forEach(other => other.setAttribute('aria-pressed', String(other === button)));
+    const counter = document.querySelector('.gallery-count');
+    if (counter) counter.textContent = `${count} projet${count > 1 ? 's' : ''} à découvrir`;
+  }));
+</script>
+<style>
+  .gallery-page{overflow:clip;background:radial-gradient(ellipse 65% 32% at 100% 5%,#91308335,transparent 80%)}
+  .gallery-hero{display:grid;grid-template-columns:1.25fr 1fr;align-items:center;gap:50px;padding-top:150px;padding-bottom:70px;min-height:580px}
+  .gallery-back{display:inline-flex;gap:12px;font-size:10px;color:var(--muted);margin-bottom:40px}.gallery-back span{color:var(--purple)}
+  .gallery-intro .eyebrow{color:var(--blue);font-size:10px}
+  .gallery-intro h1{font-family:var(--font-display);font-size:clamp(75px,7.6vw,112px);line-height:.88;letter-spacing:-.025em;font-weight:400;margin-bottom:28px}
+  .gallery-intro h1>span{color:var(--pink)}
+  .gallery-description{max-width:510px;font-size:15px;line-height:1.85;color:var(--muted);margin-bottom:24px}
+  .gallery-jump{display:inline-flex;align-items:center;gap:20px;font-size:11px;color:var(--blue);padding-block:9px;border-bottom:1px solid #8bcbed55}.gallery-jump span{color:var(--purple);font-size:23px}
+  .gallery-illustration{width:100%;max-width:430px;justify-self:center}.gallery-illustration img{width:100%;height:auto;object-fit:contain;filter:drop-shadow(0 0 40px #b997ed22)}
+  .gallery-constellation{position:relative;min-height:360px;display:flex;flex-direction:column;justify-content:center;align-items:center}
+  .constellation-ring{position:absolute;inset:15% 7%;border:1px solid #b997ed50;border-radius:50%;transform:rotate(-30deg);box-shadow:0 0 55px #b997ed0d,inset 0 0 45px #8bcbed0d}
+  .constellation-ring::after{content:'';position:absolute;inset:-20px 35px;border:1px solid #8bcbed25;border-radius:50%;transform:rotate(60deg)}
+  .constellation-star{font-size:175px;line-height:1;color:var(--purple);text-shadow:5px 7px 0 #7b265a;animation:fairy-float 8s ease-in-out infinite}
+  .constellation-small{position:absolute;right:12%;top:12%;font-size:42px;color:var(--blue);animation:fairy-twinkle 6s ease-in-out infinite}
+  .constellation-note{font-family:var(--font-display);font-size:36px;color:var(--pink);text-align:center;line-height:.9;transform:rotate(-7deg);position:relative;margin-top:-12px}
+  .gallery-selection{padding-top:30px;padding-bottom:70px}.gallery-selection-heading{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:30px}.gallery-selection-heading .eyebrow{color:var(--pink);margin-bottom:15px}.gallery-selection-heading h2{font-size:36px}.gallery-selection-heading h2 .handwritten{color:var(--purple)}
+  .gallery-count{font-size:11px;color:var(--muted);margin:0 0 4px}
+  .gallery-filters{display:flex;flex-wrap:wrap;gap:9px;padding-bottom:25px;margin-bottom:32px;border-bottom:1px solid var(--line)}
+  .gallery-filters button{font:500 11px 'DM Sans',sans-serif;padding:11px 18px;min-height:42px;border:1px solid var(--line);border-radius:25px;color:var(--muted);background:transparent;transition:color .2s,border-color .2s,background .2s}
+  .gallery-filters button[aria-pressed=true]{background:var(--pink);border-color:var(--pink);color:var(--bg)}.gallery-filters button:hover{border-color:var(--purple);color:var(--ink)}.gallery-filters button[aria-pressed=true]:hover{color:var(--bg)}.gallery-filters button:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,4vw,60px)}.gallery-item{min-width:0;display:flex}.gallery-item[hidden]{display:none}.gallery-item :global(.project){width:100%}
+  .gallery-outro{display:flex;flex-direction:column;align-items:center;text-align:center;padding:35px 0 85px}.gallery-outro>span{font-size:35px;color:var(--blue);margin-bottom:15px}.gallery-outro p{font-size:19px;line-height:1.5;margin-bottom:24px}.gallery-outro em{font-family:var(--font-display);font-size:36px;color:var(--pink);font-style:normal}
+  :global(html[data-theme=light]) .gallery-page{background:radial-gradient(ellipse 65% 32% at 100% 5%,#c4a1e733,transparent 80%)}
+  @media(max-width:1000px){.gallery-hero{gap:20px}.gallery-grid{gap:22px}.gallery-description{font-size:13px}}
+  @media(max-width:700px){.gallery-hero{padding-top:104px;padding-bottom:32px;min-height:0;grid-template-columns:1fr;gap:15px}.gallery-back{margin-bottom:28px}.gallery-intro h1{font-size:clamp(70px,18vw,104px);margin-bottom:24px}.gallery-description{font-size:13px;max-width:420px}.gallery-illustration{max-width:260px;justify-self:end}.gallery-constellation{min-height:205px}.constellation-star{font-size:110px}.constellation-note{font-size:27px}.constellation-small{font-size:28px}.gallery-illustration img{max-height:250px}.gallery-selection{padding-top:20px;padding-bottom:30px}.gallery-selection-heading{align-items:start;flex-direction:column;gap:18px;margin-bottom:25px}.gallery-selection-heading h2{font-size:31px}.gallery-filters{gap:8px;margin-bottom:25px;padding-bottom:22px}.gallery-filters button{font-size:10px;padding:10px 14px}.gallery-grid{grid-template-columns:1fr;gap:26px}.gallery-outro{padding:25px 0 60px}.gallery-outro p{font-size:16px}.gallery-outro em{display:block;font-size:34px}}
+</style>

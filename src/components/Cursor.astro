@@ -1,0 +1,66 @@
+﻿<div class="cursor-trail" aria-hidden="true"></div>
+<style is:global>
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    html, body, body * {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Ccircle cx='13' cy='13' r='6' fill='%23eba7bf' stroke='%23d62839' stroke-width='1.5'/%3E%3C/svg%3E") 13 13, auto;
+    }
+    a, a *, button, button *, summary, summary *, [role='button'] {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Ccircle cx='15' cy='15' r='10' fill='none' stroke='%23d62839' stroke-width='1.5'/%3E%3Ccircle cx='15' cy='15' r='5' fill='%23eba7bf'/%3E%3C/svg%3E") 15 15, pointer;
+    }
+    input, textarea, [contenteditable='true'] { cursor: text; }
+  }
+  .cursor-trail { position: fixed; inset: 0; z-index: 9999; pointer-events: none; overflow: hidden; }
+  .cursor-sparkle { position: absolute; top: 0; left: 0; width: 8px; height: 8px; margin: -4px; background: currentColor; clip-path: polygon(50% 0%, 62% 36%, 100% 50%, 62% 64%, 50% 100%, 38% 64%, 0% 50%, 38% 36%); }
+  @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) { .cursor-trail { display: none; } }
+</style>
+<script>
+  const layer = document.querySelector<HTMLElement>('.cursor-trail');
+  const enabled = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+  if (layer) {
+    const colors = ['#eba7bf', '#8bcbed', '#b997ed'];
+    const particles = new Map<HTMLElement, Animation>();
+    let lastSpawn = -Infinity;
+    let colorIndex = 0;
+    const clear = () => {
+      particles.forEach((animation, element) => { animation.cancel(); element.remove(); });
+      particles.clear();
+      lastSpawn = -Infinity;
+    };
+    const spawn = (x: number, y: number) => {
+      if (particles.size >= 48) return;
+      const element = document.createElement('span');
+      element.className = 'cursor-sparkle';
+      element.style.color = colors[colorIndex++ % colors.length];
+      element.style.left = `${x + (Math.random() - .5) * 12}px`;
+      element.style.top = `${y + (Math.random() - .5) * 8}px`;
+      layer.appendChild(element);
+      const drift = (Math.random() - .5) * 45;
+      const fall = 45 + Math.random() * 45;
+      const rotation = Math.random() * 90;
+      const size = .55 + Math.random() * .65;
+      const animation = element.animate([
+        { transform: `translate(0, 0) rotate(${rotation}deg) scale(${size * .5})`, opacity: 0 },
+        { transform: `translate(${drift * .15}px, 5px) rotate(${rotation + 20}deg) scale(${size})`, opacity: .85, offset: .15 },
+        { transform: `translate(${drift * .6}px, ${fall * .45}px) rotate(${rotation + 80}deg) scale(${size * .7})`, opacity: .55, offset: .6 },
+        { transform: `translate(${drift}px, ${fall}px) rotate(${rotation + 140}deg) scale(.1)`, opacity: 0 },
+      ], { duration: 650 + Math.random() * 350, easing: 'ease-in', fill: 'forwards' });
+      particles.set(element, animation);
+      animation.onfinish = () => { element.remove(); particles.delete(element); };
+    };
+    document.addEventListener('pointermove', event => {
+      if (!enabled.matches || document.documentElement.dataset.motion === 'off' || event.pointerType !== 'mouse') return;
+      const now = performance.now();
+      if (now - lastSpawn < 30) return;
+      lastSpawn = now;
+      spawn(event.clientX, event.clientY);
+    }, { passive: true });
+    document.documentElement.addEventListener('pointerleave', clear);
+    document.addEventListener('pointerdown', event => { if (event.pointerType !== 'mouse') clear(); });
+    document.addEventListener('visibilitychange', clear);
+    window.addEventListener('blur', clear);
+    enabled.addEventListener('change', clear);
+    window.addEventListener('portfolio-preferences', clear);
+  }
+</script>
+
+

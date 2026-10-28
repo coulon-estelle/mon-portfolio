@@ -1,0 +1,40 @@
+﻿---
+// Image à placer dans public/images/, puis renseigner son chemin ici.
+const footerImage = '';
+// Renseignez les adresses de vos profils pour activer les liens.
+const linkedinUrl = '';
+const behanceUrl = '';
+const socialLinks = [
+  { label: 'LinkedIn', url: linkedinUrl, icon: 'linkedin' },
+  { label: 'Behance', url: behanceUrl, icon: 'behance' },
+];
+---
+<footer class="portfolio-footer">
+  <div class="container footer-main">
+    <div class="footer-socials" aria-label="Réseaux sociaux">
+      {socialLinks.map(({ label, url, icon }) => {
+        const Tag = url ? 'a' : 'span';
+        return <Tag href={url || undefined} aria-label={url ? label : `${label} — lien à venir`} class="footer-social" target={url ? '_blank' : undefined} rel={url ? 'noopener noreferrer' : undefined}>
+          {icon === 'linkedin' ? <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 2H3.55C2.69 2 2 2.68 2 3.52v16.96c0 .84.69 1.52 1.55 1.52h16.9c.86 0 1.55-.68 1.55-1.52V3.52c0-.84-.69-1.52-1.55-1.52ZM7.93 18.75H4.98V9.2h2.95v9.55ZM6.46 7.9a1.71 1.71 0 1 1 0-3.42 1.71 1.71 0 0 1 0 3.42Zm12.29 10.85H15.8V14.1c0-1.11-.02-2.54-1.55-2.54-1.55 0-1.79 1.21-1.79 2.46v4.73H9.51V9.2h2.83v1.3h.04c.39-.74 1.36-1.53 2.79-1.53 2.98 0 3.58 1.96 3.58 4.51v5.27Z" /></svg> : <svg viewBox="0 0 28 24" aria-hidden="true"><rect x="1" y="2" width="26" height="20" rx="2" fill="currentColor"/><text x="3.2" y="17.5" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#300914">Bē</text></svg>}
+        </Tag>;
+      })}
+    </div>
+    <div class="footer-image-slot" aria-hidden="true">
+      {footerImage && <img src={footerImage} alt="" width="220" height="220" loading="lazy" />}
+    </div>
+    <nav class="footer-links" aria-label="Navigation de pied de page">
+      <button type="button" data-legal-open>Mentions légales</button>
+      <a href="/#a-propos">À propos</a>
+    </nav>
+  </div>
+  <div class="footer-copyright"><p>Copyright © {new Date().getFullYear()} Estelle COULON</p></div>
+</footer>
+<dialog class="footer-legal-dialog" aria-labelledby="footer-legal-title">
+  <h2 id="footer-legal-title">Mentions légales</h2>
+  <p>Les informations légales de ce portfolio seront ajoutées prochainement.</p>
+  <form method="dialog"><button class="button button-primary">Fermer</button></form>
+</dialog>
+<script>
+  const legalDialog = document.querySelector<HTMLDialogElement>('.footer-legal-dialog');
+  document.querySelector('[data-legal-open]')?.addEventListener('click', () => legalDialog?.showModal());
+</script>

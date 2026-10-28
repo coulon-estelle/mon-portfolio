@@ -1,0 +1,60 @@
+﻿<header class="site-header">
+  <nav class="container nav" aria-label="Navigation principale">
+    <a class="signature" href="/" aria-label="Estelle Coulon, accueil">Estelle C<span>.</span></a>
+    <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="header-navigation">Menu <span aria-hidden="true">☰</span></button>
+    <div class="nav-links" id="header-navigation">
+      <a href="/projets" aria-current={Astro.url.pathname.startsWith('/projets') ? 'page' : undefined}>Projets</a>
+      <a href="/#a-propos">À propos</a>
+      <a class="nav-contact" href="/#contact">On en parle ?</a>
+      <div class="display-controls" role="group" aria-label="Préférences d’affichage">
+        <button type="button" class="preference-switch" role="switch" data-motion-toggle aria-checked="true" aria-label="Animations"><span>Animations</span><span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span></button>
+        <button type="button" class="preference-switch" role="switch" data-theme-toggle aria-checked="false" aria-label="Mode clair"><span>Mode clair</span><span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span></button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+<script>
+  const menuButton = document.querySelector<HTMLButtonElement>('.mobile-menu-toggle');
+  const navigation = document.querySelector<HTMLElement>('#header-navigation');
+  const closeMenu = () => menuButton?.setAttribute('aria-expanded', 'false');
+  menuButton?.addEventListener('click', () => {
+    menuButton.setAttribute('aria-expanded', String(menuButton.getAttribute('aria-expanded') !== 'true'));
+  });
+  navigation?.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && menuButton?.getAttribute('aria-expanded') === 'true') {
+      closeMenu(); menuButton.focus();
+    }
+  });
+  document.addEventListener('click', event => {
+    if (event.target instanceof Node && !document.querySelector('.site-header')?.contains(event.target)) closeMenu();
+  });
+  window.matchMedia('(max-width: 700px)').addEventListener('change', closeMenu);
+  const root = document.documentElement;
+  const motionButton = document.querySelector<HTMLButtonElement>('[data-motion-toggle]');
+  const themeButton = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const sync = () => {
+    const paused = root.dataset.motion === 'off';
+    const light = root.dataset.theme === 'light';
+    motionButton?.setAttribute('aria-checked', String(!paused));
+    themeButton?.setAttribute('aria-checked', String(light));
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', light ? '#faf3f1' : '#25070e');
+  };
+  const save = (key: string, value: string) => { try { localStorage.setItem(key, value); } catch {} };
+  motionButton?.addEventListener('click', () => {
+    root.dataset.motion = root.dataset.motion === 'off' ? 'on' : 'off';
+    save('portfolio-motion', root.dataset.motion);
+    sync();
+    window.dispatchEvent(new Event('portfolio-preferences'));
+  });
+  themeButton?.addEventListener('click', () => {
+    root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
+    save('portfolio-theme', root.dataset.theme);
+    sync();
+  });
+  sync();
+</script>
+
+

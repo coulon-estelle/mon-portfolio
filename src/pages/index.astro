@@ -1,16 +1,88 @@
+﻿---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projets } from '../data/projets';
+// Renseignez ces chemins lorsque vos images sont dans public/images/.
+const heroImage = '/images/hero.png';
+const portraitImage = '';
+// Ajoutez votre adresse e-mail pour activer le lien de contact.
+const email = 'estellecoulon6@gmail.com';
 ---
----
+<Layout title="Estelle Coulon — Portfolio créatif">
+  <main id="contenu">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="glass-wall" aria-hidden="true">{Array.from({length: 15}, () => <div class="glass-tile" />)}</div>
+      {heroImage && <img class="hero-background" src={heroImage} alt="" fetchpriority="high" />}
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="little-star" aria-hidden="true">✳</span> Portfolio créatif — 2026</p>
+          <h1 id="hero-title">Estelle<br /><span>Coulon</span><span class="title-star" aria-hidden="true">✳</span></h1>
+          <p class="hero-description">Des idées plein la tête.<br />Et l’envie de leur donner <em>du caractère.</em></p>
+          <p class="hero-role">Étudiante en design graphique · Identité visuelle · UI/UX</p>
+          <a class="button button-primary" href="#projets">Découvrir mes projets</a>
+        </div>
+        <div class="hero-art">
+          {portraitImage ? <img class="hero-portrait" src={portraitImage} alt="Illustration d’Estelle Coulon" /> : <div class="portrait-placeholder"><span class="orbit-label">UN UNIVERS À PART ENTIÈRE</span><span class="big-asterisk" aria-hidden="true">✳</span><span class="handwritten">Créative,<br />tout simplement.</span><span class="portrait-note">Mon illustration arrive bientôt</span></div>}
+          <div class="palette" aria-label="Ma palette : rose, violet, bleu et bordeaux"><i></i><i></i><i></i><i></i></div>
+        </div>
+        <a class="scroll-cue" href="#projets"><span>Un peu plus bas, mon univers</span><span aria-hidden="true">↓</span></a>
+      </div>
+    </section>
+    <section class="expertise-band container" aria-label="Mes disciplines">
+      <p class="expertise-label">Entre intuition <span>& création</span></p>
+      <ul class="expertise-list">
+        <li>Identité <span>visuelle</span></li>
+        <li>Design <span>graphique</span></li>
+        <li>UI <span>/ UX</span></li>
+        <li>Web <span>design</span></li>
+      </ul>
+    </section>
+    <section class="projects-section container" id="projets" aria-labelledby="projects-title">
+      <div class="section-heading"><div><p class="eyebrow">01 / Une sélection de mon travail</p><h2 id="projects-title">Des idées devenues<br /><span class="handwritten">des projets.</span></h2></div><p>Des univers différents.<br />La même envie de créer quelque chose<br />qui a du sens et qui se remarque.</p></div>
+      <div class="project-grid" id="project-carousel" tabindex="0" aria-label="Projets sélectionnés">{projets.map((projet, index) => <ProjectCard projet={projet} index={index} />)}</div>
+      <div class="carousel-controls" aria-label="Navigation des projets">
+        <span class="carousel-hint">Glisse pour explorer</span>
+        <div class="carousel-dots">{projets.map((projet, index) => <button type="button" class="carousel-dot" aria-label={`Afficher le projet ${projet.nom}`} aria-controls="project-carousel" aria-current={index === 0 ? 'true' : undefined} data-slide={index}><span></span></button>)}</div>
+      </div>
+    </section>
+    <section class="about-section" id="a-propos" aria-labelledby="about-title"><div class="container about-inner"><div class="about-symbol" aria-hidden="true">✳<span>Enchantée !</span></div><div><p class="eyebrow">02 / Derrière les couleurs</p><h2 id="about-title">Un peu de moi,<br /><span class="handwritten">beaucoup de curiosité.</span></h2><p>Moi, c’est Estelle. Étudiante en design graphique et créative, j’aime donner vie à des idées qui méritent d’être vues.</p><p>De l’identité visuelle à l’interface, j’explore les couleurs, les formes et les typographies pour construire des univers singuliers, avec une attention particulière aux détails.</p><div class="skill-tags"><span>Identité visuelle</span><span>UI / UX</span><span>Web design</span><span>Créativité</span></div></div></div></section>
+    <section class="contact-section container" id="contact" aria-labelledby="contact-title"><p class="eyebrow">03 / Et si on créait la suite ?</p><h2 id="contact-title">Une idée en tête ?<br /><span class="handwritten">Faisons-la éclore.</span><span class="contact-star" aria-hidden="true">✳</span></h2><p>Un projet, une question ou simplement envie d’échanger ?<br />La conversation commence ici.</p>{email ? <a class="button button-primary" href={`mailto:${email}`}>Écris-moi</a> : <p class="contact-pending">Mes coordonnées arrivent bientôt.</p>}</section>
+  </main>
+</Layout>
+<script>
+  const track = document.querySelector<HTMLElement>('#project-carousel');
+  const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-slide]'));
+  const mobile = window.matchMedia('(max-width: 700px)');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (track) {
+    const cards = Array.from(track.querySelectorAll<HTMLElement>('.project'));
+    let frame = 0;
+    const update = () => {
+      const position = track.getBoundingClientRect().left;
+      let closest = 0;
+      cards.forEach((card, index) => {
+        if (Math.abs(card.getBoundingClientRect().left - position) < Math.abs(cards[closest].getBoundingClientRect().left - position)) closest = index;
+      });
+      dots.forEach((dot, index) => {
+        if (index === closest) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute('aria-current');
+      });
+      frame = 0;
+    };
+    dots.forEach((dot, index) => dot.addEventListener('click', () => {
+      if (!mobile.matches) return;
+      const shift = cards[index].getBoundingClientRect().left - track.getBoundingClientRect().left;
+      track.scrollBy({ left: shift, behavior: reduced.matches || document.documentElement.dataset.motion === 'off' ? 'instant' : 'smooth' });
+    }));
+    track.addEventListener('scroll', () => { if (!frame) frame = requestAnimationFrame(update); }, { passive: true });
+    mobile.addEventListener('change', () => {
+      track.scrollLeft = 0;
+      track.tabIndex = mobile.matches ? 0 : -1;
+      update();
+    });
+    track.tabIndex = mobile.matches ? 0 : -1;
+  }
+</script>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+

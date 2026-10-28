@@ -1,0 +1,15 @@
+﻿---
+import type { projets } from '../data/projets';
+interface Props { projet: (typeof projets)[number]; index: number; }
+const { projet } = Astro.props;
+---
+<article class:list={['project', projet.style]}>
+  <div class="project-visual">
+    {projet.image ? <img src={projet.image} alt={`Aperçu du projet ${projet.nom}`} loading="lazy" width="900" height="640" /> : <div class="project-art" aria-label={`Emplacement du visuel ${projet.nom}`}><span class="art-orbit" aria-hidden="true"></span><span class="art-name">{projet.nom}</span><span class="art-caption">{projet.accroche}</span><span class="visual-note">Visuel à venir</span></div>}
+  </div>
+  <div class="project-content">
+    <p class="project-meta">{projet.categorie.replace(' · ', ' — ')} — {projet.annee}</p>
+    <h3>{projet.nom}</h3>
+    <p class="project-description">{projet.description}</p>
+  </div>
+</article>
