@@ -1,0 +1,160 @@
+---
+import FairyIllustration from './FairyIllustration.astro';
+import Ornament from './Ornament.astro';
+
+interface Props {
+  lead: string;
+  heading: string;
+  href: string;
+  label: string;
+  variant?: 1 | 2 | 3 | 4;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+  id?: string;
+}
+const { lead, heading, href, label, variant = 3, secondaryHref, secondaryLabel, id } = Astro.props;
+---
+
+<section class="page-outro" id={id} aria-label={lead}>
+  <div class="container page-outro-inner">
+    <div class="page-outro-fairy">
+      <span class="outro-star">
+        <Ornament kind="star-blue" width={36} />
+      </span>
+      <FairyIllustration variant={variant} width={200} />
+      <span class="outro-star-small">
+        <Ornament kind="star-pink" width={22} />
+      </span>
+    </div>
+    <div class="page-outro-copy">
+      <p>{lead}</p>
+      <h2>{heading}</h2>
+    </div>
+    <div class="page-outro-actions">
+      <a class="button button-primary" href={href}>
+        {label}
+      </a>
+      {secondaryHref && secondaryLabel && (
+        <a class="page-outro-secondary" href={secondaryHref}>
+          {secondaryLabel}
+        </a>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .page-outro {
+    width: 100%;
+    border-top: 1px solid var(--line);
+    background: linear-gradient(110deg, #8bcbed05, #b997ed0c 50%, #eba7bf05);
+  }
+  .page-outro-inner {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(28px, 5vw, 75px);
+    padding-block: 42px;
+    min-height: 255px;
+  }
+  .page-outro-fairy {
+    position: relative;
+    width: 185px;
+    max-width: 100%;
+  }
+  .outro-star {
+    position: absolute;
+    right: -5px;
+    top: 4%;
+    rotate: 15deg;
+    pointer-events: none;
+  }
+  .outro-star-small {
+    position: absolute;
+    left: -4px;
+    bottom: 12%;
+    rotate: -18deg;
+    pointer-events: none;
+  }
+  .page-outro-copy p {
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+  .page-outro-copy h2 {
+    font-family: var(--font-display);
+    color: var(--purple);
+    font-size: clamp(35px, 3.5vw, 50px);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.05;
+    margin: 0;
+  }
+  .page-outro-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 17px;
+  }
+  .page-outro-secondary {
+    color: var(--blue);
+    font-size: 11px;
+    padding: 5px 0;
+  }
+  @media (max-width: 1000px) and (min-width: 701px) {
+    .page-outro-inner {
+      grid-template-columns: 130px minmax(0, 1fr) auto;
+      gap: 25px;
+    }
+    .page-outro-actions .button {
+      padding-inline: 20px;
+      font-size: 12px;
+    }
+  }
+  @media (max-width: 700px) {
+    .page-outro-inner {
+      grid-template-columns: 90px minmax(0, 1fr);
+      gap: 20px;
+      padding-block: 30px 35px;
+      min-height: 0;
+    }
+    .page-outro-fairy {
+      width: 90px;
+      grid-row: 1 / 3;
+      align-self: center;
+    }
+    .page-outro-copy p {
+      font-size: 11px;
+      margin-bottom: 8px;
+    }
+    .page-outro-copy h2 {
+      font-size: 32px;
+    }
+    .page-outro-actions {
+      grid-column: 2;
+      align-items: flex-start;
+      gap: 13px;
+    }
+    .page-outro-actions .button {
+      padding: 12px 18px;
+      font-size: 12px;
+      min-height: 44px;
+    }
+    .page-outro-secondary {
+      font-size: 10px;
+    }
+  }
+  @media (max-width: 360px) {
+    .page-outro-inner {
+      grid-template-columns: 65px minmax(0, 1fr);
+      gap: 16px;
+    }
+    .page-outro-fairy {
+      width: 65px;
+    }
+    .page-outro-copy h2 {
+      font-size: 29px;
+    }
+  }
+</style>

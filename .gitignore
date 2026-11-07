@@ -22,3 +22,10 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# contrôles navigateur et résultats locaux
+test-results/
+playwright-report/
+
+# Netlify SSR build artifacts
+.netlify/

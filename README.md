@@ -1,43 +1,88 @@
-# Astro Starter Kit: Minimal
+﻿# Portfolio — Estelle Coulon
 
-```sh
-npm create astro@latest -- --template minimal
+Portfolio personnel réalisé avec Astro, TypeScript et du CSS personnalisé : accueil, trois études de cas, atelier personnel, à propos et contact. Les images définitives seront intégrées séparément.
+
+## Travailler sur le projet
+
+Node 24 (compatible avec la contrainte du package), puis :
+
+```powershell
+npm ci
+npm run astro -- dev --background
+npm run astro -- dev status
+npm run astro -- dev logs
+npm run astro -- dev stop
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Contrôles et production :
 
-## 🚀 Project Structure
+```powershell
+npm run check
+npm run build
+npm run audit:site
+npm run format:check
+npx playwright install chromium
+npm run test:e2e
+```
 
-Inside of your Astro project, you'll see the following folders and files:
+Les tests navigateur démarrent et arrêtent leur propre prévisualisation sur le port 4322. Le test du formulaire intercepte la requête localement : aucun message n’est envoyé à Estelle ou à Netlify.
+
+## Où modifier le contenu
+
+- `src/data/site.ts` : coordonnées, liens sociaux, hébergeur et domaine.
+- `src/data/projets.ts` : les trois cartes partagées entre l’accueil et la galerie.
+- `src/data/project-assets.ts` : moodboards, logos, icônes et mockups des projets. Les PNG importés sont optimisés par le service d’images Astro.
+- `src/pages/projets/` : contenu détaillé de chaque étude de cas.
+- `src/data/oeuvres.ts` : œuvres personnelles, image, titre, sous-titre, matériel et catégorie.
+- En haut des pages : chemins des images et liens de ressources encore absents.
+- `src/components/` : éléments partagés et interactions.
+- `src/styles/global.css` : palette, accueil, composants partagés, responsive et préférences.
+
+Les CSS propres aux pages sont dans leurs balises `style` et restent isolés par Astro. Les polices sont servies localement via Fontsource : aucun appel à Google Fonts. Les licences sont dans les paquets `@fontsource/*` et `CREDITS.md`.
+
+### Classement des images
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+public/images/
+├── commun/                  # fond de l’accueil et portrait
+├── atelier/                 # dessins personnels
+├── illustrations/
+│   ├── fees/
+│   ├── lunes/
+│   └── etoiles/
+└── projets/
+    ├── olyvia/              # logo, icône, moodboard, mockups mobile/desktop
+    ├── nunc/                # logos couleur/clair, icône, moodboard, mockups
+    └── lumimix/             # logo, présentation desktop, mockup mobile
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Les noms de fichiers sont en minuscules, sans espaces ni accents. Les originaux ont été déplacés, sans modification, et tous les chemins du code et des tests ont été actualisés. Les ressources générées sont gérées par Astro : ne pas modifier `dist/` ni `.netlify/` manuellement.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Déploiement sur Netlify
 
-Any static assets, like images, can be placed in the `public/` directory.
+Le dépôt contient `netlify.toml` : rendu SSR avec `output: server` et l’adaptateur officiel `@astrojs/netlify`. Les fichiers publics sont dans `dist/` et la fonction serveur dans `.netlify/`. Les contrôles et tests locaux utilisent la fonction générée.
 
-## 🧞 Commands
+1. Importer le dépôt public GitHub dans Netlify.
+2. Copier les valeurs utiles de `.env.example` dans les variables d’environnement Netlify. Le domaine exact est obligatoire dans `PUBLIC_SITE_URL`, sous la forme `https://votre-domaine.fr`.
+3. Configurer le domaine personnel et vérifier le certificat HTTPS et les redirections vers une adresse unique.
+4. Activer la détection dans **Forms → Enable form detection**, puis redéployer. Le HTML contient un formulaire `contact`, un champ `form-name`, une protection honeypot et une page `/merci`.
+5. Dans **Forms → Submission notifications**, ajouter une notification **Email** pour le formulaire `contact`, avec **estellecoulon6@gmail.com** comme destinataire. Envoyer ensuite un vrai message de test et vérifier sa réception dans Gmail et dans Forms. Cette configuration se fait dans le compte Netlify, pas dans le HTML ; elle n’a pas été activée depuis cet environnement. L’objet du message est préparé dans le formulaire et le champ `email` permet de répondre au visiteur.
+6. Vérifier les coordonnées légales de l’hébergeur et sa documentation, les informations de confidentialité et la politique de conservation des échanges.
+7. Vérifier les pages en ligne, le sitemap, `robots.txt`, les URL canoniques et les partages sociaux après le déploiement.
 
-All commands are run from the root of the project, from a terminal:
+Sans `PUBLIC_SITE_URL`, le site n’invente pas de domaine : absence de canonical, sitemap vide et `robots.txt` qui bloque l’indexation. Ce blocage doit être levé par la configuration du domaine avant la publication finale.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Les URL LinkedIn et Behance sont celles fournies par Estelle. Leur mise à jour éditoriale doit être effectuée sur les plateformes ; un lien fonctionnel ne suffit pas à satisfaire la consigne de présence professionnelle.
 
-## 👀 Want to learn more?
+## Livrables du cours
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- `IA.md` : usages de l’assistant et décisions/corrections.
+- `JOURNAL.md` : trace réelle disponible, sans semaines ou heures inventées.
+- `QUALITE.md` : contrôles exécutés, corrections et vérifications restantes.
+- `CREDITS.md` : droits et provenance des ressources.
+
+L’oral de maquette a déjà eu lieu : ses documents de préparation ne font pas partie de ce suivi. Il reste à terminer les images et leurs crédits, le CV, la configuration du domaine et la publication du site. Aucun changement n’est automatiquement poussé ou publié.
+
+Le formulaire est déclaré dans `public/contact-form.html` pour sa détection par Netlify Forms, puisque la page contact est rendue en SSR. Les notifications restent à configurer dans Netlify.
+
+Exécutez `npm run build` après `npm run check` avant l’audit ou les tests : la vérification Astro peut réinitialiser les fichiers serveur Netlify.

@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Merci pour votre message — Estelle Coulon" noindex>
+  <main id="contenu" class="container thanks-page">
+    <p class="eyebrow">Restons en contact</p>
+    <h1>
+      Merci pour
+      <br />
+      <span class="handwritten">votre message.</span>
+    </h1>
+    <p>
+      Je prendrai le temps de vous répondre. En attendant, vous pouvez continuer à explorer mes
+      projets.
+    </p>
+    <a class="button button-primary" href="/projets">
+      Découvrir les projets
+    </a>
+  </main>
+</Layout>
+<style>
+  .thanks-page {
+    padding-block: 160px 100px;
+    max-width: 850px;
+  }
+  .thanks-page h1 {
+    font-size: 48px;
+    line-height: 1.1;
+  }
+  .thanks-page h1 span {
+    font-size: 1.4em;
+    color: var(--pink);
+  }
+  .thanks-page > p:not(.eyebrow) {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 500px;
+    margin-bottom: 30px;
+  }
+  @media (max-width: 700px) {
+    .thanks-page {
+      padding-block: 115px 65px;
+    }
+    .thanks-page h1 {
+      font-size: 38px;
+    }
+  }
+</style>

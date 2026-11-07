@@ -1,0 +1,599 @@
+---
+import Ornament from '../components/Ornament.astro';
+import FairyIllustration from '../components/FairyIllustration.astro';
+import Layout from '../layouts/Layout.astro';
+import { site } from '../data/site';
+const email = site.email;
+// Ajoutez vos images dans public/images/ et renseignez leurs chemins ici.
+const missions = [
+  'Alternance',
+  'Identité visuelle',
+  'UI / UX',
+  'Web design',
+  'Design éditorial',
+  'Autre',
+];
+---
+
+<Layout
+  title="Contact — Estelle Coulon"
+  description="Une alternance, un projet créatif ou une question ? Contactez Estelle Coulon, étudiante en design graphique à Pont-de-Roide."
+>
+  <main id="contenu" class="contact-page">
+    <section class="contact-intro container" aria-labelledby="contact-page-title">
+      <div>
+        <a class="contact-breadcrumb" href="/">
+          Accueil <span aria-hidden="true">/</span> Contact
+        </a>
+        <p class="eyebrow">Contact</p>
+        <h1 id="contact-page-title">
+          Travaillons
+          <br />
+          <span>ensemble.</span>
+        </h1>
+        <p class="contact-lead">
+          Je recherche une alternance dans la création numérique et la communication. J’aime créer
+          des identités visuelles, imaginer des interfaces et donner vie à des univers graphiques.
+        </p>
+      </div>
+      <div class="contact-illustration illustration-scene">
+        <span class="scene-moon">
+          <Ornament kind="moon-blue" width={190} eager />
+        </span>
+        <span class="scene-star-left">
+          <Ornament kind="star-pink" width={36} />
+        </span>
+        <FairyIllustration variant={4} width={320} eager />
+      </div>
+    </section>
+    <section class="contact-content container" aria-label="Coordonnées et formulaire de contact">
+      <div class="contact-information">
+        <p class="eyebrow">Coordonnées</p>
+        <dl class="contact-details">
+          <div>
+            <dt>E-mail</dt>
+            <dd>
+              <a href={`mailto:${email}`}>{email}</a>
+            </dd>
+          </div>
+          <div>
+            <dt>Téléphone</dt>
+            <dd>
+              <a href="tel:+33768364157">+33 7 68 36 41 57</a>
+            </dd>
+          </div>
+          <div>
+            <dt>Localisation</dt>
+            <dd>
+              Pont-de-Roide,
+              <br />
+              Franche-Comté
+            </dd>
+          </div>
+        </dl>
+      </div>
+      <form
+        class="contact-form"
+        name="contact"
+        action="/merci"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+      >
+        <input type="hidden" name="form-name" value="contact" />
+        <input type="hidden" name="subject" value="Nouveau message — Portfolio Estelle Coulon" />
+        <p hidden>
+          <label>
+            Ne remplissez pas ce champ : <input name="bot-field" tabindex="-1" autocomplete="off" />
+          </label>
+        </p>
+        <p class="eyebrow">Formulaire de contact</p>
+        <h2>
+          Décrivez <span class="handwritten">votre demande.</span>
+        </h2>
+        <p class="form-description">Quelques mots suffisent pour commencer.</p>
+        <div class="contact-field">
+          <label for="contact-name">
+            Votre nom <span aria-hidden="true">*</span>
+          </label>
+          <input
+            id="contact-name"
+            name="name"
+            type="text"
+            autocomplete="name"
+            placeholder="Votre nom ou celui de votre structure"
+            required
+            maxlength="120"
+          />
+        </div>
+        <div class="contact-field">
+          <label for="contact-email">
+            Votre e-mail <span aria-hidden="true">*</span>
+          </label>
+          <input
+            id="contact-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="vous@exemple.fr"
+            required
+            maxlength="254"
+          />
+        </div>
+        <fieldset class="mission-options">
+          <legend>Vous souhaitez parler de…</legend>
+          <div>
+            {missions.map((mission, index) => (
+              <label>
+                <input type="checkbox" name="mission" value={mission} id={`mission-${index}`} />
+                <span>{mission}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+        <div class="contact-field">
+          <label for="contact-message">
+            Votre message <span aria-hidden="true">*</span>
+          </label>
+          <textarea
+            id="contact-message"
+            name="message"
+            placeholder="Votre projet, vos envies, votre calendrier…"
+            rows="4"
+            required
+            maxlength="5000"
+          ></textarea>
+        </div>
+        <p class="form-note">
+          Les champs marqués d’un * sont obligatoires. Vos informations servent uniquement à
+          répondre à votre demande.{' '}
+          <a href="/mentions-legales">Consultez la politique de confidentialité.</a>
+        </p>
+        <button class="button button-primary" type="submit">
+          Envoyer mon message
+        </button>
+
+        <p class="form-fallback">
+          Vous préférez écrire directement ? <a href={`mailto:${email}`}>Envoyez-moi un e-mail.</a>
+        </p>
+      </form>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .contact-page {
+    overflow: clip;
+    background: radial-gradient(ellipse 65% 35% at 100% 0%, #8a216850, transparent 80%);
+  }
+  .contact-intro {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 60px;
+    align-items: center;
+    padding-top: 145px;
+    padding-bottom: 60px;
+  }
+  .contact-breadcrumb {
+    display: inline-flex;
+    gap: 12px;
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 35px;
+  }
+  .contact-breadcrumb span {
+    color: var(--purple);
+  }
+  .contact-intro .eyebrow {
+    color: var(--blue);
+  }
+  .contact-intro h1 {
+    font-family: var(--font-display);
+    font-size: clamp(85px, 8vw, 120px);
+    font-weight: 400;
+    line-height: 0.87;
+    letter-spacing: -0.025em;
+    margin-bottom: 30px;
+  }
+  .contact-intro h1 > span {
+    color: var(--pink);
+  }
+  .contact-lead {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.85;
+    max-width: 640px;
+    margin: 0;
+  }
+  .contact-illustration {
+    max-width: 320px;
+    width: 100%;
+    justify-self: center;
+  }
+  .contact-illustration img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  .contact-seal {
+    position: relative;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid #b997ed40;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, #a267d328, transparent 75%);
+  }
+  .seal-star {
+    font-family: Arial, sans-serif;
+    color: var(--purple);
+    font-size: 140px;
+    line-height: 1;
+    animation: fairy-float 8s ease-in-out infinite;
+  }
+  .seal-note {
+    font-family: var(--font-display);
+    color: var(--pink);
+    font-size: 37px;
+    line-height: 0.9;
+    text-align: center;
+    transform: rotate(-7deg);
+    margin-top: -15px;
+  }
+  .seal-spark {
+    position: absolute;
+    right: 5%;
+    top: 10%;
+    font-size: 35px;
+    color: var(--blue);
+  }
+  .contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: clamp(45px, 7vw, 110px);
+    align-items: start;
+    padding-top: 20px;
+    padding-bottom: 100px;
+  }
+  .contact-information {
+    padding-top: 25px;
+  }
+  .contact-information > .eyebrow {
+    font-size: 9px;
+    color: var(--purple);
+    margin-bottom: 30px;
+  }
+  .contact-details {
+    margin: 0;
+  }
+  .contact-details > div {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 24px;
+    padding-block: 15px;
+  }
+  .contact-details dt {
+    font-size: 12px;
+    color: var(--muted);
+    padding-top: 3px;
+  }
+  .contact-details dd {
+    margin: 0;
+    padding-left: 24px;
+    border-left: 1px solid #b997ed55;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+  }
+  .contact-details a[href^='mailto:'] {
+    color: var(--purple);
+  }
+  .contact-details a:hover {
+    color: var(--blue);
+  }
+  .contact-photo {
+    margin-top: 60px;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+  .contact-photo > img {
+    display: block;
+    width: 100%;
+    height: 360px;
+    object-fit: contain;
+    object-position: center bottom;
+    background: radial-gradient(ellipse at 50% 40%, #b997ed22, transparent 75%);
+  }
+  .contact-photo-placeholder {
+    min-height: 230px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid #8bcbed30;
+    border-radius: 12px;
+    background: radial-gradient(ellipse at 90% 5%, #8bcbed15, transparent 70%);
+  }
+  .contact-photo-placeholder > span:first-child {
+    font-size: 30px;
+    color: var(--blue);
+    margin-bottom: 12px;
+  }
+  .contact-photo-placeholder p {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 23px;
+    line-height: 1.2;
+    margin-bottom: 22px;
+  }
+  .contact-photo-placeholder .handwritten {
+    font-size: 34px;
+    color: var(--purple);
+  }
+  .photo-caption {
+    font-size: 9px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .contact-form {
+    border: 1px solid #b997ed77;
+    border-radius: 18px;
+    padding: 40px;
+    background: linear-gradient(145deg, #5b265747, #37163c80);
+    box-shadow: 0 15px 55px #14050d20;
+  }
+  .contact-form > .eyebrow {
+    font-size: 9px;
+    color: var(--blue);
+    margin-bottom: 17px;
+  }
+  .contact-form h2 {
+    font-size: 30px;
+    line-height: 1.1;
+  }
+  .contact-form h2 .handwritten {
+    color: var(--pink);
+    font-size: 1.3em;
+  }
+  .form-description {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 17px 0 30px;
+  }
+  .contact-field {
+    margin-bottom: 27px;
+  }
+  .contact-field label,
+  .mission-options legend {
+    display: block;
+    font-size: 13px;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .contact-field label > span {
+    color: var(--pink);
+  }
+  .contact-field input,
+  .contact-field textarea {
+    display: block;
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid #b997ed66;
+    border-radius: 0;
+    background: transparent;
+    color: var(--ink);
+    font:
+      400 14px 'DM Sans',
+      sans-serif;
+    padding: 12px 0;
+    line-height: 1.6;
+    transition: border-color 0.2s;
+  }
+  .contact-field textarea {
+    resize: vertical;
+    min-height: 115px;
+    max-height: 450px;
+  }
+  .contact-field input::placeholder,
+  .contact-field textarea::placeholder {
+    color: var(--muted);
+    opacity: 0.8;
+    font-size: 12px;
+  }
+  .contact-field input:focus,
+  .contact-field textarea:focus {
+    outline: 0;
+    border-color: var(--blue);
+    box-shadow: 0 1px 0 var(--blue);
+  }
+  .mission-options {
+    border: 0;
+    padding: 0;
+    margin: 0 0 29px;
+    min-width: 0;
+  }
+  .mission-options > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .mission-options label {
+    position: relative;
+  }
+  .mission-options input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+  .mission-options label > span {
+    display: block;
+    font-size: 10px;
+    padding: 10px 13px;
+    border: 1px solid #b997ed55;
+    border-radius: 5px;
+    color: var(--muted);
+    transition:
+      background 0.2s,
+      border-color 0.2s;
+  }
+  .mission-options input:checked + span {
+    background: #eba7bf20;
+    color: var(--pink);
+    border-color: var(--pink);
+  }
+  .mission-options input:focus-visible + span {
+    outline: 2px solid var(--blue);
+    outline-offset: 3px;
+  }
+  .form-note,
+  .form-fallback {
+    font-size: 10px;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+  .form-note {
+    margin: 0 0 24px;
+  }
+  .contact-form > .button {
+    width: 100%;
+    min-height: 48px;
+  }
+  .form-status {
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--blue);
+    margin: 17px 0 0;
+  }
+  .form-status:empty {
+    display: none;
+  }
+  .form-fallback {
+    margin: 19px 0 0;
+    text-align: center;
+  }
+  .form-fallback a {
+    color: var(--pink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  :global(html[data-theme='light']) .contact-page {
+    background: radial-gradient(ellipse 65% 35% at 100% 0%, #d9b9e644, transparent 80%);
+  }
+  :global(html[data-theme='light']) .contact-form {
+    background: linear-gradient(145deg, #f3e5f2, #fff8f8);
+    border-color: #b58ac9;
+    box-shadow: 0 15px 50px #77527b12;
+  }
+  @media (max-width: 1000px) {
+    .contact-intro {
+      gap: 30px;
+    }
+    .contact-content {
+      gap: 35px;
+    }
+    .contact-form {
+      padding: 28px;
+    }
+    .contact-details > div {
+      grid-template-columns: 70px 1fr;
+      gap: 10px;
+    }
+    .contact-details dd {
+      padding-left: 15px;
+      font-size: 12px;
+    }
+  }
+  @media (max-width: 700px) {
+    .contact-intro {
+      grid-template-columns: 1fr;
+      padding-top: 105px;
+      padding-bottom: 30px;
+      gap: 25px;
+    }
+    .contact-breadcrumb {
+      margin-bottom: 28px;
+    }
+    .contact-intro h1 {
+      font-size: clamp(83px, 22vw, 116px);
+      margin-bottom: 25px;
+    }
+    .contact-intro .eyebrow {
+      font-size: 8px;
+      letter-spacing: 0.14em;
+    }
+    .contact-lead {
+      font-size: 13px;
+      line-height: 1.85;
+    }
+    .contact-illustration {
+      max-width: 190px;
+      justify-self: end;
+    }
+    .seal-star {
+      font-size: 90px;
+    }
+    .seal-note {
+      font-size: 27px;
+    }
+    .seal-spark {
+      font-size: 25px;
+    }
+    .contact-content {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding-top: 0;
+      padding-bottom: 60px;
+    }
+    .contact-information {
+      padding-top: 0;
+    }
+    .contact-information > .eyebrow {
+      margin-bottom: 16px;
+    }
+    .contact-details > div {
+      grid-template-columns: 78px 1fr;
+      padding-block: 12px;
+      gap: 13px;
+    }
+    .contact-details dd {
+      font-size: 13px;
+    }
+    .contact-photo {
+      margin-top: 25px;
+    }
+    .contact-photo-placeholder {
+      min-height: 155px;
+      padding: 23px;
+    }
+    .contact-photo-placeholder p {
+      font-size: 19px;
+      margin-bottom: 15px;
+    }
+    .contact-photo-placeholder .handwritten {
+      font-size: 29px;
+    }
+    .contact-photo-placeholder > span:first-child {
+      font-size: 23px;
+      margin-bottom: 9px;
+    }
+    .contact-form {
+      padding: 27px 21px;
+      border-radius: 14px;
+    }
+    .contact-form h2 {
+      font-size: 28px;
+    }
+    .contact-field input,
+    .contact-field textarea {
+      font-size: 16px;
+    }
+    .mission-options label > span {
+      padding: 11px 12px;
+    }
+    .form-fallback {
+      text-align: left;
+    }
+  }
+</style>

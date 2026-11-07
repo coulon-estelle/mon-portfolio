@@ -1,0 +1,692 @@
+---
+import MockupLabel from '../../components/MockupLabel.astro';
+import ProjectImage from '../../components/ProjectImage.astro';
+import { projectAssets } from '../../data/project-assets';
+import Ornament from '../../components/Ornament.astro';
+import PageOutro from '../../components/PageOutro.astro';
+import Layout from '../../layouts/Layout.astro';
+// Images à placer dans public/images/ ; renseignez ensuite leurs chemins.
+const logoImage = projectAssets.nunc.logo;
+const webappImage = projectAssets.nunc.home;
+const figmaImage = projectAssets.nunc.app;
+const webappUrl = 'https://nuncapp.linabenmabrouk.fr/';
+const figmaUrl =
+  'https://www.figma.com/proto/TJiXKVsvrgmfMSRRY3fHF3/N%C5%A8NC?node-id=139-2420&p=f&t=ibeQiF4xrpvgh3uW-1&scaling=scale-down&content-scaling=fixed&page-id=69%3A5&starting-point-node-id=310%3A1336';
+const steps = [
+  {
+    title: 'Recherche',
+    text: 'Nous avons commencé par réaliser un benchmark et un moodboard afin de définir l’univers de NŨNC et de trouver une identité adaptée aux jeunes et au monde des sorties.',
+  },
+  {
+    title: 'Conception',
+    text: 'Nous avons défini les fonctionnalités principales : trouver des bars, organiser des sorties entre amis et programmer son retour. Le concept s’est ensuite enrichi avec un test de sobriété, des points, des récompenses et une offre Premium.',
+  },
+  {
+    title: 'Évolution',
+    text: 'L’identité a évolué au fil des retours. Le logo a notamment été retravaillé et simplifié pour être plus lisible et mieux correspondre à l’univers de NŨNC. Le slogan initial a également été abandonné car il pouvait trop inciter à la consommation d’alcool.',
+  },
+];
+---
+
+<Layout
+  title="NŨNC — Identité visuelle & application | Estelle Coulon"
+  description="Découvrez NŨNC, un projet collectif de BUT MMI : une identité visuelle chaleureuse et une application pour organiser des soirées entre amis et prévoir son retour."
+>
+  <main id="contenu" class="nunc-case">
+    <section class="case-hero container" aria-labelledby="nunc-title">
+      <a class="case-back" href="/projets">
+        Tous les projets <span aria-hidden="true">/</span> NŨNC
+      </a>
+      <div class="case-intro">
+        <div>
+          <p class="eyebrow">Identité visuelle — Application — 2026</p>
+          <h1 id="nunc-title" class="case-brand-logo">
+            {logoImage ? (
+              <>
+                <ProjectImage
+                  src={logoImage}
+                  alt="NŨNC"
+                  width={420}
+                  eager
+                  class="nunc-logo-light"
+                />
+                <ProjectImage
+                  src={projectAssets.nunc.colorLogo}
+                  alt="NŨNC"
+                  width={420}
+                  eager
+                  class="nunc-logo-color"
+                />
+              </>
+            ) : (
+              'NŨNC'
+            )}
+          </h1>
+          <p class="case-tagline">
+            Les bonnes soirées commencent
+            <br />
+            <span class="handwritten">par de bonnes idées.</span>
+          </p>
+          <div class="case-tags">
+            <span>Projet collectif · BUT MMI</span>
+            <span>Identité & interfaces</span>
+          </div>
+        </div>
+        <div class="citrus-decoration" aria-hidden="true">
+          <span class="citrus-spark">
+            <Ornament kind="star-pink" width={44} />
+          </span>
+          <img
+            class="nunc-brand-icon"
+            src={projectAssets.nunc.icon}
+            alt=""
+            width="100"
+            height="132"
+          />
+        </div>
+      </div>
+    </section>
+    <section class="case-context case-two-columns container" aria-label="Présentation du projet">
+      <div>
+        <p class="eyebrow">Le point de départ</p>
+        <h2>
+          Contexte <span class="handwritten">& commande.</span>
+        </h2>
+        <p>
+          NŨNC est un projet collectif réalisé dans le cadre de ma formation en BUT MMI. L’objectif
+          était de reprendre une idée imaginée par d’autres étudiants et de la développer
+          entièrement en y apportant notre propre direction.
+        </p>
+        <p>
+          Nous avons imaginé une application destinée aux jeunes pour organiser leurs soirées,
+          retrouver leurs amis et surtout prévoir leur retour en toute sécurité.
+        </p>
+      </div>
+      <div>
+        <p class="eyebrow">Ma contribution</p>
+        <h2>
+          Mon rôle <span class="handwritten">dans le projet.</span>
+        </h2>
+        <p>
+          En binôme, je me suis principalement occupée de toute la partie visuelle du projet :
+          identité graphique, logo, couleurs, typographies, maquettes et supports de communication.
+        </p>
+        <p>
+          J’ai également participé au ciblage, au budget et à la réflexion autour du concept. Ma
+          collègue s’est principalement chargée de l’intégration.
+        </p>
+      </div>
+    </section>
+    <section class="case-process container" aria-labelledby="process-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Des premières pistes aux choix finaux</p>
+          <h2 id="process-title">
+            Une idée qui <span class="handwritten">prend forme.</span>
+          </h2>
+        </div>
+      </div>
+      <ol class="case-steps">
+        {steps.map((step, index) => (
+          <li>
+            <span class="step-number">0{index + 1}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+    <section
+      class="case-design case-two-columns container"
+      aria-label="Choix graphiques et résultat"
+    >
+      <div>
+        <p class="eyebrow">L’univers visuel</p>
+        <h2>
+          Chaleureux, <span class="handwritten">et vivant.</span>
+        </h2>
+        <p>
+          L’identité repose sur des couleurs chaudes : orange, jaune, brun et beige, qui rappellent
+          l’ambiance des soirées et la convivialité. Titan One apporte un côté dynamique aux titres,
+          tandis que Tuffy assure la lisibilité des textes.
+        </p>
+        <p>
+          Le logo intègre un verre directement dans le « U » de NŨNC pour rappeler l’univers des
+          sorties.
+        </p>
+        <div
+          class="case-palette"
+          role="img"
+          aria-label="Palette : orange, jaune, brun, bordeaux et crème"
+        >
+          <i style="--swatch:#df580b"></i>
+          <i style="--swatch:#edaa23"></i>
+          <i style="--swatch:#843b10"></i>
+          <i style="--swatch:#4a0905"></i>
+          <i style="--swatch:#f7e4d0"></i>
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow">Le résultat</p>
+        <h2>
+          Un univers <span class="handwritten">qui se décline.</span>
+        </h2>
+        <p>
+          Le projet aboutit à une application web autour des sorties entre amis : organisation et
+          invitations, découverte de bars, retour programmé, test de sobriété, points,
+          personnalisation du profil et offre Premium.
+        </p>
+        <p>
+          Le projet comprend également toute l’identité visuelle, les maquettes et les supports de
+          présentation.
+        </p>
+        <p class="case-deliverables">
+          Logo · Charte graphique · Maquettes · Supports de communication
+        </p>
+      </div>
+    </section>
+    <section class="case-previews container" aria-labelledby="previews-title">
+      <p class="eyebrow">Du concept à l’écran</p>
+      <h2 id="previews-title">
+        Découvrez <span class="handwritten">l’expérience.</span>
+      </h2>
+      <div class="case-preview-grid">
+        {[
+          {
+            title: 'La webapp mobile',
+            image: webappImage,
+            url: webappUrl,
+            label: 'Découvrir la webapp',
+            type: 'Webapp',
+          },
+          {
+            title: 'La maquette Figma',
+            image: figmaImage,
+            url: figmaUrl,
+            label: 'Explorer la maquette',
+            type: 'Prototype',
+          },
+        ].map((preview) => (
+          <article class="case-preview">
+            <a
+              class="project-preview-link"
+              href={preview.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={preview.label + ' (nouvel onglet)'}
+            >
+              <MockupLabel text={preview.label} />
+              <ProjectImage src={preview.image} alt={`Aper?u de ${preview.title}`} width={600} />
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
+    <PageOutro
+      lead="Autres études de cas"
+      heading="Découvrez les autres projets."
+      href="/projets"
+      label="Retour à la galerie"
+      variant={1}
+    />
+  </main>
+</Layout>
+<style>
+  .nunc-case {
+    --citrus: #f3ad28;
+    --cream: #f9d7b6;
+    overflow: clip;
+    background: radial-gradient(
+      ellipse 70% 28% at 100% 0%,
+      #e6a55380,
+      #8a440e35 45%,
+      transparent 85%
+    );
+  }
+  .case-hero {
+    padding-top: 140px;
+    padding-bottom: 55px;
+  }
+  .case-back {
+    display: inline-flex;
+    gap: 14px;
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 45px;
+  }
+  .case-back span {
+    color: var(--cream);
+  }
+  .case-intro {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    align-items: center;
+    gap: 50px;
+  }
+  .case-intro .eyebrow {
+    color: var(--blue);
+    font-size: 10px;
+  }
+  .case-intro h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(85px, 10vw, 150px);
+    font-weight: 700;
+    letter-spacing: -0.08em;
+    line-height: 1;
+    color: var(--cream);
+    margin-bottom: 20px;
+  }
+  .case-intro h1 img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    width: 380px;
+  }
+  .case-tagline {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+  .case-tagline .handwritten {
+    font-size: 37px;
+    color: var(--cream);
+  }
+  .case-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+  }
+  .case-tags span {
+    font-size: 9px;
+    border: 1px solid #f9d7b640;
+    border-radius: 25px;
+    padding: 9px 13px;
+    color: var(--cream);
+  }
+  .citrus-decoration {
+    position: relative;
+    height: 290px;
+  }
+  .citrus-slice {
+    position: absolute;
+    top: 5%;
+    right: 20%;
+    width: 190px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid #ffe1a4;
+    background: repeating-conic-gradient(#f0a522 0deg 33deg, #ffdfa5 33deg 36deg);
+    box-shadow:
+      0 0 0 2px #d98514,
+      0 0 70px #f3ad2822;
+    transform: rotate(-15deg);
+  }
+  .citrus-slice::after {
+    content: '';
+    position: absolute;
+    inset: 43%;
+    background: #ffe1a4;
+    border-radius: 50%;
+  }
+  .ice {
+    position: absolute;
+    width: 58px;
+    height: 58px;
+    border-radius: 12px;
+    background: linear-gradient(140deg, #fff9f0 45%, #f0cfaf 46% 78%, #ffe8d1 79%);
+    box-shadow: 0 5px 20px #6a310c22;
+    animation: fairy-float 8s ease-in-out infinite;
+  }
+  .ice-one {
+    top: 38%;
+    left: 14%;
+    rotate: 20deg;
+  }
+  .ice-two {
+    bottom: 4%;
+    right: 4%;
+    rotate: -20deg;
+    animation-delay: -3s;
+  }
+  .citrus-spark {
+    position: absolute;
+    color: var(--cream);
+    font-size: 38px;
+    right: 4%;
+    top: 0;
+  }
+  .case-two-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 7vw, 100px);
+  }
+  .case-context {
+    padding-block: 40px 70px;
+  }
+  .case-two-columns .eyebrow {
+    font-size: 9px;
+    color: var(--purple);
+    margin-bottom: 18px;
+  }
+  .case-two-columns h2 {
+    font-size: 30px;
+    margin-bottom: 25px;
+  }
+  .case-two-columns h2 .handwritten {
+    font-size: 1.3em;
+    color: var(--cream);
+  }
+  .case-two-columns p:not(.eyebrow) {
+    font-size: 13px;
+    line-height: 1.85;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .case-process {
+    padding-block: 30px 75px;
+  }
+  .case-process .eyebrow {
+    color: var(--pink);
+    font-size: 9px;
+  }
+  .case-process h2 {
+    font-size: 39px;
+  }
+  .case-process h2 .handwritten {
+    color: var(--pink);
+  }
+  .case-steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 35px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: steps;
+  }
+  .case-steps li {
+    position: relative;
+    padding: 26px 24px;
+    border: 1px solid #eba7bf77;
+    border-radius: 10px;
+    background: linear-gradient(140deg, #eba7bf08, transparent);
+    transition:
+      border-color 0.3s,
+      background 0.3s;
+  }
+  .case-steps li + li::before {
+    content: '';
+    position: absolute;
+    top: 46px;
+    left: -36px;
+    width: 35px;
+    height: 1px;
+    background: #eba7bf77;
+  }
+  .step-number {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: var(--cream);
+  }
+  .case-steps h3 {
+    font-family: var(--font-display);
+    font-size: 35px;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--pink);
+    margin: 16px 0;
+  }
+  .case-steps p {
+    font-size: 12px;
+    line-height: 1.85;
+    color: var(--muted);
+    margin: 0;
+  }
+  .case-steps li:hover {
+    border-color: var(--cream);
+    background: #f9d7b608;
+  }
+  .case-design {
+    padding-block: 20px 60px;
+  }
+  .case-design .eyebrow {
+    color: var(--blue);
+  }
+  .case-palette {
+    display: flex;
+    gap: 9px;
+    margin-top: 25px;
+  }
+  .case-palette i {
+    width: 37px;
+    height: 37px;
+    border-radius: 50%;
+    background: var(--swatch);
+    border: 1px solid #f9d7b655;
+  }
+  .case-two-columns .case-deliverables {
+    font-size: 10px !important;
+    color: var(--cream) !important;
+    border-top: 1px solid #f9d7b633;
+    padding-top: 18px;
+  }
+  .case-previews {
+    padding-block: 25px 50px;
+  }
+  .case-previews > .eyebrow {
+    font-size: 9px;
+    color: var(--blue);
+  }
+  .case-previews > h2 {
+    font-size: 39px;
+    margin-bottom: 40px;
+  }
+  .case-previews > h2 .handwritten {
+    color: var(--cream);
+  }
+  .case-preview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+  }
+  .case-preview {
+    text-align: center;
+    min-width: 0;
+  }
+  .case-preview h3 {
+    font-family: var(--font-display);
+    font-size: 34px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 30px;
+  }
+  .case-preview > img {
+    display: block;
+    width: 100%;
+    height: 450px;
+    object-fit: contain;
+    margin-bottom: 30px;
+  }
+  .phone-placeholder {
+    margin: 15px auto 35px;
+    width: min(245px, 75%);
+    aspect-ratio: 1/1.9;
+    border: 3px solid #806e7a;
+    border-radius: 35px;
+    padding: 7px;
+    background: #17131c;
+    box-shadow:
+      14px 17px 0 #0a071533,
+      0 25px 45px #08020755;
+    transform: rotate(8deg);
+  }
+  .case-preview:nth-child(2) .phone-placeholder {
+    transform: rotate(-8deg);
+  }
+  .phone-screen {
+    height: 100%;
+    border-radius: 26px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #efae38, #f7e4d0 70%);
+    color: #843b10;
+  }
+  .phone-camera {
+    position: absolute;
+    width: 47px;
+    height: 11px;
+    border-radius: 12px;
+    top: 9px;
+    background: #21161d;
+  }
+  .phone-brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 43px;
+    font-weight: 700;
+    letter-spacing: -0.07em;
+  }
+  .phone-subtitle {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .phone-orbit {
+    font-size: 100px;
+    line-height: 1;
+    color: #df580b;
+    margin-top: 25px;
+  }
+  .phone-note {
+    position: absolute;
+    bottom: 25px;
+    font-size: 9px;
+    color: #843b10;
+  }
+  .case-link-pending {
+    font-size: 10px;
+    color: var(--muted);
+  }
+  :global(html[data-theme='light']) .nunc-case {
+    --cream: #964518;
+    background: radial-gradient(ellipse 70% 28% at 100% 0%, #f4ca8360, transparent 85%);
+  }
+  :global(html[data-theme='light']) .case-tags span {
+    border-color: #96451850;
+  }
+  :global(html[data-theme='light']) .case-steps li {
+    background: #fff8f255;
+  }
+  :global(html[data-theme='light']) .case-palette i {
+    border-color: #96451844;
+  }
+  @media (max-width: 700px) {
+    .case-hero {
+      padding-top: 105px;
+      padding-bottom: 20px;
+    }
+    .case-back {
+      margin-bottom: 30px;
+    }
+    .case-intro {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+    .case-intro .eyebrow {
+      font-size: 8px;
+      letter-spacing: 0.08em;
+    }
+    .case-intro h1 {
+      font-size: 97px;
+    }
+    .case-tagline {
+      font-size: 17px;
+    }
+    .case-tagline .handwritten {
+      font-size: 32px;
+    }
+    .citrus-decoration {
+      height: 175px;
+      max-width: 280px;
+      width: 100%;
+      justify-self: end;
+    }
+    .citrus-slice {
+      width: 120px;
+      right: 20%;
+      border-width: 5px;
+    }
+    .ice {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+    }
+    .citrus-spark {
+      font-size: 25px;
+    }
+    .case-two-columns {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .case-context {
+      padding-block: 15px 40px;
+    }
+    .case-two-columns h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .case-two-columns p:not(.eyebrow) {
+      font-size: 13px;
+    }
+    .case-process {
+      padding-block: 20px 40px;
+    }
+    .case-process h2,
+    .case-previews > h2 {
+      font-size: 31px;
+    }
+    .case-steps {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+    .case-steps li {
+      padding: 23px;
+    }
+    .case-steps li + li::before {
+      top: -23px;
+      left: 35px;
+      width: 1px;
+      height: 22px;
+    }
+    .case-steps h3 {
+      font-size: 33px;
+    }
+    .case-design {
+      padding-block: 10px 35px;
+    }
+    .case-palette i {
+      width: 32px;
+      height: 32px;
+    }
+    .case-previews {
+      padding-block: 20px 30px;
+    }
+    .case-preview-grid {
+      grid-template-columns: 1fr;
+      gap: 35px;
+    }
+    .case-preview h3 {
+      font-size: 32px;
+    }
+    .case-preview > img {
+      height: 370px;
+    }
+    .phone-placeholder {
+      width: 205px;
+    }
+  }
+</style>

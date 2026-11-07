@@ -1,0 +1,659 @@
+---
+import MockupLabel from '../../components/MockupLabel.astro';
+import ProjectImage from '../../components/ProjectImage.astro';
+import { projectAssets } from '../../data/project-assets';
+import Ornament from '../../components/Ornament.astro';
+import PageOutro from '../../components/PageOutro.astro';
+import Layout from '../../layouts/Layout.astro';
+// Placez vos images dans public/images/ puis renseignez leurs chemins.
+const logoImage = projectAssets.olyvia.logo;
+const mobileImage = projectAssets.olyvia.mobile;
+const desktopImage = projectAssets.olyvia.desktop;
+const websiteUrl = 'https://olyvia.estelle-coulon.fr/';
+const figmaUrl =
+  'https://www.figma.com/proto/1cBlSJIHOKQ87w8EANdnoi/OLYVIA?node-id=211-5&p=f&t=0fO8xluVZKHOOgOX-1&scaling=scale-down&content-scaling=fixed&page-id=136%3A2&starting-point-node-id=187%3A102&show-proto-sidebar=1';
+const steps = [
+  {
+    title: 'Recherche',
+    text: "Nous avons commencé par explorer l'univers de la santé féminine et les différentes façons de communiquer sur ce sujet. J'ai réalisé un moodboard en m'inspirant notamment de Flo, une application consacrée à la santé menstruelle, afin d'identifier des pistes graphiques douces, modernes et accessibles.",
+  },
+  {
+    title: 'Conception',
+    text: "J'ai travaillé sur plusieurs propositions de logo autour de la pivoine, une fleur choisie pour son aspect délicat et naturel. J'ai également défini les couleurs, les typographies et les premières déclinaisons graphiques pour construire une identité cohérente avec les valeurs d'OLYVIA.",
+  },
+  {
+    title: 'Évolution',
+    text: "Le logo a connu plusieurs versions à la suite des retours de notre professeur. J'ai retravaillé sa forme et ses détails pour aboutir à une proposition plus adaptée au projet. L'identité a ensuite été déclinée sur différents supports, notamment des sacs et des goodies, afin de visualiser son utilisation au-delà du site web.",
+  },
+];
+---
+
+<Layout
+  title="OLYVIA — Identité visuelle & site web | Estelle Coulon"
+  description="Étude de cas OLYVIA : création d’une identité visuelle douce et naturelle pour un site d’information sur la ménopause, du logo aux supports de communication."
+>
+  <main id="contenu" class="olyvia-case">
+    <section class="case-hero container" aria-labelledby="olyvia-title">
+      <a class="case-back" href="/projets">
+        Tous les projets <span aria-hidden="true">/</span> OLYVIA
+      </a>
+      <div class="case-intro">
+        <div>
+          <p class="eyebrow">Identité visuelle — Site web — 2026</p>
+          <h1 id="olyvia-title" class="case-brand-logo">
+            {logoImage ? <ProjectImage src={logoImage} alt="Olyvia" width={430} eager /> : 'OLYVIA'}
+          </h1>
+          <p class="case-tagline">
+            Un sujet sensible,
+            <br />
+            <span class="handwritten">un regard bienveillant.</span>
+          </p>
+          <div class="case-tags">
+            <span>Projet collectif · BUT MMI</span>
+            <span>Identité visuelle</span>
+            <span>WordPress</span>
+          </div>
+        </div>
+        <div class="peony-art" aria-hidden="true">
+          <img
+            class="olyvia-brand-icon"
+            src={projectAssets.olyvia.icon}
+            alt=""
+            width="180"
+            height="280"
+          />
+          <span class="peony-spark">
+            <Ornament kind="star-violet" width={42} />
+          </span>
+        </div>
+      </div>
+    </section>
+    <section class="case-context case-two-columns container" aria-label="Présentation du projet">
+      <div>
+        <p class="eyebrow">Le point de départ</p>
+        <h2>
+          Contexte <span class="handwritten">& commande.</span>
+        </h2>
+        <p>
+          OLYVIA est un projet collectif réalisé en groupe de trois dans le cadre de mon BUT MMI.
+          L'objectif était de créer un site web destiné aux femmes ménopausées ou souhaitant
+          s'informer sur ce sujet encore trop peu abordé.
+        </p>
+        <p>
+          Le site, développé avec WordPress, avait pour but de libérer la parole autour de la
+          ménopause, de mieux faire connaître ses symptômes et ses risques, et de proposer des
+          contenus informatifs. Le projet comprenait également la réalisation d'interviews et le
+          montage de vidéos destinées au site.
+        </p>
+      </div>
+      <div>
+        <p class="eyebrow">Ma contribution</p>
+        <h2>
+          Mon rôle <span class="handwritten">exact.</span>
+        </h2>
+        <p>
+          Au sein du groupe, je me suis principalement occupée de la création de l'identité visuelle
+          d'OLYVIA.
+        </p>
+        <p>
+          J'ai conçu le logo et ses différentes déclinaisons, ainsi que plusieurs supports de
+          communication et goodies, notamment des visuels de sacs. Mon objectif était de créer un
+          univers graphique doux, rassurant et accessible, adapté au sujet de la ménopause et à
+          notre public cible.
+        </p>
+        <p>
+          J'ai également participé à la réflexion graphique globale du projet pour assurer une
+          cohérence entre les différents supports.
+        </p>
+      </div>
+    </section>
+    <section class="case-process container" aria-labelledby="olyvia-process">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Processus — Recherches, pistes, arbitrages</p>
+          <h2 id="olyvia-process">
+            Une identité <span class="handwritten">qui éclot.</span>
+          </h2>
+        </div>
+      </div>
+      <ol class="case-steps">
+        {steps.map((step, index) => (
+          <li>
+            <span class="step-number">0{index + 1}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+    <section
+      class="case-design case-two-columns container"
+      aria-label="Choix graphiques et résultat"
+    >
+      <div>
+        <p class="eyebrow">Choix graphiques</p>
+        <h2>
+          Naturelle, <span class="handwritten">et rassurante.</span>
+        </h2>
+        <p>
+          L'identité visuelle d'OLYVIA repose sur un univers doux et naturel, avec une place
+          importante accordée au vert, qui évoque la nature et rappelle que la ménopause est une
+          étape naturelle de la vie.
+        </p>
+        <p>
+          Le logo inspiré d'une pivoine apporte une dimension délicate et féminine. Les typographies
+          Cormorant Garamond et IBM Plex Sans associent élégance et lisibilité pour créer une
+          identité à la fois rassurante, moderne et accessible.
+        </p>
+        <div class="botanical-notes">
+          <span>Vert naturel</span>
+          <span>Pivoine</span>
+          <span>Élégance & lisibilité</span>
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow">Résultat</p>
+        <h2>
+          Une identité <span class="handwritten">qui accompagne.</span>
+        </h2>
+        <p>
+          Le projet a abouti à une identité visuelle complète comprenant un logo, ses déclinaisons
+          et plusieurs supports de communication, accompagnée d'une maquette finalisée et d'un site
+          WordPress.
+        </p>
+        <p>
+          Ce travail m'a permis de développer mes compétences en création d'identité visuelle, en
+          recherche graphique et en déclinaison de supports. Il m'a également appris à faire évoluer
+          mes propositions à partir de retours critiques, tout en conservant une cohérence graphique
+          adaptée à un sujet sensible.
+        </p>
+      </div>
+    </section>
+    <section class="case-previews container" aria-labelledby="olyvia-previews">
+      <p class="eyebrow">Déclinaisons web</p>
+      <h2 id="olyvia-previews">
+        Un univers, <span class="handwritten">plusieurs expressions.</span>
+      </h2>
+      <div class="olyvia-preview-grid">
+        <figure>
+          <a
+            class="project-preview-link"
+            href={figmaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Explorer la maquette Olyvia (nouvel onglet)"
+          >
+            <MockupLabel text="Explorer la maquette Figma" />
+            <ProjectImage
+              src={mobileImage}
+              alt="Maquette mobile Olyvia pr?sent?e sur un t?l?phone"
+              width={650}
+            />
+          </a>
+        </figure>
+        <figure>
+          <a
+            class="project-preview-link"
+            href={websiteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Découvrir le site Olyvia (nouvel onglet)"
+          >
+            <MockupLabel text="Découvrir le site Olyvia" />
+            <ProjectImage
+              src={desktopImage}
+              alt="Site Olyvia pr?sent? sur un ordinateur portable"
+              width={800}
+            />
+          </a>
+        </figure>
+      </div>
+    </section>
+    <PageOutro
+      lead="Autres études de cas"
+      heading="Découvrez les autres projets."
+      href="/projets"
+      label="Retour à la galerie"
+      variant={2}
+    />
+  </main>
+</Layout>
+<style>
+  .olyvia-case {
+    --sage: #b7c6a3;
+    --petal: #e6b9c3;
+    --cream: #ede7d6;
+    overflow: clip;
+    background:
+      radial-gradient(ellipse 65% 28% at 100% 0%, #7b94604a, transparent 85%),
+      radial-gradient(ellipse 45% 22% at 0 35%, #b886a31c, transparent 80%);
+  }
+  .case-hero {
+    padding-top: 140px;
+    padding-bottom: 55px;
+  }
+  .case-back {
+    display: inline-flex;
+    gap: 14px;
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 45px;
+  }
+  .case-back span {
+    color: var(--sage);
+  }
+  .case-intro {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .case-intro .eyebrow {
+    color: var(--blue);
+    font-size: 10px;
+  }
+  .case-intro h1 {
+    font-family: Georgia, serif;
+    font-size: clamp(65px, 8vw, 115px);
+    font-weight: 400;
+    letter-spacing: -0.06em;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 24px;
+  }
+  .case-intro h1 img {
+    display: block;
+    width: 400px;
+    max-width: 100%;
+    height: auto;
+  }
+  .case-tagline {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+  .case-tagline .handwritten {
+    font-size: 39px;
+    color: var(--petal);
+  }
+  .case-tags,
+  .botanical-notes {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .case-tags span,
+  .botanical-notes span {
+    font-size: 9px;
+    color: var(--sage);
+    padding: 9px 13px;
+    border: 1px solid #b7c6a345;
+    border-radius: 24px;
+  }
+  .peony-art {
+    position: relative;
+    height: 290px;
+  }
+  .peony-flower {
+    position: absolute;
+    left: 50%;
+    top: 38%;
+    width: 150px;
+    height: 150px;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+  .peony-flower i {
+    position: absolute;
+    left: 45px;
+    top: 5px;
+    width: 65px;
+    height: 105px;
+    border: 1px solid #e6b9c35e;
+    border-radius: 60% 60% 50% 50%;
+    background: linear-gradient(145deg, #e6b9c373, #a9638655);
+    transform-origin: 50% 70%;
+    transform: rotate(calc(var(--petal) * 45deg));
+    box-shadow: inset 0 0 22px #f5d9e112;
+  }
+  .peony-flower > span {
+    position: absolute;
+    left: 56px;
+    top: 56px;
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #efe0b4, #c8a47a66);
+    box-shadow: 0 0 30px #e6b9c333;
+  }
+  .peony-stem {
+    position: absolute;
+    top: 49%;
+    left: 50%;
+    width: 1px;
+    height: 115px;
+    background: linear-gradient(#b7c6a3aa, #b7c6a333);
+    rotate: 8deg;
+  }
+  .peony-leaf {
+    position: absolute;
+    top: 65%;
+    left: 51%;
+    width: 62px;
+    height: 32px;
+    border: 1px solid #b7c6a355;
+    border-radius: 0 80% 0 80%;
+    background: #b7c6a316;
+    rotate: -33deg;
+  }
+  .peony-spark {
+    position: absolute;
+    top: 8%;
+    right: 15%;
+    font-size: 30px;
+    color: var(--sage);
+    animation: fairy-float 8s ease-in-out infinite;
+  }
+  .case-two-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 7vw, 100px);
+  }
+  .case-context {
+    padding-block: 40px 65px;
+  }
+  .case-two-columns .eyebrow {
+    font-size: 9px;
+    color: var(--sage);
+    margin-bottom: 18px;
+  }
+  .case-two-columns h2 {
+    font-size: 30px;
+    line-height: 1.15;
+    margin-bottom: 25px;
+  }
+  .case-two-columns h2 .handwritten {
+    font-size: 1.3em;
+    color: var(--petal);
+  }
+  .case-two-columns p:not(.eyebrow) {
+    font-size: 13px;
+    line-height: 1.85;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .case-process {
+    padding-block: 30px 75px;
+  }
+  .case-process .eyebrow {
+    color: var(--pink);
+    font-size: 9px;
+  }
+  .case-process h2 {
+    font-size: 39px;
+  }
+  .case-process h2 .handwritten {
+    color: var(--sage);
+  }
+  .case-steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .case-steps li {
+    position: relative;
+    padding: 26px 23px;
+    border: 1px solid #b7c6a355;
+    border-radius: 12px;
+    background: linear-gradient(140deg, #b7c6a30d, #e6b9c307);
+  }
+  .case-steps li + li::before {
+    content: '';
+    position: absolute;
+    top: 46px;
+    left: -31px;
+    width: 30px;
+    height: 1px;
+    background: #b7c6a355;
+  }
+  .step-number {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: var(--sage);
+  }
+  .case-steps h3 {
+    font-family: var(--font-display);
+    font-size: 35px;
+    font-weight: 400;
+    line-height: 1.05;
+    color: var(--petal);
+    margin: 16px 0;
+  }
+  .case-steps p {
+    font-size: 12px;
+    line-height: 1.85;
+    color: var(--muted);
+    margin: 0;
+  }
+  .case-design {
+    padding-block: 20px 60px;
+  }
+  .case-design .eyebrow {
+    color: var(--blue);
+  }
+  .case-previews {
+    padding-block: 30px 45px;
+  }
+  .case-previews > .eyebrow {
+    color: var(--sage);
+    font-size: 9px;
+  }
+  .case-previews > h2 {
+    font-size: 39px;
+    margin-bottom: 40px;
+  }
+  .case-previews > h2 .handwritten {
+    color: var(--petal);
+  }
+  .olyvia-preview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 35px;
+  }
+  .olyvia-preview-grid figure {
+    margin: 0;
+    min-width: 0;
+  }
+  .olyvia-preview-grid img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+  .olyvia-preview-grid figcaption {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 18px;
+    text-align: center;
+  }
+  .identity-placeholder,
+  .goodies-placeholder {
+    position: relative;
+    aspect-ratio: 1.25;
+    overflow: hidden;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: #c3cbb2;
+    color: #3c4d38;
+  }
+  .identity-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 13% 18%;
+    border: 1px solid #74856a55;
+    border-radius: 50% 50% 5% 5%;
+    transform: rotate(-12deg);
+    background: #eee7d533;
+  }
+  .specimen-name {
+    font-family: Georgia, serif;
+    font-size: clamp(46px, 5vw, 75px);
+    letter-spacing: -0.05em;
+    position: relative;
+  }
+  .specimen-caption {
+    font-size: 10px;
+    position: relative;
+    margin-top: 15px;
+  }
+  .preview-note {
+    position: absolute;
+    bottom: 20px;
+    font-size: 9px;
+    letter-spacing: 0.04em;
+  }
+  .goodies-placeholder {
+    background: #ded3c7;
+  }
+  .tote-bag {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 41%;
+    height: 48%;
+    margin-top: 30px;
+    background: #f4e9d9;
+    box-shadow: 6px 10px 25px #71584822;
+    transform: rotate(7deg);
+    color: #576647;
+  }
+  .tote-bag::before {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 40%;
+    border: 8px solid #f4e9d9;
+    border-bottom: 0;
+    left: 25%;
+    top: -35%;
+    border-radius: 35px 35px 0 0;
+  }
+  .tote-bag > span {
+    font-family: Georgia, serif;
+    font-size: 31px;
+    letter-spacing: -0.05em;
+  }
+  .tote-bag i {
+    font-style: normal;
+    font-size: 45px;
+    color: #b78196;
+    line-height: 1;
+    margin-top: 10px;
+  }
+  :global(html[data-theme='light']) .olyvia-case {
+    --sage: #536c46;
+    --petal: #994d69;
+    --cream: #435b3c;
+    background: radial-gradient(ellipse 65% 28% at 100% 0%, #cad5b866, transparent 85%);
+  }
+  :global(html[data-theme='light']) .case-tags span,
+  :global(html[data-theme='light']) .botanical-notes span {
+    border-color: #738a5f66;
+  }
+  :global(html[data-theme='light']) .case-steps li {
+    background: #e5ebdb44;
+    border-color: #738a5f55;
+  }
+  @media (max-width: 700px) {
+    .case-hero {
+      padding-top: 105px;
+      padding-bottom: 20px;
+    }
+    .case-back {
+      margin-bottom: 30px;
+    }
+    .case-intro {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .case-intro .eyebrow {
+      font-size: 8px;
+      letter-spacing: 0.08em;
+    }
+    .case-intro h1 {
+      font-size: clamp(65px, 18vw, 98px);
+    }
+    .case-tagline {
+      font-size: 17px;
+    }
+    .case-tagline .handwritten {
+      font-size: 32px;
+    }
+    .peony-art {
+      height: 210px;
+      width: 240px;
+      justify-self: end;
+    }
+    .peony-flower {
+      scale: 0.8;
+    }
+    .peony-stem {
+      height: 85px;
+    }
+    .peony-spark {
+      font-size: 24px;
+    }
+    .case-two-columns {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .case-context {
+      padding-block: 15px 35px;
+    }
+    .case-two-columns h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .case-process {
+      padding-block: 20px 40px;
+    }
+    .case-process h2,
+    .case-previews > h2 {
+      font-size: 31px;
+    }
+    .case-steps {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+    .case-steps li {
+      padding: 23px;
+    }
+    .case-steps li + li::before {
+      top: -23px;
+      left: 35px;
+      width: 1px;
+      height: 22px;
+    }
+    .case-design {
+      padding-block: 10px 30px;
+    }
+    .case-previews {
+      padding-block: 20px 30px;
+    }
+    .olyvia-preview-grid {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+    .specimen-name {
+      font-size: 58px;
+    }
+  }
+</style>

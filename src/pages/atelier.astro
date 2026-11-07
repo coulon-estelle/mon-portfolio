@@ -1,0 +1,886 @@
+---
+import Ornament from '../components/Ornament.astro';
+import PageOutro from '../components/PageOutro.astro';
+import Layout from '../layouts/Layout.astro';
+import { oeuvres } from '../data/oeuvres';
+const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categorie))];
+---
+
+<Layout
+  title="Atelier personnel — Dessins & peintures | Estelle Coulon"
+  description="L’atelier personnel d’Estelle Coulon : dessins, peintures et expérimentations. Découvrez les œuvres en grand et les matériaux utilisés."
+>
+  <main id="contenu" class="art-page">
+    <section class="art-heading container">
+      <a class="art-breadcrumb" href="/">
+        Accueil <span aria-hidden="true">/</span> Atelier personnel
+      </a>
+      <p class="eyebrow">Travaux personnels</p>
+      <h1>
+        Mon
+        <br />
+        <span>atelier personnel.</span>
+      </h1>
+      <p class="art-introduction">
+        Des dessins, des peintures, des idées sur le papier.
+        <br />
+        Un espace pour explorer, expérimenter et créer librement.
+      </p>
+      <span class="art-heading-star" aria-hidden="true">
+        <Ornament kind="moon-pink" width={150} eager />
+        <span class="moon-companion moon-companion-blue">
+          <Ornament kind="star-blue" width={32} eager />
+        </span>
+        <span class="moon-companion moon-companion-violet">
+          <Ornament kind="star-violet" width={23} eager />
+        </span>
+        <span class="moon-companion moon-companion-pink">
+          <Ornament kind="star-pink" width={18} eager />
+        </span>
+      </span>
+    </section>
+    <div class="art-star-divider container" aria-hidden="true">
+      <span class="divider-line"></span>
+      <Ornament kind="star-violet" width={15} />
+      <Ornament kind="star-blue" width={25} />
+      <Ornament kind="star-pink" width={15} />
+      <span class="divider-line"></span>
+    </div>
+    <section class="art-gallery container" aria-labelledby="art-gallery-title">
+      <div class="art-gallery-heading">
+        <h2 id="art-gallery-title">
+          Dessins <span class="handwritten">et peintures.</span>
+        </h2>
+        <p>Cliquez sur une œuvre pour voir son titre et le matériel utilisé.</p>
+      </div>
+      {oeuvres.length > 0 ? (
+        <>
+          <div class="art-toolbar">
+            <div class="art-filters" role="group" aria-label="Filtrer les œuvres">
+              {categories.map((category, index) => (
+                <button type="button" data-art-filter={category} aria-pressed={index === 0}>
+                  {category}
+                </button>
+              ))}
+            </div>
+            <p class="art-count" role="status">
+              {oeuvres.length} œuvre{oeuvres.length > 1 ? 's' : ''}
+            </p>
+          </div>
+          <div class="art-grid">
+            {oeuvres.map((oeuvre) => (
+              <article class="art-card" data-art-category={oeuvre.categorie}>
+                <button
+                  type="button"
+                  class="art-open"
+                  aria-haspopup="dialog"
+                  aria-controls="art-lightbox"
+                  aria-label={`Agrandir ${oeuvre.titre}`}
+                  data-image={oeuvre.image}
+                  data-alt={oeuvre.alt}
+                  data-title={oeuvre.titre}
+                  data-subtitle={oeuvre.sousTitre}
+                  data-description={oeuvre.description || ''}
+                  data-materials={JSON.stringify(oeuvre.materiel)}
+                  data-year={oeuvre.annee || ''}
+                  data-category={oeuvre.categorie}
+                >
+                  <div class="art-image">
+                    <img
+                      src={oeuvre.image}
+                      alt={oeuvre.alt}
+                      loading="lazy"
+                      width="800"
+                      height="1000"
+                    />
+                  </div>
+                  <div class="art-card-copy">
+                    <span class="art-category">
+                      {oeuvre.categorie}
+                      {oeuvre.annee && ` · ${oeuvre.annee}`}
+                    </span>
+                    <h3>{oeuvre.titre}</h3>
+                    <p>{oeuvre.sousTitre}</p>
+                    <ul class="art-materials" aria-label="Matériel utilisé">
+                      {oeuvre.materiel.map((material) => (
+                        <li>{material}</li>
+                      ))}
+                    </ul>
+                    <span class="art-card-action">Voir l’œuvre en grand</span>
+                  </div>
+                </button>
+              </article>
+            ))}
+          </div>
+        </>
+      ) : (
+        <div class="art-empty">
+          <div class="art-empty-frames" aria-hidden="true">
+            <div>
+              <span>✧</span>
+              <i>Dessin</i>
+            </div>
+            <div>
+              <span>✳</span>
+              <i>Peinture</i>
+            </div>
+            <div>
+              <span>✧</span>
+              <i>Exploration</i>
+            </div>
+          </div>
+          <h3>Les premières œuvres arrivent bientôt.</h3>
+          <p>
+            Cette galerie présentera mes dessins et mes peintures
+            <br />
+            et toutes les idées qui prennent forme.
+          </p>
+        </div>
+      )}
+    </section>
+    <PageOutro
+      lead="Design graphique et développement web"
+      heading="Consultez mes projets."
+      href="/projets"
+      label="Voir les projets"
+      variant={4}
+    />
+  </main>
+  <dialog
+    id="art-lightbox"
+    class="art-lightbox"
+    aria-labelledby="art-modal-title"
+    aria-describedby="art-modal-subtitle art-modal-description"
+  >
+    <div class="art-modal-layout">
+      <div class="art-modal-image">
+        <img alt="" />
+      </div>
+      <div class="art-modal-info">
+        <button type="button" class="art-modal-close" aria-label="Fermer l’image">
+          Fermer <span aria-hidden="true">×</span>
+        </button>
+        <p class="art-modal-category"></p>
+        <h2 id="art-modal-title"></h2>
+        <p id="art-modal-subtitle"></p>
+        <p id="art-modal-description"></p>
+        <div class="art-modal-materials">
+          <h3>Matériel utilisé</h3>
+          <ul></ul>
+        </div>
+        <p class="art-modal-hint">Échap pour fermer</p>
+      </div>
+    </div>
+  </dialog>
+  <script>
+    const dialog = document.querySelector<HTMLDialogElement>('#art-lightbox');
+    const modalImage = dialog?.querySelector<HTMLImageElement>('.art-modal-image img');
+    let trigger: HTMLButtonElement | null = null;
+    let previousOverflow = '';
+    document.querySelectorAll<HTMLButtonElement>('.art-open').forEach((button) =>
+      button.addEventListener('click', () => {
+        if (!dialog || !modalImage) return;
+        trigger = button;
+        modalImage.src = button.dataset.image || '';
+        modalImage.alt = button.dataset.alt || '';
+        dialog.querySelector('#art-modal-title')!.textContent = button.dataset.title || '';
+        dialog.querySelector('#art-modal-subtitle')!.textContent = button.dataset.subtitle || '';
+        const description = dialog.querySelector<HTMLElement>('#art-modal-description')!;
+        description.textContent = button.dataset.description || '';
+        description.hidden = !button.dataset.description;
+        dialog.querySelector('.art-modal-category')!.textContent = [
+          button.dataset.category,
+          button.dataset.year,
+        ]
+          .filter(Boolean)
+          .join(' · ');
+        const materials = dialog.querySelector('ul')!;
+        materials.replaceChildren();
+        const values: string[] = JSON.parse(button.dataset.materials || '[]');
+        values.forEach((value) => {
+          const item = document.createElement('li');
+          item.textContent = value;
+          materials.appendChild(item);
+        });
+        (dialog.querySelector('.art-modal-materials') as HTMLElement).hidden = values.length === 0;
+        previousOverflow = document.documentElement.style.overflow;
+        dialog.showModal();
+        document.documentElement.style.overflow = 'hidden';
+        dialog.querySelector<HTMLButtonElement>('.art-modal-close')?.focus();
+      }),
+    );
+    dialog?.querySelector('.art-modal-close')?.addEventListener('click', () => dialog.close());
+    dialog?.addEventListener('click', (event) => {
+      if (event.target === dialog) {
+        const rect = dialog.getBoundingClientRect();
+        if (
+          event.clientX < rect.left ||
+          event.clientX > rect.right ||
+          event.clientY < rect.top ||
+          event.clientY > rect.bottom
+        )
+          dialog.close();
+      }
+    });
+    dialog?.addEventListener('close', () => {
+      document.documentElement.style.overflow = previousOverflow;
+      modalImage?.removeAttribute('src');
+      trigger?.focus();
+    });
+    const filters = document.querySelectorAll<HTMLButtonElement>('[data-art-filter]');
+    filters.forEach((button) =>
+      button.addEventListener('click', () => {
+        let count = 0;
+        document.querySelectorAll<HTMLElement>('.art-card').forEach((card) => {
+          card.hidden =
+            button.dataset.artFilter !== 'Toutes' &&
+            card.dataset.artCategory !== button.dataset.artFilter;
+          if (!card.hidden) count++;
+        });
+        filters.forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
+        const counter = document.querySelector('.art-count');
+        if (counter) counter.textContent = `${count} œuvre${count > 1 ? 's' : ''}`;
+      }),
+    );
+  </script>
+</Layout>
+
+<style>
+  .art-page {
+    overflow: clip;
+    background: radial-gradient(ellipse 70% 35% at 100% 0%, #713eaa35, transparent 80%);
+  }
+  .art-heading {
+    position: relative;
+    padding-top: 140px;
+    padding-bottom: 60px;
+  }
+  .art-breadcrumb {
+    display: inline-flex;
+    gap: 12px;
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 36px;
+  }
+  .art-breadcrumb span {
+    color: var(--purple);
+  }
+  .art-heading .eyebrow {
+    color: var(--blue);
+    font-size: 9px;
+  }
+  .art-heading h1 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(80px, 8vw, 120px);
+    line-height: 0.88;
+    letter-spacing: -0.025em;
+    margin-bottom: 30px;
+  }
+  .art-heading h1 > span {
+    color: var(--pink);
+  }
+  .art-introduction {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--muted);
+    margin: 0;
+  }
+  .art-heading-star {
+    position: absolute;
+    width: 140px;
+    right: 9%;
+    top: 45%;
+    color: var(--purple);
+    font-size: 100px;
+    animation: fairy-float 8s ease-in-out infinite;
+  }
+  .moon-companion {
+    position: absolute;
+    display: block;
+    line-height: 0;
+    pointer-events: none;
+  }
+  .moon-companion-blue {
+    width: 32px;
+    left: -38px;
+    top: 24%;
+    rotate: -18deg;
+  }
+  .moon-companion-violet {
+    width: 23px;
+    right: -25px;
+    top: -14px;
+    rotate: 16deg;
+  }
+  .moon-companion-pink {
+    width: 18px;
+    right: -30px;
+    bottom: 8%;
+    rotate: -10deg;
+  }
+  .art-star-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 17px;
+    padding-block: 8px 28px;
+  }
+  .divider-line {
+    width: min(18vw, 180px);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line));
+  }
+  .divider-line:last-child {
+    rotate: 180deg;
+  }
+  .art-gallery {
+    padding-block: 20px 50px;
+  }
+  .art-gallery-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  .art-gallery-heading h2 {
+    font-size: 30px;
+  }
+  .art-gallery-heading .handwritten {
+    color: var(--purple);
+  }
+  .art-gallery-heading > p {
+    font-size: 11px;
+    color: var(--muted);
+    margin: 0;
+  }
+  .art-toolbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+  }
+  .art-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .art-filters button {
+    font:
+      500 11px 'DM Sans',
+      sans-serif;
+    min-height: 42px;
+    padding: 10px 18px;
+    border: 1px solid var(--line);
+    border-radius: 25px;
+    background: none;
+    color: var(--muted);
+  }
+  .art-filters button[aria-pressed='true'] {
+    background: var(--pink);
+    border-color: var(--pink);
+    color: var(--bg);
+  }
+  .art-count {
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+    margin: 0;
+  }
+  .art-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 38px 28px;
+  }
+  .art-card {
+    min-width: 0;
+    --art-accent: var(--purple);
+    --art-wash: #402347;
+    border: 1px solid color-mix(in srgb, var(--art-accent) 65%, transparent);
+    border-radius: 15px;
+    overflow: hidden;
+    background: linear-gradient(155deg, var(--art-wash), var(--bg) 85%);
+    box-shadow: 0 8px 26px #10030b26;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+  .art-card:nth-child(3n + 2) {
+    --art-accent: var(--blue);
+    --art-wash: #263040;
+  }
+  .art-card:nth-child(3n + 3) {
+    --art-accent: var(--pink);
+    --art-wash: #4b2035;
+  }
+  .art-card:focus-within {
+    outline: 2px solid var(--blue);
+    outline-offset: 4px;
+  }
+  .art-card[hidden] {
+    display: none;
+  }
+  .art-open {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 100%;
+    height: 100%;
+    background: none;
+    color: inherit;
+    font: inherit;
+    border: 0;
+    padding: 0;
+  }
+  .art-image {
+    position: relative;
+    width: 100%;
+    flex: none;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    background: #f5eee7;
+    padding: 15px;
+  }
+  .art-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.6s;
+  }
+  .art-card:nth-child(3n + 2) .art-image {
+    border-color: #8bcbed55;
+  }
+  .art-card:nth-child(3n + 3) .art-image {
+    border-color: #eba7bf55;
+  }
+  .art-open:hover .art-image img {
+    transform: scale(1.035);
+  }
+  .art-open:focus-visible,
+  .art-filters button:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 5px;
+    border-radius: 10px;
+  }
+  .art-card-copy {
+    padding: 23px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+  }
+  .art-category {
+    font-size: 9px;
+    color: var(--art-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .art-card-copy h3 {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1;
+    margin: 12px 0;
+    color: var(--pink);
+  }
+  .art-card-copy p {
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 13px;
+  }
+  .art-materials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 23px;
+    font-size: 10px;
+    line-height: 1.7;
+    color: var(--blue);
+  }
+  .art-materials li {
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 5px 8px;
+  }
+  .art-card-action {
+    display: block;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    color: var(--art-accent);
+  }
+  .art-open:focus-visible {
+    outline-offset: -4px;
+  }
+  :global(html[data-theme='light']) .art-card {
+    --art-wash: #e9def1;
+    box-shadow: 0 8px 26px #54355c12;
+  }
+  :global(html[data-theme='light']) .art-card:nth-child(3n + 2) {
+    --art-wash: #dfedf2;
+  }
+  :global(html[data-theme='light']) .art-card:nth-child(3n + 3) {
+    --art-wash: #f1dfe8;
+  }
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .art-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px #10030b40;
+    }
+  }
+  :global(html[data-motion='off']) .art-card:hover {
+    transform: none;
+  }
+  .art-empty {
+    padding-top: 10px;
+    text-align: center;
+  }
+  .art-empty-frames {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 38px;
+  }
+  .art-empty-frames > div {
+    aspect-ratio: 4/4.5;
+    border: 1px solid #b997ed44;
+    border-radius: 80px 80px 10px 10px;
+    background: radial-gradient(ellipse, #b997ed14, transparent 70%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--purple);
+  }
+  .art-empty-frames > div:nth-child(2) {
+    border-color: #eba7bf44;
+    color: var(--pink);
+    border-radius: 10px;
+    background: #eba7bf08;
+  }
+  .art-empty-frames > div:nth-child(3) {
+    border-color: #8bcbed44;
+    color: var(--blue);
+  }
+  .art-empty-frames span {
+    font-size: 80px;
+    opacity: 0.65;
+  }
+  .art-empty-frames i {
+    font-family: var(--font-display);
+    font-style: normal;
+    font-size: 32px;
+    margin-top: 15px;
+  }
+  .art-empty h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+  }
+  .art-empty > p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.9;
+  }
+  .art-lightbox {
+    width: min(1160px, calc(100% - 56px));
+    max-height: 90vh;
+    max-height: 90dvh;
+    padding: 0;
+    border: 1px solid #b997ed70;
+    border-radius: 15px;
+    background: var(--bg);
+    color: var(--ink);
+    overflow: auto;
+  }
+  .art-lightbox::backdrop {
+    background: #100512dc;
+    backdrop-filter: blur(10px);
+  }
+  .art-modal-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    min-height: 400px;
+  }
+  .art-modal-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    background: #0002;
+    padding: 24px;
+  }
+  .art-modal-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: calc(90dvh - 50px);
+    object-fit: contain;
+  }
+  .art-modal-info {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+  .art-modal-close {
+    align-self: flex-end;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    min-height: 44px;
+    padding: 0;
+    background: none;
+    border: 0;
+    color: var(--muted);
+    font:
+      400 11px 'DM Sans',
+      sans-serif;
+    margin-bottom: 35px;
+  }
+  .art-modal-close span {
+    font-size: 25px;
+    color: var(--pink);
+  }
+  .art-modal-close:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 5px;
+  }
+  .art-modal-category {
+    font-size: 9px;
+    color: var(--purple);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 1.8;
+  }
+  .art-modal-info h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 46px;
+    line-height: 1;
+    color: var(--pink);
+    overflow-wrap: anywhere;
+    margin: 12px 0 20px;
+  }
+  #art-modal-subtitle,
+  #art-modal-description {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+  #art-modal-description {
+    white-space: pre-line;
+  }
+  .art-modal-materials {
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+    margin-top: 15px;
+    width: 100%;
+  }
+  .art-modal-materials h3 {
+    font-size: 11px;
+    color: var(--blue);
+    font-weight: 500;
+  }
+  .art-modal-materials ul {
+    list-style: none;
+    margin: 15px 0 0;
+    padding: 0;
+  }
+  .art-modal-materials li {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.8;
+    padding-block: 4px;
+  }
+  .art-modal-hint {
+    font-size: 9px;
+    color: var(--muted);
+    margin: 35px 0 0;
+  }
+  @media (max-width: 900px) {
+    .art-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .art-modal-layout {
+      grid-template-columns: 1fr 260px;
+    }
+  }
+  @media (max-width: 700px) {
+    .art-heading {
+      padding-top: 105px;
+      padding-bottom: 35px;
+    }
+    .art-heading h1 {
+      font-size: clamp(66px, 17vw, 98px);
+    }
+    .art-heading .eyebrow {
+      font-size: 8px;
+      letter-spacing: 0.1em;
+      line-height: 1.7;
+    }
+    .art-introduction {
+      font-size: 13px;
+    }
+    .art-introduction br {
+      display: none;
+    }
+    .art-heading-star {
+      width: 52px;
+      font-size: 35px;
+      right: 0;
+      top: 25%;
+    }
+    .moon-companion-blue {
+      width: 18px;
+      left: -23px;
+      top: 18%;
+    }
+    .moon-companion-violet {
+      width: 14px;
+      right: -11px;
+      top: -12px;
+    }
+    .moon-companion-pink {
+      width: 11px;
+      right: -12px;
+      bottom: -4px;
+    }
+    .art-star-divider {
+      gap: 12px;
+      padding-block: 2px 21px;
+    }
+    .art-gallery-heading {
+      align-items: start;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .art-gallery-heading h2 {
+      font-size: 29px;
+    }
+    .art-toolbar {
+      align-items: start;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .art-grid {
+      gap: 27px 14px;
+    }
+    .art-card-copy {
+      padding: 18px;
+    }
+    .art-card-copy h3 {
+      font-size: 29px;
+    }
+    .art-card-copy p {
+      font-size: 11px;
+    }
+    .art-category {
+      font-size: 8px;
+    }
+    .art-materials {
+      font-size: 9px;
+    }
+    .art-empty-frames {
+      gap: 10px;
+    }
+    .art-empty-frames span {
+      font-size: 40px;
+    }
+    .art-empty-frames i {
+      font-size: 22px;
+    }
+    .art-empty-frames > div {
+      border-radius: 40px 40px 7px 7px;
+      aspect-ratio: 1/1.6;
+    }
+    .art-empty h3 {
+      font-size: 17px;
+    }
+    .art-empty > p {
+      font-size: 12px;
+    }
+    .art-lightbox {
+      width: calc(100% - 24px);
+      max-height: 94dvh;
+      border-radius: 12px;
+    }
+    .art-modal-layout {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .art-modal-image {
+      padding: 52px 12px 12px;
+    }
+    .art-modal-image img {
+      max-height: 55dvh;
+    }
+    .art-modal-info {
+      padding: 23px;
+    }
+    .art-modal-close {
+      position: absolute;
+      right: 18px;
+      top: 5px;
+      background: var(--bg);
+      padding: 0 8px;
+      margin: 0;
+    }
+    .art-modal-info h2 {
+      font-size: 38px;
+      margin-block: 8px 15px;
+    }
+    #art-modal-description {
+      white-space: pre-line;
+    }
+    .art-modal-materials {
+      padding-top: 17px;
+      margin-top: 7px;
+    }
+    .art-modal-hint {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .art-open:hover .art-image img {
+      transform: none;
+    }
+  }
+  :global(html[data-motion='off']) .art-open:hover .art-image img {
+    transform: none;
+  }
+  @media (max-width: 600px) {
+    .art-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 25px;
+    }
+    .art-card-copy {
+      padding: 23px;
+    }
+    .art-card-copy h3 {
+      font-size: 39px;
+    }
+    .art-card-copy p {
+      font-size: 13px;
+    }
+    .art-materials {
+      font-size: 10px;
+    }
+    .art-category {
+      font-size: 9px;
+    }
+  }
+</style>

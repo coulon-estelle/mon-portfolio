@@ -1,0 +1,200 @@
+---
+import { Image } from 'astro:assets';
+import fairyOne from '../../public/images/illustrations/fees/fee-1.png';
+import fairyTwo from '../../public/images/illustrations/fees/fee-2.png';
+import fairyThree from '../../public/images/illustrations/fees/fee-3.png';
+import fairyFour from '../../public/images/illustrations/fees/fee-4.png';
+
+interface Props {
+  variant?: 1 | 2 | 3 | 4;
+  width?: number;
+  eager?: boolean;
+  alt?: string;
+  class?: string;
+}
+const { variant = 1, width = 320, eager = false, alt = '', class: className } = Astro.props;
+const drawings = { 1: fairyOne, 2: fairyTwo, 3: fairyThree, 4: fairyFour };
+---
+
+<button
+  type="button"
+  class:list={['fairy-illustration', className]}
+  aria-label={
+    alt ? `${alt} — faire tomber des étoiles` : 'Animer la fée et faire tomber des étoiles'
+  }
+  data-fairy
+  disabled
+>
+  <Image
+    src={drawings[variant]}
+    alt=""
+    width={width}
+    widths={[160, 320, 640, 960]}
+    sizes={`(max-width: 700px) ${Math.min(width, 280)}px, ${width}px`}
+    format="webp"
+    quality={85}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding="async"
+  />
+</button>
+
+<script>
+  const fairies = document.querySelectorAll<HTMLButtonElement>('[data-fairy]');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const animations = new Set<Animation>();
+  const shaking = new WeakSet<HTMLButtonElement>();
+  const layer = document.createElement('div');
+  layer.className = 'fairy-burst-layer';
+  layer.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(layer);
+  const allowed = () => !reducedMotion.matches && document.documentElement.dataset.motion !== 'off';
+  const clear = () => {
+    animations.forEach((animation) => animation.cancel());
+    animations.clear();
+    layer.replaceChildren();
+    fairies.forEach((fairy) => shaking.delete(fairy));
+  };
+  const sync = () => {
+    fairies.forEach((fairy) => {
+      fairy.disabled = !allowed();
+    });
+    if (!allowed()) clear();
+  };
+  const track = (animation: Animation, done: () => void) => {
+    animations.add(animation);
+    const finish = () => {
+      animations.delete(animation);
+      done();
+    };
+    animation.onfinish = finish;
+    animation.oncancel = finish;
+  };
+  fairies.forEach((fairy) =>
+    fairy.addEventListener('click', () => {
+      if (!allowed() || shaking.has(fairy) || layer.childElementCount >= 72) return;
+      const image = fairy.querySelector('img');
+      if (!image) return;
+      shaking.add(fairy);
+      track(
+        image.animate(
+          [
+            { transform: 'translateX(0) rotate(0deg)' },
+            { transform: 'translateX(-4px) rotate(-7deg)' },
+            { transform: 'translateX(4px) rotate(6deg)' },
+            { transform: 'translateX(-3px) rotate(-5deg)' },
+            { transform: 'translateX(2px) rotate(3deg)' },
+            { transform: 'translateX(0) rotate(0deg)' },
+          ],
+          { duration: 480, easing: 'ease-in-out' },
+        ),
+        () => shaking.delete(fairy),
+      );
+      const bounds = fairy.getBoundingClientRect();
+      const colors = ['var(--pink)', 'var(--blue)', 'var(--purple)'];
+      for (let index = 0; index < 18; index++) {
+        const star = document.createElement('span');
+        star.className = 'fairy-burst-star';
+        star.style.color = colors[index % colors.length];
+        star.style.left = `${bounds.left + bounds.width * (0.35 + Math.random() * 0.3)}px`;
+        star.style.top = `${bounds.top + bounds.height * (0.35 + Math.random() * 0.25)}px`;
+        const size = 5 + Math.random() * 7;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        layer.appendChild(star);
+        const drift = (Math.random() - 0.5) * 140;
+        const fall = 65 + Math.random() * 110;
+        track(
+          star.animate(
+            [
+              { transform: 'translate(-50%, -50%) scale(.3) rotate(0deg)', opacity: 0 },
+              {
+                transform: `translate(${drift * 0.15}px, -7px) scale(1) rotate(30deg)`,
+                opacity: 1,
+                offset: 0.15,
+              },
+              {
+                transform: `translate(${drift * 0.7}px, ${fall * 0.55}px) scale(.8) rotate(130deg)`,
+                opacity: 0.8,
+                offset: 0.65,
+              },
+              {
+                transform: `translate(${drift}px, ${fall}px) scale(.15) rotate(220deg)`,
+                opacity: 0,
+              },
+            ],
+            {
+              duration: 850 + Math.random() * 400,
+              delay: index * 8,
+              easing: 'ease-in',
+              fill: 'both',
+            },
+          ),
+          () => star.remove(),
+        );
+      }
+    }),
+  );
+  sync();
+  window.addEventListener('portfolio-preferences', sync);
+  reducedMotion.addEventListener('change', sync);
+  window.addEventListener('blur', clear);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) clear();
+  });
+</script>
+
+<style>
+  .fairy-illustration {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    appearance: none;
+    color: inherit;
+    text-align: inherit;
+    line-height: 0;
+    user-select: none;
+    filter: drop-shadow(0 8px 20px #17051d25);
+  }
+  .fairy-illustration:disabled {
+    opacity: 1;
+  }
+  .fairy-illustration:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 8px;
+    border-radius: 16px;
+  }
+  :global(.fairy-burst-layer) {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 100;
+  }
+  :global(.fairy-burst-star) {
+    position: absolute;
+    background: currentColor;
+    pointer-events: none;
+    clip-path: polygon(
+      50% 0%,
+      61% 35%,
+      98% 35%,
+      68% 57%,
+      79% 94%,
+      50% 72%,
+      21% 94%,
+      32% 57%,
+      2% 35%,
+      39% 35%
+    );
+  }
+  .fairy-illustration :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: inherit;
+    object-fit: contain;
+    animation: fairy-float 9s ease-in-out infinite;
+  }
+</style>

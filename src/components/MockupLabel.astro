@@ -1,0 +1,19 @@
+---
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+---
+
+<span class="mockup-label">
+  <span>{text}</span>
+  <svg viewBox="0 0 160 100" fill="none" aria-hidden="true">
+    <path
+      d="M12 8 C20 67 77 75 144 63 M122 42 Q133 56 147 63 Q132 70 119 88"
+      stroke="currentColor"
+      stroke-width="3.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</span>

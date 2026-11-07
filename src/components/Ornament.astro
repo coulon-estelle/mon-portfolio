@@ -1,0 +1,57 @@
+---
+import { Image } from 'astro:assets';
+import pinkMoon from '../../public/images/illustrations/lunes/lune-rose.png';
+import blueMoon from '../../public/images/illustrations/lunes/lune-bleue.png';
+import pinkStar from '../../public/images/illustrations/etoiles/etoile-rose.png';
+import blueStar from '../../public/images/illustrations/etoiles/etoile-bleue.png';
+import violetStar from '../../public/images/illustrations/etoiles/etoile-violette.png';
+
+interface Props {
+  kind?: 'moon-pink' | 'moon-blue' | 'star-pink' | 'star-blue' | 'star-violet';
+  width?: number;
+  eager?: boolean;
+}
+const { kind = 'star-pink', width = 48, eager = false } = Astro.props;
+const drawings = {
+  'moon-pink': pinkMoon,
+  'moon-blue': blueMoon,
+  'star-pink': pinkStar,
+  'star-blue': blueStar,
+  'star-violet': violetStar,
+};
+---
+
+<span class="drawn-ornament" aria-hidden="true" style={`--ornament-width:${width}px`}>
+  <Image
+    src={drawings[kind]}
+    alt=""
+    width={width}
+    widths={[width, width * 2]}
+    sizes={`${width}px`}
+    format="webp"
+    quality={85}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding="async"
+  />
+</span>
+<style>
+  .drawn-ornament {
+    display: inline-block;
+    width: var(--ornament-width);
+    max-width: 100%;
+    vertical-align: middle;
+    line-height: 0;
+    pointer-events: none;
+    user-select: none;
+  }
+  .drawn-ornament :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px #16062222);
+  }
+  :global(html[data-theme='light']) .drawn-ornament :global(img) {
+    filter: brightness(0.76) saturate(1.12);
+  }
+</style>

@@ -1,0 +1,326 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectImage from '../../components/ProjectImage.astro';
+import MockupLabel from '../../components/MockupLabel.astro';
+import PageOutro from '../../components/PageOutro.astro';
+import { projectAssets } from '../../data/project-assets';
+const assets = projectAssets.bordeaux;
+const websiteUrl = 'https://bordeaux-surchauffe.netlify.app/';
+const steps = [
+  {
+    title: 'Le sujet',
+    text: 'Comprendre où il fait le plus chaud et quels habitants sont les plus exposés.',
+  },
+  {
+    title: 'Les données',
+    text: 'Comparer le climat, les îlots de chaleur et la population avec des cartes et des graphiques.',
+  },
+  {
+    title: 'Le site',
+    text: 'Permettre à chacun de choisir sa commune et de consulter les sources utilisées.',
+  },
+];
+---
+
+<Layout
+  title="Bordeaux Surchauffe — Datavisualisation | Estelle Coulon"
+  description="Bordeaux Surchauffe : un projet en binôme pour comprendre la chaleur et l’exposition des habitants de Bordeaux Métropole grâce aux données ouvertes."
+>
+  <main id="contenu" class="bordeaux-case">
+    <section class="bordeaux-hero container" aria-labelledby="bordeaux-title">
+      <a class="case-back" href="/projets">
+        Tous les projets <span aria-hidden="true">/</span> Bordeaux Surchauffe
+      </a>
+      <div class="bordeaux-intro">
+        <div>
+          <p class="eyebrow">Datavisualisation — Développement web — 2026</p>
+          <h1 id="bordeaux-title">
+            Bordeaux <span class="handwritten">Surchauffe.</span>
+          </h1>
+          <p class="bordeaux-lead">
+            Comprendre la chaleur, <br />à l’échelle de sa commune.
+          </p>
+          <ul class="bordeaux-tags" aria-label="Cadre du projet">
+            <li>Projet en binôme</li>
+            <li>SAÉ 303 · BUT MMI</li>
+            <li>Open Data University</li>
+          </ul>
+        </div>
+        <div class="bordeaux-logo">
+          <ProjectImage
+            src={assets.logo}
+            alt="Logo Bordeaux Surchauffe : silhouette de la ville, flammes et fleuve"
+            width={290}
+            eager
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="bordeaux-context container" aria-label="Présentation du projet">
+      <div>
+        <p class="eyebrow">Contexte & commande</p>
+        <h2>
+          Le <span class="handwritten">projet.</span>
+        </h2>
+        <p>
+          Avec Lina Ben Mabrouk, nous avons créé ce site pour un défi de l’Open Data University en
+          BUT MMI. Nous avons choisi de travailler sur la chaleur à Bordeaux Métropole et ses effets
+          sur les habitants.
+        </p>
+      </div>
+      <div>
+        <p class="eyebrow">Notre objectif</p>
+        <h2>
+          Pour les <span class="handwritten">habitants.</span>
+        </h2>
+        <p>
+          Le site permet de comparer les 28 communes pour mieux comprendre son exposition à la
+          chaleur. Nous avons utilisé des données publiques, notamment celles de Météo-France, de
+          Bordeaux Métropole et de l’INSEE.
+        </p>
+      </div>
+    </section>
+
+    <section class="bordeaux-process container" aria-labelledby="bordeaux-process-title">
+      <p class="eyebrow">La démarche</p>
+      <h2 id="bordeaux-process-title">
+        Les grandes <span class="handwritten">étapes.</span>
+      </h2>
+      <ol class="bordeaux-steps">
+        {steps.map((step, index) => (
+          <li>
+            <span class="step-number">0{index + 1}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="bordeaux-context container" aria-label="Choix graphiques et résultat">
+      <div>
+        <p class="eyebrow">Design & lecture</p>
+        <h2>
+          Les choix <span class="handwritten">graphiques.</span>
+        </h2>
+        <p>
+          L’orange et le rouge rappellent la chaleur, le bleu fait référence à la Garonne. Le logo
+          reprend ces couleurs autour d’une silhouette de Bordeaux.
+        </p>
+      </div>
+      <div>
+        <p class="eyebrow">Résultat</p>
+        <h2>
+          Le <span class="handwritten">résultat.</span>
+        </h2>
+        <p>
+          Un site développé avec Astro et publié sur Netlify, avec des cartes, des graphiques et une
+          comparaison par commune. La page Méthode explique les sources et les calculs.
+        </p>
+      </div>
+    </section>
+
+    <section
+      class="case-previews bordeaux-previews container"
+      aria-labelledby="bordeaux-preview-title"
+    >
+      <p class="eyebrow">Le site en ligne</p>
+      <h2 id="bordeaux-preview-title">
+        À vous <span class="handwritten">d’explorer.</span>
+      </h2>
+      <a
+        class="project-preview-link bordeaux-mockup"
+        href={websiteUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Découvrir le site Bordeaux Surchauffe (nouvel onglet)"
+      >
+        <MockupLabel text="Découvrir le site Bordeaux Surchauffe" />
+        <ProjectImage
+          src={assets.mockup}
+          alt="Le site Bordeaux Surchauffe présenté sur un téléphone"
+          width={850}
+        />
+      </a>
+    </section>
+    <PageOutro
+      lead="Autres études de cas"
+      heading="Découvrez les autres projets."
+      href="/projets"
+      label="Retour à la galerie"
+      variant={3}
+    />
+  </main>
+</Layout>
+
+<style>
+  .bordeaux-case {
+    overflow: clip;
+    --heat: #efb074;
+    background: radial-gradient(ellipse 75% 35% at 100% 0, #a650282e, transparent 80%);
+  }
+  .bordeaux-hero {
+    padding-top: 145px;
+    padding-bottom: 65px;
+  }
+  .case-back {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .case-back span {
+    margin-inline: 12px;
+    color: var(--heat);
+  }
+  .bordeaux-intro {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    align-items: center;
+    gap: 60px;
+    margin-top: 55px;
+  }
+  .bordeaux-intro h1 {
+    font-size: clamp(42px, 5vw, 72px);
+    line-height: 1.1;
+    margin: 24px 0;
+  }
+  .bordeaux-intro h1 span {
+    display: block;
+    color: var(--heat);
+    font-size: 1.4em;
+    font-weight: 400;
+  }
+  .bordeaux-lead {
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 19px;
+  }
+  .bordeaux-logo {
+    width: min(290px, 85%);
+    justify-self: center;
+  }
+  .bordeaux-logo :global(img) {
+    width: 100%;
+    height: auto;
+  }
+  .bordeaux-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin-top: 25px;
+  }
+  .bordeaux-tags li {
+    font-size: 12px;
+    padding: 8px 12px;
+    border: 1px solid #c9927550;
+    border-radius: 25px;
+    color: var(--muted);
+  }
+  .bordeaux-context {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 65px;
+    padding-block: 50px;
+  }
+  h2 {
+    font-size: clamp(28px, 3vw, 39px);
+    line-height: 1.2;
+    margin: 16px 0 25px;
+  }
+  h2 .handwritten {
+    color: var(--heat);
+    font-size: 1.3em;
+    font-weight: 400;
+  }
+  .bordeaux-context p:not(.eyebrow),
+  .bordeaux-steps p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+  .bordeaux-process {
+    padding-block: 55px;
+  }
+  .bordeaux-steps {
+    list-style: none;
+    padding: 0;
+    margin: 35px 0 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .bordeaux-steps li {
+    border: 1px solid #c9927550;
+    border-radius: 14px;
+    padding: 25px;
+    background: #8c42300b;
+  }
+  .step-number {
+    font-family: 'Just Me Again Down Here', cursive;
+    font-size: 40px;
+    color: var(--heat);
+  }
+  .bordeaux-steps h3 {
+    font-size: 19px;
+    margin: 8px 0 14px;
+  }
+  .bordeaux-previews {
+    padding-block: 65px 90px;
+  }
+  .bordeaux-previews .bordeaux-mockup {
+    max-width: 900px;
+    margin: 45px auto 0;
+    grid-template-columns: minmax(100px, 1fr) minmax(0, 3fr);
+    color: var(--heat);
+  }
+  .bordeaux-mockup :global(img) {
+    width: 100%;
+    height: auto;
+    max-height: 660px;
+    object-fit: contain;
+  }
+  :global(html[data-theme='light']) .bordeaux-case {
+    --heat: #8a421c;
+  }
+  @media (max-width: 700px) {
+    .bordeaux-hero {
+      padding-top: 115px;
+      padding-bottom: 20px;
+    }
+    .bordeaux-intro {
+      grid-template-columns: 1fr;
+      gap: 30px;
+      margin-top: 30px;
+    }
+    .bordeaux-logo {
+      width: 150px;
+    }
+    .bordeaux-intro h1 {
+      font-size: 40px;
+    }
+    .bordeaux-lead {
+      font-size: 17px;
+    }
+    .bordeaux-context {
+      grid-template-columns: 1fr;
+      gap: 30px;
+      padding-block: 30px;
+    }
+    .bordeaux-process {
+      padding-block: 30px;
+    }
+    .bordeaux-steps {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .bordeaux-previews {
+      padding-block: 30px 55px;
+    }
+    .bordeaux-previews .bordeaux-mockup {
+      grid-template-columns: minmax(85px, 1fr) minmax(0, 2fr);
+    }
+  }
+</style>

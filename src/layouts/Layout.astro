@@ -1,20 +1,51 @@
-﻿---
+---
 import '../styles/global.css';
+import '../styles/project-assets.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Cursor from '../components/Cursor.astro';
 import FairyEffects from '../components/FairyEffects.astro';
-interface Props { title: string; description?: string; }
-const { title, description = 'Estelle Coulon, étudiante en design graphique. Identité visuelle, UI/UX et web design : découvrez mon univers et mes projets.' } = Astro.props;
+import { site } from '../data/site';
+import { getImage } from 'astro:assets';
+import faviconStar from '../../public/images/illustrations/etoiles/etoile-rose.png';
+const favicon = await getImage({
+  src: faviconStar,
+  width: 48,
+  height: 48,
+  fit: 'contain',
+  format: 'png',
+});
+interface Props {
+  title: string;
+  description?: string;
+  noindex?: boolean;
+}
+const {
+  title,
+  description = 'Estelle Coulon, étudiante en design graphique. Identité visuelle, UI/UX et web design : découvrez mon univers et mes projets.',
+  noindex = false,
+} = Astro.props;
+const canonical = site.url ? new URL(Astro.url.pathname, site.url).href : undefined;
 ---
+
 <!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <link rel="icon" type="image/png" sizes="48x48" href={favicon.src} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Estelle Coulon — Portfolio" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
     <meta name="theme-color" content="#25070e" />
     <script is:inline>
+      document.documentElement.dataset.js = 'true';
       try {
         const theme = localStorage.getItem('portfolio-theme');
         const motion = localStorage.getItem('portfolio-motion');
@@ -27,7 +58,9 @@ const { title, description = 'Estelle Coulon, étudiante en design graphique. Id
   <body>
     <Cursor />
     <FairyEffects />
-    <a class="skip-link" href="#contenu">Aller au contenu</a>
+    <a class="skip-link" href="#contenu">
+      Aller au contenu
+    </a>
     <Header />
     <slot />
     <Footer />

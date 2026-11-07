@@ -1,0 +1,188 @@
+﻿---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../data/site';
+---
+
+<Layout
+  title="Mentions légales & confidentialité — Estelle Coulon"
+  description="Informations sur l’édition du portfolio, son hébergement, les droits des créations et les données personnelles."
+>
+  <main id="contenu" class="legal-page container">
+    <p class="eyebrow">Informations du site</p>
+    <h1>
+      Mentions légales
+      <br />
+      <span class="handwritten">& confidentialité.</span>
+    </h1>
+    <section>
+      <h2>Édition du site</h2>
+      <p>
+        Ce portfolio personnel et pédagogique est édité par Estelle Coulon, responsable de sa
+        publication.
+      </p>
+      <p>
+        Contact : <a href={`mailto:${site.email}`}>{site.email}</a>. Téléphone :{' '}
+        <a href={`tel:${site.phoneHref}`}>{site.phone}</a>.
+      </p>
+    </section>
+    <section>
+      <h2>Hébergement</h2>
+      {site.host.name && site.host.address ? (
+        <p>
+          {site.host.name}
+          <br />
+          {site.host.address}
+          <br />
+          {site.host.phone && (
+            <>
+              Téléphone : {site.host.phone}
+              <br />
+            </>
+          )}
+          <a href="https://www.netlify.com/contact/">Contacter Netlify</a>
+        </p>
+      ) : (
+        <p>
+          Les coordonnées complètes de l’hébergeur seront renseignées avant la publication du
+          portfolio.
+        </p>
+      )}
+    </section>
+    <section>
+      <h2>Créations et crédits</h2>
+      <p>
+        Les études de cas précisent le contexte collectif des projets et mon rôle personnel. La
+        présence d’un projet sur ce site ne signifie pas que j’ai réalisé seule tous ses éléments.
+        Les marques, textes et contributions de tiers restent la propriété de leurs auteurs
+        respectifs.
+      </p>
+      <p>
+        Pour réutiliser une création personnelle présentée dans l’atelier ou un élément de ce
+        portfolio, contactez-moi afin de convenir des autorisations nécessaires.
+      </p>
+      <p>
+        Les typographies DM Sans, Space Grotesk et Just Me Again Down Here sont distribuées sous
+        licence SIL Open Font License. Les crédits des visuels seront complétés lors de leur
+        intégration.
+      </p>
+    </section>
+    <section>
+      <h2>Contact et données personnelles</h2>
+      <p>
+        Le formulaire de contact est traité par Netlify Forms. Le nom, l’adresse e-mail, les
+        catégories choisies et le message sont transmis à Netlify puis consultés par Estelle Coulon
+        pour répondre à votre demande. Vous pouvez aussi écrire directement par e-mail.
+      </p>
+      <p>
+        Les informations que vous transmettez sont utilisées pour vous répondre et échanger au sujet
+        de votre demande, sur la base de mon intérêt légitime à traiter les prises de contact.
+        Netlify est un prestataire situé aux États-Unis ; ses conditions de traitement et de
+        transfert sont décrites dans sa{' '}
+        <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener noreferrer">
+          politique de confidentialité<span class="sr-only"> (nouvel onglet)</span>
+        </a>
+        . Pour une demande sans suite, ces échanges sont conservés au maximum douze mois après le
+        dernier contact, sauf obligation légale particulière.
+      </p>
+      <p>
+        Vous pouvez demander l’accès, la rectification ou l’effacement de vos données, ou vous
+        opposer à leur traitement en écrivant à <a href={`mailto:${site.email}`}>{site.email}</a>.
+        Vous pouvez également adresser une réclamation à la{' '}
+        <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener noreferrer">
+          CNIL<span class="sr-only"> (nouvel onglet)</span>
+        </a>
+        .
+      </p>
+    </section>
+    <section>
+      <h2>Préférences et navigation</h2>
+      <p>
+        Deux préférences sont enregistrées uniquement dans votre navigateur : le thème clair ou
+        sombre (<code>portfolio-theme</code>) et l’activation des animations (
+        <code>portfolio-motion</code>). Elles servent à conserver les choix effectués dans le header
+        et ne sont pas utilisées pour vous suivre.
+      </p>
+      <p>
+        Ce site n’intègre pas de publicité ni d’outil de mesure d’audience. L’hébergeur peut traiter
+        des journaux techniques de connexion pour assurer le fonctionnement et la sécurité de son
+        service ; ses coordonnées figurent dans la rubrique hébergement.
+      </p>
+      <button class="button button-primary" type="button" data-reset-preferences>
+        Effacer mes préférences
+      </button>
+      <p role="status" data-reset-status></p>
+    </section>
+  </main>
+</Layout>
+<script>
+  document.querySelector('[data-reset-preferences]')?.addEventListener('click', () => {
+    try {
+      localStorage.removeItem('portfolio-theme');
+      localStorage.removeItem('portfolio-motion');
+    } catch {}
+    delete document.documentElement.dataset.theme;
+    delete document.documentElement.dataset.motion;
+    window.dispatchEvent(new Event('portfolio-preferences'));
+    const status = document.querySelector('[data-reset-status]');
+    if (status) status.textContent = 'Vos préférences ont été effacées dans ce navigateur.';
+  });
+</script>
+<style>
+  .legal-page {
+    padding-top: 145px;
+    padding-bottom: 70px;
+    max-width: 850px;
+  }
+  .legal-page > .eyebrow {
+    color: var(--blue);
+  }
+  .legal-page h1 {
+    font-size: 48px;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    margin-bottom: 50px;
+  }
+  .legal-page h1 span {
+    font-size: 1.3em;
+    color: var(--pink);
+  }
+  .legal-page section {
+    margin-bottom: 36px;
+  }
+  .legal-page h2 {
+    font-size: 25px;
+    margin-bottom: 18px;
+  }
+  .legal-page p {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--muted);
+  }
+  .legal-page a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    color: var(--blue);
+  }
+  .legal-page code {
+    overflow-wrap: anywhere;
+  }
+  .legal-page [role='status'] {
+    font-size: 12px;
+    color: var(--blue);
+  }
+  @media (max-width: 700px) {
+    .legal-page {
+      padding-top: 105px;
+      padding-bottom: 45px;
+    }
+    .legal-page h1 {
+      font-size: 34px;
+    }
+    .legal-page h2 {
+      font-size: 23px;
+    }
+    .legal-page p {
+      font-size: 13px;
+    }
+  }
+</style>

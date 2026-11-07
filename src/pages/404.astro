@@ -1,0 +1,63 @@
+﻿---
+import Layout from '../layouts/Layout.astro';
+Astro.response.status = 404;
+---
+
+<Layout
+  noindex
+  title="Page introuvable — Estelle Coulon"
+  description="Cette page n’existe pas. Retrouvez les projets et les coordonnées d’Estelle Coulon."
+>
+  <main id="contenu" class="container not-found">
+    <p class="eyebrow">Erreur 404</p>
+    <h1>
+      Cette page s’est
+      <br />
+      <span class="handwritten">égarée dans les étoiles.</span>
+    </h1>
+    <p>Vous pouvez retrouver mon travail dans la galerie ou revenir à l’accueil.</p>
+    <div>
+      <a class="button button-primary" href="/">
+        Retour à l’accueil
+      </a>
+      <a href="/projets">Voir les projets</a>
+    </div>
+  </main>
+</Layout>
+<style>
+  .not-found {
+    padding-block: 170px 100px;
+  }
+  .not-found h1 {
+    font-size: 42px;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+  }
+  .not-found h1 span {
+    font-size: 1.35em;
+    color: var(--pink);
+  }
+  .not-found > p:not(.eyebrow) {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+  .not-found > div {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .not-found > div > a:last-child {
+    font-size: 12px;
+    color: var(--blue);
+  }
+  @media (max-width: 700px) {
+    .not-found {
+      padding-block: 120px 65px;
+    }
+    .not-found h1 {
+      font-size: 29px;
+    }
+  }
+</style>
