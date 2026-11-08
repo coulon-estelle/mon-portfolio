@@ -1,0 +1,368 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectImage from '../../components/ProjectImage.astro';
+import PageOutro from '../../components/PageOutro.astro';
+import { projectAssets } from '../../data/project-assets';
+const assets = projectAssets.feelm;
+const figmaUrl =
+  'https://www.figma.com/proto/rBYibior2FCjTj4nHJcL0P/Untitled?node-id=1-2&p=f&t=ppKVrGJOdOcSA7B1-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1';
+const features = [
+  {
+    title: 'Des séances programmées',
+    text: 'Se retrouver à un horaire prévu pour regarder un film ensemble.',
+  },
+  {
+    title: 'Des clubs de cinéma',
+    text: 'Créer un club pour se réunir autour de films et de goûts communs.',
+  },
+  {
+    title: 'Un forum de discussion',
+    text: 'Échanger autour des films et prolonger la séance par une discussion.',
+  },
+];
+---
+
+<Layout
+  title="Feelm — Plateforme VOD pour cinéphiles | Estelle Coulon"
+  description="Feelm, un concept de plateforme VOD avec séances programmées, clubs de cinéma et forum. Projet UX/UI de BUT MMI et dossier PDF à télécharger."
+>
+  <main id="contenu" class="feelm-case">
+    <section class="case-hero container" aria-labelledby="feelm-title">
+      <a class="case-back" href="/projets">
+        Tous les projets <span aria-hidden="true">/</span> Feelm
+      </a>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Conception UX/UI · Plateforme VOD</p>
+          <div class="brand">
+            <img src={assets.logo} alt="" width="100" height="100" />
+            <h1 id="feelm-title">FEELM</h1>
+          </div>
+          <p class="hero-lead">
+            Voir des films ensemble,
+            <br />
+            <span class="handwritten">puis en discuter.</span>
+          </p>
+          <p class="hero-summary">
+            Un concept de plateforme pour cinéphiles qui associe séances programmées, clubs et forum
+            de discussion.
+          </p>
+          <div class="case-tags">
+            <span>BUT MMI · R304</span>
+            <span>Culture du numérique</span>
+            <span>Conception d’interface</span>
+          </div>
+          <a class="pdf-button" href={assets.pdf} target="_blank" rel="noopener noreferrer">
+            Voir le rendu final et notre démarche <span class="file-info">PDF · 6,5 Mo</span>
+            <span class="sr-only">(nouvel onglet)</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <figure class="hero-preview">
+          <a
+            href={figmaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Explorer le prototype Feelm sur Figma (nouvel onglet)"
+          >
+            <ProjectImage
+              src={assets.mockup}
+              alt="Maquette Feelm sur un ordinateur : espace personnel et sélection de films du club sur un fond bordeaux, avec accents jaunes et cyan"
+              width={1000}
+              eager
+            />
+          </a>
+          <figcaption>
+            <a href={figmaUrl} target="_blank" rel="noopener noreferrer">
+              Explorer le prototype Figma <span class="sr-only">(nouvel onglet)</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="concept container" aria-labelledby="feelm-concept">
+      <p class="eyebrow">Le concept</p>
+      <h2 id="feelm-concept">
+        Le cinéma <span class="handwritten">en groupe.</span>
+      </h2>
+      <div class="feature-grid">
+        {features.map((feature) => (
+          <article>
+            <h3>{feature.title}</h3>
+            <p>{feature.text}</p>
+          </article>
+        ))}
+      </div>
+      <p class="project-context">
+        Projet réalisé en BUT MMI, en cours de culture du numérique. La demande : imaginer
+        l’interface d’un service de VOD adapté aux passionnés de cinéma. Feelm est une proposition
+        de conception UX/UI.
+      </p>
+    </section>
+
+    <section class="identity container" aria-labelledby="feelm-identity">
+      <figure class="moodboard">
+        <ProjectImage
+          src={assets.moodboard}
+          alt="Moodboard Feelm : rideaux rouges, bobines, caméras, popcorn et lunettes 3D"
+          width={600}
+        />
+        <figcaption>Les références visuelles du projet.</figcaption>
+      </figure>
+      <div class="identity-copy">
+        <p class="eyebrow">L’univers graphique</p>
+        <h2 id="feelm-identity">
+          Les codes <span class="handwritten">de la salle.</span>
+        </h2>
+        <p>
+          Rideaux rouges, bobines et popcorn composent le moodboard. La maquette reprend un fond
+          bordeaux, du jaune et des touches de cyan.
+        </p>
+        <div class="logo-grid">
+          {assets.research.map((src, index) => (
+            <figure>
+              <img
+                src={src}
+                alt={`Recherche de logo Feelm, piste ${index + 1}`}
+                width="230"
+                height="180"
+                loading="lazy"
+              />
+              <figcaption>Piste {index + 1}</figcaption>
+            </figure>
+          ))}
+        </div>
+        <a class="read-link" href={assets.pdf} download="Feelm-dossier-de-conception.pdf">
+          Télécharger le dossier PDF
+          <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+    </section>
+    <PageOutro
+      lead="Autres projets"
+      heading="Découvrez les autres projets."
+      href="/projets"
+      label="Retour à la galerie"
+      variant={2}
+    />
+  </main>
+</Layout>
+
+<style>
+  .feelm-case {
+    overflow: clip;
+  }
+  .case-hero {
+    padding-block: 145px 55px;
+  }
+  .case-back {
+    display: inline-flex;
+    gap: 14px;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 45px;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.2fr);
+    align-items: center;
+    gap: clamp(30px, 5vw, 70px);
+  }
+  .eyebrow {
+    color: var(--pink);
+    font-size: 10px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-block: 25px;
+  }
+  .brand img {
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+  h1 {
+    font-family: Georgia, serif;
+    font-size: clamp(42px, 5vw, 70px);
+    font-weight: 400;
+    color: var(--pink);
+    margin: 0;
+  }
+  .hero-lead {
+    font-size: 23px;
+    line-height: 1.4;
+  }
+  .handwritten {
+    color: var(--blue);
+  }
+  .hero-lead .handwritten {
+    font-size: 42px;
+  }
+  .hero-summary,
+  .project-context,
+  .identity-copy > p:not(.eyebrow),
+  .feature-grid p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .hero-summary {
+    max-width: 430px;
+  }
+  .case-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-block: 24px;
+  }
+  .case-tags span {
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .pdf-button {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 13px;
+    padding: 15px 20px;
+    background: var(--pink);
+    color: var(--bg);
+    border-radius: 28px;
+    font-size: 12px;
+  }
+  .file-info {
+    font-size: 10px;
+  }
+  .pdf-button:hover,
+  .read-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  figure {
+    margin: 0;
+    min-width: 0;
+  }
+  .hero-preview {
+    padding: 25px 0;
+    border-radius: 24px;
+    background: color-mix(in srgb, var(--pink) 7%, transparent);
+  }
+  .hero-preview :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 15px 20px #0004);
+  }
+  figcaption {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.6;
+    margin-top: 15px;
+  }
+  .hero-preview figcaption {
+    text-align: center;
+  }
+  .concept {
+    padding-block: 25px 55px;
+  }
+  h2 {
+    font-size: clamp(30px, 3.5vw, 42px);
+    line-height: 1.2;
+    margin: 16px 0 28px;
+  }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+  }
+  .feature-grid article {
+    border-top: 1px solid var(--line);
+    padding-top: 18px;
+  }
+  .feature-grid h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--pink);
+  }
+  .project-context {
+    max-width: 800px;
+    margin-top: 30px;
+  }
+  .identity {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    align-items: center;
+    gap: clamp(35px, 6vw, 85px);
+    padding-block: 25px 65px;
+  }
+  .moodboard {
+    max-width: 420px;
+  }
+  .moodboard :global(img) {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+  }
+  .logo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-block: 30px;
+  }
+  .logo-grid img {
+    display: block;
+    width: 100%;
+    height: 140px;
+    object-fit: contain;
+    background: #fff8e9;
+    padding: 15px;
+    border-radius: 12px;
+  }
+  .read-link {
+    display: inline-flex;
+    gap: 15px;
+    color: var(--pink);
+    font-size: 13px;
+    padding-block: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (max-width: 700px) {
+    .case-hero {
+      padding-block: 110px 25px;
+    }
+    .case-back {
+      margin-bottom: 25px;
+    }
+    .hero-grid,
+    .feature-grid,
+    .identity {
+      grid-template-columns: 1fr;
+      gap: 25px;
+    }
+    .identity {
+      padding-block: 25px 40px;
+    }
+    .identity-copy {
+      grid-row: 1;
+    }
+    .moodboard {
+      width: 100%;
+      margin-inline: auto;
+    }
+    .logo-grid img {
+      height: 110px;
+      padding: 8px;
+    }
+    .brand img {
+      width: 75px;
+      height: 75px;
+    }
+  }
+</style>

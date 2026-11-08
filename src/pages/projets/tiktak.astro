@@ -1,0 +1,370 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageOutro from '../../components/PageOutro.astro';
+import ProjectImage from '../../components/ProjectImage.astro';
+import MockupLabel from '../../components/MockupLabel.astro';
+import { projectAssets } from '../../data/project-assets';
+
+const websiteUrl = 'https://tiktak.estelle-coulon.fr/';
+const figmaUrl =
+  'https://www.figma.com/proto/lhQjGGtgFyHcrVLUNgcWmo/Tik-Tak?node-id=100-2904&t=Am4nVN4w06BVVZ3f-1&scaling=min-zoom&content-scaling=fixed&page-id=23%3A2&starting-point-node-id=100%3A2904';
+---
+
+<Layout
+  title="TiK•TaK — Montres personnalisables | Estelle Coulon"
+  description="Découvrez TiK•TaK, un projet de BUT MMI consacré à la conception d’un site de montres personnalisables : parcours utilisateur, prototype Figma et développement web."
+>
+  <main id="contenu" class="tiktak-case">
+    <section class="case-hero container" aria-labelledby="tiktak-title">
+      <a class="case-back" href="/projets">
+        Tous les projets <span aria-hidden="true">/</span> TiK•TaK
+      </a>
+      <p class="eyebrow">Conception d’interface · Développement web</p>
+      <h1 id="tiktak-title" class="case-brand-logo">
+        <img
+          src={projectAssets.tiktak.logo}
+          alt="TiK•TaK"
+          width="1574"
+          height="1067"
+          fetchpriority="high"
+        />
+      </h1>
+      <p class="case-tagline">
+        Configurateur de montres
+        <br />
+        <span class="handwritten">Design & site web.</span>
+      </p>
+      <div class="case-tags">
+        <span>Projet pédagogique · BUT MMI</span>
+        <span>UI / UX</span>
+        <span>Configurateur de produit</span>
+      </div>
+      <div class="case-links">
+        <a class="case-button" href={websiteUrl} target="_blank" rel="noopener noreferrer">
+          Découvrir le site <span class="sr-only">(nouvel onglet)</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+        <a class="case-button secondary" href={figmaUrl} target="_blank" rel="noopener noreferrer">
+          Explorer le prototype Figma <span class="sr-only">(nouvel onglet)</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="case-columns container" aria-label="Présentation du projet">
+      <div>
+        <p class="eyebrow">Le projet</p>
+        <h2>
+          Des montres <span class="handwritten">personnalisables.</span>
+        </h2>
+        <p>
+          Un projet de BUT MMI consacré à un site de personnalisation de montres, avec une maquette
+          Figma et un site en ligne.
+        </p>
+      </div>
+      <div>
+        <p class="eyebrow">La demande</p>
+        <h2>
+          Le <span class="handwritten">configurateur.</span>
+        </h2>
+        <p>
+          Le brief demandait de choisir les composants, les matériaux et les couleurs d’une montre,
+          puis de retrouver ses modèles dans un espace personnel.
+        </p>
+      </div>
+    </section>
+
+    <section class="case-identity container" aria-labelledby="tiktak-identity">
+      <p class="eyebrow">L’univers graphique</p>
+      <h2 id="tiktak-identity">
+        Les inspirations <span class="handwritten">graphiques.</span>
+      </h2>
+      <div class="identity-copy">
+        <img src={projectAssets.tiktak.icon} alt="" width="100" height="100" loading="lazy" />
+        <p>
+          Une palette crème, brune et dorée, des textures nacrées et des ornements : les
+          inspirations du moodboard se retrouvent dans la maquette.
+        </p>
+      </div>
+      <figure class="moodboard">
+        <ProjectImage
+          src={projectAssets.tiktak.moodboard}
+          alt="Moodboard TiK•TaK : montre dorée, perles, cygnes, ornements et textures crème et rose poudré"
+          width={1280}
+        />
+        <figcaption>Les inspirations visuelles de TiK•TaK.</figcaption>
+      </figure>
+    </section>
+
+    <section class="case-previews container" aria-labelledby="tiktak-previews">
+      <p class="eyebrow">Du prototype au site</p>
+      <h2 id="tiktak-previews">
+        Le site <span class="handwritten">& le prototype.</span>
+      </h2>
+      <div class="preview-grid">
+        <figure>
+          <a
+            class="project-preview-link"
+            href={websiteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Découvrir le site TiK•TaK (nouvel onglet)"
+          >
+            <MockupLabel text="Découvrir le site TiK•TaK" />
+            <ProjectImage
+              src={projectAssets.tiktak.site}
+              alt="Page d’accueil TiK•TaK présentée sur un téléphone"
+              width={650}
+            />
+          </a>
+          <figcaption>Le site dans sa version mobile.</figcaption>
+        </figure>
+        <figure>
+          <a
+            class="project-preview-link"
+            href={figmaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Explorer le prototype Figma TiK•TaK (nouvel onglet)"
+          >
+            <MockupLabel text="Explorer le prototype Figma" />
+            <ProjectImage
+              src={projectAssets.tiktak.prototype}
+              alt="Prototype du configurateur TiK•TaK présenté sur un ordinateur portable"
+              width={900}
+            />
+          </a>
+          <figcaption>La maquette du configurateur et ses choix de personnalisation.</figcaption>
+        </figure>
+      </div>
+    </section>
+    <PageOutro
+      lead="Autres études de cas"
+      heading="Découvrez les autres projets."
+      href="/projets"
+      label="Retour à la galerie"
+      variant={2}
+    />
+  </main>
+</Layout>
+
+<style>
+  .case-brand-logo {
+    width: min(360px, 100%);
+    padding: 20px 30px;
+    border-radius: 16px;
+    background: #faf7f0;
+  }
+  .case-brand-logo img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .case-identity,
+  .case-previews {
+    padding-block: 25px 55px;
+  }
+  .identity-copy {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    max-width: 900px;
+  }
+  .identity-copy img {
+    flex-shrink: 0;
+    padding: 10px;
+    border-radius: 50%;
+    background: #faf7f0;
+    object-fit: contain;
+  }
+  .identity-copy p {
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--muted);
+  }
+  figure {
+    margin: 30px 0 0;
+    min-width: 0;
+  }
+  .moodboard :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+  }
+  figcaption {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-top: 18px;
+  }
+  .preview-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .preview-grid :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .tiktak-case {
+    overflow: clip;
+    background: radial-gradient(ellipse 65% 25% at 100% 0%, #b997ed22, transparent 85%);
+  }
+  .case-hero {
+    padding-block: 145px 65px;
+  }
+  .case-back {
+    display: inline-flex;
+    gap: 14px;
+    color: var(--muted);
+    font-size: 11px;
+    margin-bottom: 48px;
+  }
+  .eyebrow {
+    color: var(--pink);
+    font-size: 10px;
+  }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(64px, 12vw, 145px);
+    letter-spacing: -0.07em;
+    line-height: 1.1;
+    margin: 18px 0 24px;
+  }
+  h1 span {
+    color: var(--pink);
+  }
+  .case-tagline {
+    font-size: 21px;
+    line-height: 1.4;
+  }
+  .handwritten {
+    color: var(--pink);
+  }
+  .case-tagline .handwritten {
+    font-size: 45px;
+  }
+  .case-tags,
+  .case-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 26px;
+  }
+  .case-tags span {
+    border: 1px solid var(--line);
+    padding: 9px 14px;
+    border-radius: 24px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .case-links {
+    margin-top: 32px;
+  }
+  .case-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 22px;
+    border: 1px solid var(--pink);
+    border-radius: 30px;
+    background: var(--pink);
+    color: var(--bg);
+    font-size: 12px;
+  }
+  .case-button.secondary {
+    background: transparent;
+    color: var(--ink);
+  }
+  .case-button:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .case-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(35px, 7vw, 100px);
+    padding-block: 35px 55px;
+  }
+  h2 {
+    font-size: clamp(30px, 3.5vw, 42px);
+    line-height: 1.2;
+    margin: 16px 0 26px;
+  }
+  .case-columns p:not(.eyebrow),
+  .case-focus p:not(.eyebrow),
+  .case-steps p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.85;
+  }
+  .case-process {
+    padding-block: 25px 55px;
+  }
+  .case-steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    list-style: none;
+    padding: 0;
+    margin: 30px 0 0;
+  }
+  .case-steps li {
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+  }
+  .step-number {
+    font-size: 11px;
+    color: var(--pink);
+    letter-spacing: 0.14em;
+  }
+  .case-steps h3 {
+    font-family: var(--font-display);
+    font-size: 34px;
+    font-weight: 400;
+    line-height: 1.1;
+    margin: 18px 0;
+  }
+  .case-focus {
+    padding-block: 30px 55px;
+  }
+  .case-focus p:not(.eyebrow) {
+    max-width: 800px;
+  }
+  @media (max-width: 700px) {
+    .preview-grid {
+      grid-template-columns: 1fr;
+      gap: 25px;
+    }
+    .identity-copy {
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .identity-copy img {
+      width: 65px;
+      height: 65px;
+    }
+    .case-hero {
+      padding-block: 110px 30px;
+    }
+    .case-back {
+      margin-bottom: 30px;
+    }
+    .case-columns,
+    .case-steps {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .case-columns {
+      padding-block: 25px;
+    }
+    .case-process,
+    .case-focus {
+      padding-block: 25px;
+    }
+  }
+</style>

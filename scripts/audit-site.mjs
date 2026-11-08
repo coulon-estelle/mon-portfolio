@@ -3,7 +3,7 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 
 const output = path.resolve('dist');
-const { render } = await import('./ssr-runtime.mjs');
+const { render } = await import('./static-runtime.mjs');
 const routes = [
   '/',
   '/projets',
@@ -13,6 +13,9 @@ const routes = [
   '/merci',
   '/mentions-legales',
   '/projets/olyvia',
+  '/projets/tiktak',
+  '/projets/solaire',
+  '/projets/feelm',
   '/projets/nunc',
   '/projets/lumimix',
   '/projets/bordeaux-surchauffe',

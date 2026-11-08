@@ -1,0 +1,220 @@
+/* Palettes issues des identités et maquettes, partagées entre carte et étude de cas. */
+html .project.olyvia,
+html main.olyvia-case {
+  --project-bg: #18251c;
+  --project-surface: #2b3c29;
+  --project-accent: #b7c6a3;
+  --project-secondary: #e6b9c3;
+  --project-ink: #ede7d6;
+  --project-muted: #c2c9b6;
+}
+html .project.nunc,
+html main.nunc-case {
+  --project-bg: #290c05;
+  --project-surface: #4a1909;
+  --project-accent: #edaa23;
+  --project-secondary: #ff9a57;
+  --project-ink: #f7e4d0;
+  --project-muted: #e5c3a4;
+}
+html .project.lumimix,
+html main.lumimix-case {
+  --project-bg: #060a12;
+  --project-surface: #19132b;
+  --project-accent: #f365ef;
+  --project-secondary: #43e3f5;
+  --project-ink: #faf9ff;
+  --project-muted: #c6c5dc;
+}
+html .project.tiktak,
+html main.tiktak-case {
+  --project-bg: #231b15;
+  --project-surface: #3d3023;
+  --project-accent: #d5b673;
+  --project-secondary: #d7b3b6;
+  --project-ink: #faf7f0;
+  --project-muted: #d3c5b3;
+}
+html .project.solaire,
+html main.solaire-case {
+  --project-bg: #260c2d;
+  --project-surface: #4a1252;
+  --project-accent: #ffe500;
+  --project-secondary: #ff69eb;
+  --project-ink: #f7d2f9;
+  --project-muted: #e2bde4;
+}
+html .project.bordeaux,
+html main.bordeaux-case {
+  --project-bg: #071d32;
+  --project-surface: #16374c;
+  --project-accent: #ffaa24;
+  --project-secondary: #79c7ed;
+  --project-ink: #fff7eb;
+  --project-muted: #c0cfdb;
+}
+
+html[data-theme='light'] .project.olyvia,
+html[data-theme='light'] main.olyvia-case {
+  --project-bg: #f3f4ea;
+  --project-surface: #e1e8d5;
+  --project-accent: #536c46;
+  --project-secondary: #994d69;
+  --project-ink: #293b27;
+  --project-muted: #53614c;
+}
+html[data-theme='light'] .project.nunc,
+html[data-theme='light'] main.nunc-case {
+  --project-bg: #fff5e8;
+  --project-surface: #f7dfbc;
+  --project-accent: #963a0b;
+  --project-secondary: #843b10;
+  --project-ink: #4a0905;
+  --project-muted: #75503a;
+}
+html[data-theme='light'] .project.lumimix,
+html[data-theme='light'] main.lumimix-case {
+  --project-bg: #f4f4ff;
+  --project-surface: #e8def7;
+  --project-accent: #a112a1;
+  --project-secondary: #006d85;
+  --project-ink: #18152c;
+  --project-muted: #59516c;
+}
+html[data-theme='light'] .project.tiktak,
+html[data-theme='light'] main.tiktak-case {
+  --project-bg: #faf7f0;
+  --project-surface: #f0e6d7;
+  --project-accent: #76543d;
+  --project-secondary: #925860;
+  --project-ink: #483525;
+  --project-muted: #75614f;
+}
+html[data-theme='light'] .project.solaire,
+html[data-theme='light'] main.solaire-case {
+  --project-bg: #fff5ff;
+  --project-surface: #f7d2f9;
+  --project-accent: #94008a;
+  --project-secondary: #9b3d00;
+  --project-ink: #51094f;
+  --project-muted: #765076;
+}
+html[data-theme='light'] .project.bordeaux,
+html[data-theme='light'] main.bordeaux-case {
+  --project-bg: #fff8ed;
+  --project-surface: #f6e4cb;
+  --project-accent: #a3420b;
+  --project-secondary: #12679a;
+  --project-ink: #071d32;
+  --project-muted: #52606a;
+}
+
+html[data-theme] article.project[class] {
+  --card-accent: var(--project-accent);
+  --card-tint: var(--project-surface);
+  --ink: var(--project-ink);
+  background: linear-gradient(155deg, var(--project-surface), var(--project-bg));
+  border-color: var(--project-accent);
+}
+html[data-theme] article.project[class] .project-meta {
+  color: var(--project-accent);
+}
+html[data-theme] article.project[class] h3 {
+  color: var(--project-ink);
+}
+html[data-theme] article.project[class] .project-description {
+  color: var(--project-muted);
+}
+html[data-theme] article.project[class] .project-visual {
+  background: var(--project-surface);
+}
+html[data-theme] article.project[class] .project-page-link:focus-visible {
+  outline-color: var(--project-accent);
+}
+
+/* Priorité sur les styles locaux Astro ; les palettes restent limitées au contenu du projet. */
+:root
+  body
+  main[id='contenu']:is(
+    .olyvia-case,
+    .nunc-case,
+    .lumimix-case,
+    .tiktak-case,
+    .solaire-case,
+    .bordeaux-case,
+    .feelm-case
+  ) {
+  --bg: var(--project-bg);
+  --ink: var(--project-ink);
+  --muted: var(--project-muted);
+  --pink: var(--project-accent);
+  --purple: var(--project-accent);
+  --blue: var(--project-secondary);
+  --hot: var(--project-accent);
+  --line: color-mix(in srgb, var(--project-accent) 25%, transparent);
+  color: var(--project-ink);
+  background:
+    radial-gradient(
+      ellipse 75% 30% at 100% 0%,
+      color-mix(in srgb, var(--project-accent) 12%, transparent),
+      transparent 85%
+    ),
+    var(--project-bg);
+}
+html main[id='contenu'].bordeaux-case {
+  --heat: var(--project-accent);
+}
+html main[id='contenu'].nunc-case {
+  --cream: var(--project-ink);
+}
+html main[id='contenu'].solaire-case .handwritten {
+  color: var(--project-secondary);
+}
+html main[id='contenu'].solaire-case .case-button {
+  background: #ffe500;
+  border-color: #ffe500;
+  color: #650060;
+}
+html main[id='contenu'].tiktak-case .case-button:not(.secondary) {
+  background: #76543d;
+  border-color: #76543d;
+  color: #faf7f0;
+}
+html main[id='contenu'] .page-outro {
+  background: color-mix(in srgb, var(--project-accent, var(--pink)) 5%, transparent);
+}
+html
+  main[id='contenu']:is(
+    .olyvia-case,
+    .nunc-case,
+    .lumimix-case,
+    .tiktak-case,
+    .solaire-case,
+    .bordeaux-case,
+    .feelm-case
+  )
+  .button-primary {
+  background: var(--project-accent);
+  border-color: var(--project-accent);
+  color: var(--project-bg);
+  box-shadow: none;
+}
+
+html .project.feelm,
+html main.feelm-case {
+  --project-bg: #210403;
+  --project-surface: #3b1210;
+  --project-accent: #e9d769;
+  --project-secondary: #60d3e3;
+  --project-ink: #fff6e7;
+  --project-muted: #dec6b4;
+}
+html[data-theme='light'] .project.feelm,
+html[data-theme='light'] main.feelm-case {
+  --project-bg: #fff8ee;
+  --project-surface: #f3e2c8;
+  --project-accent: #73301e;
+  --project-secondary: #006d7b;
+  --project-ink: #35100d;
+  --project-muted: #74554b;
+}

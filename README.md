@@ -60,7 +60,7 @@ Les noms de fichiers sont en minuscules, sans espaces ni accents. Les originaux 
 
 ## Déploiement sur Netlify
 
-Le dépôt contient `netlify.toml` : rendu SSR avec `output: server` et l’adaptateur officiel `@astrojs/netlify`. Les fichiers publics sont dans `dist/` et la fonction serveur dans `.netlify/`. Les contrôles et tests locaux utilisent la fonction générée.
+Le dépôt contient `netlify.toml` et génère un site statique avec `output: 'static'`, sans adaptateur serveur. Toutes les pages et les images optimisées sont produites dans `dist/`. Les contrôles et tests locaux servent directement ces fichiers.
 
 1. Importer le dépôt public GitHub dans Netlify.
 2. Copier les valeurs utiles de `.env.example` dans les variables d’environnement Netlify. Le domaine exact est obligatoire dans `PUBLIC_SITE_URL`, sous la forme `https://votre-domaine.fr`.
@@ -83,6 +83,6 @@ Les URL LinkedIn et Behance sont celles fournies par Estelle. Leur mise à jour 
 
 L’oral de maquette a déjà eu lieu : ses documents de préparation ne font pas partie de ce suivi. Il reste à terminer les images et leurs crédits, le CV, la configuration du domaine et la publication du site. Aucun changement n’est automatiquement poussé ou publié.
 
-Le formulaire est déclaré dans `public/contact-form.html` pour sa détection par Netlify Forms, puisque la page contact est rendue en SSR. Les notifications restent à configurer dans Netlify.
+Le formulaire est présent dans la page contact générée et dans `public/contact-form.html` pour sa détection par Netlify Forms. Les notifications restent à configurer dans Netlify.
 
-Exécutez `npm run build` après `npm run check` avant l’audit ou les tests : la vérification Astro peut réinitialiser les fichiers serveur Netlify.
+Exécutez `npm run build` avant l’audit ou les tests pour vérifier la dernière version des fichiers statiques.

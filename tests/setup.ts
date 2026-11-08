@@ -1,5 +1,5 @@
 import { createServer } from 'node:http';
-import { render } from '../scripts/ssr-runtime.mjs';
+import { render } from '../scripts/static-runtime.mjs';
 export default async function setup() {
   const server = createServer(async (request, response) => {
     if (!['GET', 'HEAD'].includes(request.method || '')) {

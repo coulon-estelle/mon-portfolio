@@ -1,6 +1,42 @@
 import { projectAssets } from './project-assets';
 export const projets = [
   {
+    id: 'feelm',
+    nom: 'Feelm',
+    categorie: 'UI / UX · Plateforme VOD',
+    annee: 'BUT MMI',
+    image: projectAssets.feelm.mockup,
+    style: 'feelm',
+    accroche: 'Voir des films ensemble et en discuter.',
+    description:
+      'Concept de plateforme VOD pour cinéphiles : séances programmées, clubs et forum de discussion.',
+    livrables: 'Conception UX/UI · Identité visuelle · Dossier de présentation',
+  },
+  {
+    id: 'solaire',
+    nom: 'Solaire',
+    categorie: 'Identité visuelle · UI / UX',
+    annee: 'BUT MMI',
+    image: projectAssets.solaire.mockup,
+    style: 'solaire',
+    accroche: 'Un regard sur les vacances, une expérience à personnaliser.',
+    description:
+      'Identité visuelle et prototype Figma d’un configurateur de lunettes, à partir d’un persona imposé.',
+    livrables: 'Recherche UX · Identité visuelle · Illustrations vectorielles · Prototype Figma',
+  },
+  {
+    id: 'tiktak',
+    nom: 'TiK•TaK',
+    categorie: 'UI / UX · Développement web',
+    annee: 'BUT MMI',
+    image: projectAssets.tiktak.moodboard,
+    style: 'tiktak',
+    accroche: 'Une montre à composer, un style à soi.',
+    description:
+      'Un projet de site de montres personnalisables, présenté à travers sa maquette Figma et son interface web.',
+    livrables: 'Prototype Figma · Interface web · Configurateur de montres',
+  },
+  {
     id: 'olyvia',
     nom: 'Olyvia',
     categorie: 'Identité visuelle · Site web',
@@ -45,10 +81,12 @@ export const projets = [
     style: 'bordeaux',
     accroche: 'Comprendre la chaleur à l’échelle de sa commune.',
     description:
-      'Un site réalisé à deux pour comprendre où il fait le plus chaud à Bordeaux Métropole. Des cartes et des graphiques permettent de comparer les 28 communes et de voir quels habitants sont les plus exposés.',
+      'Un site réalisé en binôme pour comparer la chaleur dans les 28 communes de Bordeaux Métropole, avec des cartes et des graphiques.',
     livrables: 'Récit en données · Cartographie · Visualisations · Site web',
   },
 ];
 
 // La galerie peut évoluer sans modifier la sélection de l’accueil.
-export const projetsAccueil = projets.filter((projet) => projet.id !== 'bordeaux-surchauffe');
+export const projetsAccueil = projets.filter((projet) =>
+  ['olyvia', 'nunc', 'lumimix'].includes(projet.id),
+);
