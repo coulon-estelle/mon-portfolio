@@ -109,26 +109,26 @@ html[data-theme='light'] main.bordeaux-case {
   --project-muted: #52606a;
 }
 
-html[data-theme] article.project[class] {
+html:is([data-theme], :not([data-theme])) article.project[class] {
   --card-accent: var(--project-accent);
   --card-tint: var(--project-surface);
   --ink: var(--project-ink);
   background: linear-gradient(155deg, var(--project-surface), var(--project-bg));
   border-color: var(--project-accent);
 }
-html[data-theme] article.project[class] .project-meta {
+html:is([data-theme], :not([data-theme])) article.project[class] .project-meta {
   color: var(--project-accent);
 }
-html[data-theme] article.project[class] h3 {
+html:is([data-theme], :not([data-theme])) article.project[class] h3 {
   color: var(--project-ink);
 }
-html[data-theme] article.project[class] .project-description {
+html:is([data-theme], :not([data-theme])) article.project[class] .project-description {
   color: var(--project-muted);
 }
-html[data-theme] article.project[class] .project-visual {
+html:is([data-theme], :not([data-theme])) article.project[class] .project-visual {
   background: var(--project-surface);
 }
-html[data-theme] article.project[class] .project-page-link:focus-visible {
+html:is([data-theme], :not([data-theme])) article.project[class] .project-page-link:focus-visible {
   outline-color: var(--project-accent);
 }
 

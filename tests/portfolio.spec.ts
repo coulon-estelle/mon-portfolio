@@ -36,7 +36,7 @@ test('Visuels des projets : moodboards, logos et mockups chargés', async ({ pag
 
 test('Atelier : les dessins s’ouvrent en grand sans changer de page', async ({ page }) => {
   await page.goto('/atelier');
-  await expect(page.locator('.art-card')).toHaveCount(5);
+  await expect(page.locator('.art-card')).toHaveCount(11);
   const drawing = page.getByRole('button', { name: 'Agrandir Alice', exact: true });
   await drawing.click();
   const dialog = page.getByRole('dialog');

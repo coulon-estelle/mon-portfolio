@@ -14,6 +14,72 @@
 // Présentations et matériel rédigés à partir des précisions d’Estelle.
 export const oeuvres: Oeuvre[] = [
   {
+    id: 'poisson-lion',
+    titre: 'Poisson-lion',
+    sousTitre: 'Une étude réaliste à l’encre et à l’aquarelle.',
+    description:
+      'Un poisson-lion réalisé dans un style réaliste, en associant l’encre et l’aquarelle.',
+    categorie: 'Peinture',
+    image: '/images/atelier/poisson-lion.jpeg',
+    alt: 'Poisson-lion aux nageoires déployées, dans des tons bruns et bleutés sur fond blanc.',
+    materiel: ['Encre', 'Aquarelle'],
+  },
+  {
+    id: 'after-fight',
+    titre: 'After Fight',
+    sousTitre: 'Un personnage au stylo noir fin et aux crayons de couleur.',
+    description:
+      'Un portrait de personnage dessiné au stylo noir fin et mis en couleur aux crayons de couleur.',
+    categorie: 'Dessin',
+    image: '/images/atelier/after-fight.jpeg',
+    alt: 'Portrait d’un personnage aux cheveux clairs, portant de petites lunettes, avec des marques sur le visage.',
+    materiel: ['Stylo noir fin', 'Crayons de couleur'],
+  },
+  {
+    id: 'chouette',
+    titre: 'La chouette',
+    sousTitre: 'Un dessin au crayon de papier gras.',
+    description:
+      'Une chouette réalisée au crayon de papier gras. Ce dessin a été particulièrement difficile à réaliser pour moi.',
+    categorie: 'Dessin',
+    image: '/images/atelier/chouette-realiste.jpeg',
+    alt: 'Chouette perchée sur une branche, dessinée en nuances de gris.',
+    materiel: ['Crayon de papier gras'],
+  },
+  {
+    id: 'foret',
+    titre: 'Forêt',
+    sousTitre: 'Un lettrage inspiré du street art.',
+    description:
+      'Un travail de lettrage dans un style street art, réalisé à l’encre de Chine et à l’encre de couleur.',
+    categorie: 'Dessin',
+    image: '/images/atelier/foret.jpeg',
+    alt: 'Lettrage Forêt aux contours noirs, avec des couleurs orange, jaunes et roses et de petites toiles d’araignée.',
+    materiel: ['Encre de Chine', 'Encre de couleur'],
+  },
+  {
+    id: 'le-coeur-de-la-foret',
+    titre: 'Le cœur de la forêt',
+    sousTitre: 'Le lien entre les arbres et les êtres humains.',
+    description:
+      'Avec cette création, je voulais parler des arbres comme êtres vivants et de leur lien étroit avec les êtres humains. L’encre de Chine et l’encre de couleur créent un contraste entre le fond noir, les branches et le cœur.',
+    categorie: 'Peinture',
+    image: '/images/atelier/le-coeur-de-la-foret.jpeg',
+    alt: 'Un cœur entouré de branches et de formes végétales colorées sur un fond noir.',
+    materiel: ['Encre de Chine', 'Encre de couleur'],
+  },
+  {
+    id: 'smoke',
+    titre: 'Smoke',
+    sousTitre: 'Un chat à trois yeux, une interprétation ouverte.',
+    description:
+      'Un chat à trois yeux qui fume, dans une ambiance mystérieuse. Je laisse à chacun la liberté de l’interpréter.',
+    categorie: 'Dessin',
+    image: '/images/atelier/smoke.jpeg',
+    alt: 'Chat à trois yeux en costume et cravate rouge, fumant au milieu de volutes de fumée.',
+    materiel: [],
+  },
+  {
     id: 'alice',
     titre: 'Alice',
     sousTitre: 'Inspiré d’Alice au pays des merveilles et d’Ophélie.',

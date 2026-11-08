@@ -69,7 +69,11 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
           </div>
           <div class="art-grid">
             {oeuvres.map((oeuvre) => (
-              <article class="art-card" data-art-category={oeuvre.categorie}>
+              <article
+                class="art-card"
+                data-art-category={oeuvre.categorie}
+                data-artwork={oeuvre.id}
+              >
                 <button
                   type="button"
                   class="art-open"
@@ -101,12 +105,12 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
                     </span>
                     <h3>{oeuvre.titre}</h3>
                     <p>{oeuvre.sousTitre}</p>
-                    <ul class="art-materials" aria-label="Matériel utilisé">
-                      {oeuvre.materiel.map((material) => (
-                        <li>{material}</li>
-                      ))}
-                    </ul>
-                    <span class="art-card-action">Voir l’œuvre en grand</span>
+                    <span class="art-card-action">
+                      Voir l’œuvre{' '}
+                      <span class="art-card-arrow" aria-hidden="true">
+                        ↗
+                      </span>
+                    </span>
                   </div>
                 </button>
               </article>
@@ -400,8 +404,8 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
     min-width: 0;
     --art-accent: var(--purple);
     --art-wash: #402347;
-    border: 1px solid color-mix(in srgb, var(--art-accent) 65%, transparent);
-    border-radius: 15px;
+    border: 1px solid color-mix(in srgb, var(--art-accent) 28%, transparent);
+    border-radius: 20px;
     overflow: hidden;
     background: linear-gradient(155deg, var(--art-wash), var(--bg) 85%);
     box-shadow: 0 8px 26px #10030b26;
@@ -440,19 +444,21 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
     position: relative;
     width: 100%;
     flex: none;
-    aspect-ratio: 1;
+    aspect-ratio: 1.15;
     overflow: hidden;
     border: 0;
     border-bottom: 1px solid var(--line);
     border-radius: 0;
     background: #f5eee7;
-    padding: 15px;
+    padding: 0;
   }
   .art-image img {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.08);
     transition: transform 0.6s;
   }
   .art-card:nth-child(3n + 2) .art-image {
@@ -462,7 +468,7 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
     border-color: #eba7bf55;
   }
   .art-open:hover .art-image img {
-    transform: scale(1.035);
+    transform: scale(1.14);
   }
   .art-open:focus-visible,
   .art-filters button:focus-visible {
@@ -484,14 +490,19 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
     letter-spacing: 0.1em;
   }
   .art-card-copy h3 {
-    font-family: var(--font-display);
-    font-size: 36px;
-    font-weight: 400;
-    line-height: 1;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 25px;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 1.2;
     margin: 12px 0;
     color: var(--pink);
   }
   .art-card-copy p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     font-size: 12px;
     line-height: 1.7;
     color: var(--muted);
@@ -514,12 +525,33 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
     padding: 5px 8px;
   }
   .art-card-action {
-    display: block;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
     margin-top: auto;
     padding-top: 16px;
     border-top: 1px solid var(--line);
     font-size: 11px;
     color: var(--art-accent);
+  }
+  .art-card-arrow {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    font-size: 19px;
+  }
+  .art-card[data-artwork='after-fight'] .art-image img {
+    object-position: 50% 35%;
+  }
+  .art-card[data-artwork='smoke'] .art-image img {
+    object-position: 50% 52%;
+  }
+  .art-card[data-artwork='chouette'] .art-image img {
+    object-position: 50% 40%;
   }
   .art-open:focus-visible {
     outline-offset: -4px;
@@ -856,11 +888,11 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
   }
   @media (prefers-reduced-motion: reduce) {
     .art-open:hover .art-image img {
-      transform: none;
+      transform: scale(1.08);
     }
   }
   :global(html[data-motion='off']) .art-open:hover .art-image img {
-    transform: none;
+    transform: scale(1.08);
   }
   @media (max-width: 600px) {
     .art-grid {
@@ -871,7 +903,7 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
       padding: 23px;
     }
     .art-card-copy h3 {
-      font-size: 39px;
+      font-size: 27px;
     }
     .art-card-copy p {
       font-size: 13px;
