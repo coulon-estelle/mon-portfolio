@@ -3,6 +3,7 @@ import Ornament from '../components/Ornament.astro';
 import FairyIllustration from '../components/FairyIllustration.astro';
 import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import SocialLinks from '../components/SocialLinks.astro';
 import { projetsAccueil as projets } from '../data/projets';
 import { site } from '../data/site';
 // Renseignez ces chemins lorsque vos images sont dans public/images/.
@@ -32,16 +33,14 @@ const email = site.email;
             Portfolio créatif — 2026
           </p>
           <h1 id="hero-title">
-            Estelle
-            <br />
+            Estelle <br />
             <span>Coulon</span>
             <span class="title-star" aria-hidden="true">
               <Ornament kind="star-pink" width={60} eager />
             </span>
           </h1>
           <p class="hero-description">
-            Design graphique,
-            <br />
+            Design graphique, <br />
             <em>identité visuelle et interfaces.</em>
           </p>
           <p class="hero-role">Étudiante en BUT MMI · Design graphique & interfaces</p>
@@ -51,6 +50,7 @@ const email = site.email;
           <a class="button button-primary" href="#projets">
             Découvrir mes projets
           </a>
+          <SocialLinks />
         </div>
         <div class="hero-art illustration-scene">
           <span class="scene-moon">
@@ -68,6 +68,7 @@ const email = site.email;
             eager
             alt="Fée dessinée par Estelle Coulon"
             class="hero-fairy"
+            hint
           />
           <div class="palette" role="img" aria-label="Ma palette : rose, violet, bleu et bordeaux">
             <i></i>
@@ -107,16 +108,13 @@ const email = site.email;
         <div>
           <p class="eyebrow">01 / Une sélection de mon travail</p>
           <h2 id="projects-title">
-            Des idées devenues
-            <br />
+            Des idées devenues <br />
             <span class="handwritten">des projets.</span>
           </h2>
         </div>
         <p>
-          Des univers différents.
-          <br />
-          La même envie de créer quelque chose
-          <br />
+          Des univers différents. <br />
+          La même envie de créer quelque chose <br />
           qui a du sens et qui se remarque.
         </p>
       </div>
@@ -157,8 +155,7 @@ const email = site.email;
         <div>
           <p class="eyebrow">02 / Mon parcours</p>
           <h2 id="about-title">
-            Design graphique
-            <br />
+            Design graphique <br />
             <span class="handwritten">et formation MMI.</span>
           </h2>
           <p>
@@ -181,8 +178,7 @@ const email = site.email;
     <section class="contact-section container" id="contact" aria-labelledby="contact-title">
       <p class="eyebrow">03 / Contact</p>
       <h2 id="contact-title">
-        Une alternance
-        <br />
+        Une alternance <br />
         <span class="handwritten">ou un projet ?</span>
         <span class="contact-star" aria-hidden="true">
           <Ornament kind="star-blue" width={58} />
@@ -254,3 +250,79 @@ const email = site.email;
     }
   </script>
 </Layout>
+
+<style>
+  /* Respiration de l’accueil sur mobile, sans modifier les illustrations. */
+  @media (max-width: 700px) {
+    .hero-inner {
+      padding-top: 136px;
+      padding-bottom: 100px;
+      gap: 56px;
+    }
+    .hero .eyebrow {
+      margin-bottom: 32px;
+    }
+    .hero h1 {
+      margin-bottom: 42px;
+    }
+    .hero-description {
+      margin-bottom: 24px;
+    }
+    .hero-role {
+      margin-bottom: 24px;
+    }
+    .hero-availability {
+      margin-bottom: 32px;
+    }
+    .hero-copy :global(.social-cta) {
+      margin-top: 28px;
+      gap: 12px;
+    }
+    .expertise-band {
+      padding-block: 48px;
+    }
+    .expertise-label {
+      margin-bottom: 28px;
+    }
+    .expertise-list {
+      row-gap: 24px;
+    }
+    .projects-section {
+      padding-block: 72px 80px;
+    }
+    .section-heading {
+      margin-bottom: 42px;
+    }
+    .section-heading > p {
+      margin-top: 28px;
+    }
+    .carousel-controls {
+      margin-top: 28px;
+    }
+    .about-section {
+      padding-block: 64px 72px;
+    }
+    .about-inner {
+      gap: 44px;
+    }
+    .about-inner h2 {
+      margin-bottom: 30px;
+    }
+    .about-inner p:not(.eyebrow) + p {
+      margin-top: 24px;
+    }
+    .skill-tags {
+      margin-top: 30px;
+      gap: 10px;
+    }
+    .contact-section {
+      padding-block: 80px;
+    }
+    .contact-section h2 {
+      margin-bottom: 32px;
+    }
+    .contact-section .button {
+      margin-top: 24px;
+    }
+  }
+</style>

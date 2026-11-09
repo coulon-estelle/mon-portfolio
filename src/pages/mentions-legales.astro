@@ -10,8 +10,7 @@ import { site } from '../data/site';
   <main id="contenu" class="legal-page container">
     <p class="eyebrow">Informations du site</p>
     <h1>
-      Mentions légales
-      <br />
+      Mentions légales <br />
       <span class="handwritten">& confidentialité.</span>
     </h1>
     <section>
@@ -29,14 +28,11 @@ import { site } from '../data/site';
       <h2>Hébergement</h2>
       {site.host.name && site.host.address ? (
         <p>
-          {site.host.name}
-          <br />
-          {site.host.address}
-          <br />
+          {site.host.name} <br />
+          {site.host.address} <br />
           {site.host.phone && (
             <>
-              Téléphone : {site.host.phone}
-              <br />
+              Téléphone : {site.host.phone} <br />
             </>
           )}
           <a href="https://www.netlify.com/contact/">Contacter Netlify</a>

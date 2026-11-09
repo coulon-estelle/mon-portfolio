@@ -2,6 +2,7 @@
 import Ornament from '../components/Ornament.astro';
 import FairyIllustration from '../components/FairyIllustration.astro';
 import Layout from '../layouts/Layout.astro';
+import SocialLinks from '../components/SocialLinks.astro';
 import { site } from '../data/site';
 const email = site.email;
 // Ajoutez vos images dans public/images/ et renseignez leurs chemins ici.
@@ -27,14 +28,14 @@ const missions = [
         </a>
         <p class="eyebrow">Contact</p>
         <h1 id="contact-page-title">
-          Travaillons
-          <br />
+          Travaillons <br />
           <span>ensemble.</span>
         </h1>
         <p class="contact-lead">
           Je recherche une alternance dans la création numérique et la communication. J’aime créer
           des identités visuelles, imaginer des interfaces et donner vie à des univers graphiques.
         </p>
+        <SocialLinks />
       </div>
       <div class="contact-illustration illustration-scene">
         <span class="scene-moon">
@@ -65,8 +66,7 @@ const missions = [
           <div>
             <dt>Localisation</dt>
             <dd>
-              Pont-de-Roide,
-              <br />
+              Pont-de-Roide, <br />
               Franche-Comté
             </dd>
           </div>

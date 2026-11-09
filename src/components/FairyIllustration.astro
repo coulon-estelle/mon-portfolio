@@ -7,12 +7,20 @@ import fairyFour from '../../public/images/illustrations/fees/fee-4.png';
 
 interface Props {
   variant?: 1 | 2 | 3 | 4;
+  hint?: boolean;
   width?: number;
   eager?: boolean;
   alt?: string;
   class?: string;
 }
-const { variant = 1, width = 320, eager = false, alt = '', class: className } = Astro.props;
+const {
+  variant = 1,
+  width = 320,
+  eager = false,
+  alt = '',
+  class: className,
+  hint = false,
+} = Astro.props;
 const drawings = { 1: fairyOne, 2: fairyTwo, 3: fairyThree, 4: fairyFour };
 ---
 
@@ -36,6 +44,29 @@ const drawings = { 1: fairyOne, 2: fairyTwo, 3: fairyThree, 4: fairyFour };
     loading={eager ? 'eager' : 'lazy'}
     decoding="async"
   />
+  {hint && (
+    <span class="fairy-click-hint" aria-hidden="true">
+      <span>Cliquez sur moi</span>
+      <svg class="fairy-loop-arrow" viewBox="0 0 44 34" width="34" height="26" fill="none">
+        <path
+          d="M3 28C17 31 32 26 30 18C28 10 17 13 20 21C23 29 40 17 37 3M31 8L37 3L41 10"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+      <svg class="fairy-mobile-arrow" viewBox="0 0 84 44" width="76" height="40" fill="none">
+        <path
+          d="M3 35C20 37 32 29 25 20C19 13 11 19 17 25C32 41 63 22 78 8M68 9L78 8L75 18"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </span>
+  )}
 </button>
 
 <script>
@@ -145,6 +176,7 @@ const drawings = { 1: fairyOne, 2: fairyTwo, 3: fairyThree, 4: fairyFour };
 
 <style>
   .fairy-illustration {
+    position: relative;
     display: block;
     width: 100%;
     padding: 0;
@@ -159,6 +191,58 @@ const drawings = { 1: fairyOne, 2: fairyTwo, 3: fairyThree, 4: fairyFour };
   }
   .fairy-illustration:disabled {
     opacity: 1;
+  }
+  .fairy-click-hint {
+    position: absolute;
+    bottom: 1%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--muted);
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1.5;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .fairy-loop-arrow {
+    color: var(--pink);
+    flex-shrink: 0;
+    margin-top: -14px;
+  }
+  .fairy-mobile-arrow {
+    display: none;
+  }
+  @media (max-width: 700px) {
+    .fairy-click-hint {
+      left: calc(-14% - 20px);
+      bottom: 27%;
+      transform: none;
+      font-family: var(--font-display);
+      font-size: 18px;
+      color: var(--pink);
+    }
+    .fairy-loop-arrow {
+      display: none;
+    }
+    .fairy-mobile-arrow {
+      display: block;
+      position: absolute;
+      left: calc(100% + 3px);
+      bottom: 2px;
+      width: 34px;
+      height: 28px;
+      color: var(--pink);
+    }
+  }
+  .fairy-illustration:disabled .fairy-click-hint {
+    display: none;
+  }
+  .fairy-illustration:not(:disabled) {
+    cursor: pointer;
   }
   .fairy-illustration:focus-visible {
     outline: 2px solid var(--blue);

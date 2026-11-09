@@ -2,6 +2,7 @@
 import Ornament from '../components/Ornament.astro';
 import PageOutro from '../components/PageOutro.astro';
 import Layout from '../layouts/Layout.astro';
+import SocialLinks from '../components/SocialLinks.astro';
 import { projets } from '../data/projets';
 // Placez le portrait et le CV dans public/, puis renseignez leurs chemins.
 const portraitImage = '/images/commun/portrait.png';
@@ -80,6 +81,7 @@ const skills = [
             <span class="bio-cv-pending">Mon CV sera bientôt disponible</span>
           )}
         </div>
+        <SocialLinks />
       </div>
       <div class="bio-portrait-wrap">
         <div class="bio-portrait">
@@ -124,8 +126,7 @@ const skills = [
         <div>
           <p class="eyebrow">Compétences et outils</p>
           <h2 id="bio-skills-title">
-            Design, web
-            <br />
+            Design, web <br />
             <span class="handwritten">et audiovisuel.</span>
           </h2>
         </div>
