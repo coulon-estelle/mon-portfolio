@@ -56,7 +56,7 @@ html main.bordeaux-case {
 
 html[data-theme='light'] .project.olyvia,
 html[data-theme='light'] main.olyvia-case {
-  --project-bg: #f3f4ea;
+  --project-bg: #e4e8da;
   --project-surface: #e1e8d5;
   --project-accent: #536c46;
   --project-secondary: #994d69;
@@ -65,7 +65,7 @@ html[data-theme='light'] main.olyvia-case {
 }
 html[data-theme='light'] .project.nunc,
 html[data-theme='light'] main.nunc-case {
-  --project-bg: #fff5e8;
+  --project-bg: #eedfce;
   --project-surface: #f7dfbc;
   --project-accent: #963a0b;
   --project-secondary: #843b10;
@@ -74,7 +74,7 @@ html[data-theme='light'] main.nunc-case {
 }
 html[data-theme='light'] .project.lumimix,
 html[data-theme='light'] main.lumimix-case {
-  --project-bg: #f4f4ff;
+  --project-bg: #e1dbea;
   --project-surface: #e8def7;
   --project-accent: #a112a1;
   --project-secondary: #006d85;
@@ -83,7 +83,7 @@ html[data-theme='light'] main.lumimix-case {
 }
 html[data-theme='light'] .project.tiktak,
 html[data-theme='light'] main.tiktak-case {
-  --project-bg: #faf7f0;
+  --project-bg: #e9e0d5;
   --project-surface: #f0e6d7;
   --project-accent: #76543d;
   --project-secondary: #925860;
@@ -92,7 +92,7 @@ html[data-theme='light'] main.tiktak-case {
 }
 html[data-theme='light'] .project.solaire,
 html[data-theme='light'] main.solaire-case {
-  --project-bg: #fff5ff;
+  --project-bg: #edd8ed;
   --project-surface: #f7d2f9;
   --project-accent: #94008a;
   --project-secondary: #9b3d00;
@@ -101,7 +101,7 @@ html[data-theme='light'] main.solaire-case {
 }
 html[data-theme='light'] .project.bordeaux,
 html[data-theme='light'] main.bordeaux-case {
-  --project-bg: #fff8ed;
+  --project-bg: #ece1d5;
   --project-surface: #f6e4cb;
   --project-accent: #a3420b;
   --project-secondary: #12679a;
@@ -211,7 +211,7 @@ html main.feelm-case {
 }
 html[data-theme='light'] .project.feelm,
 html[data-theme='light'] main.feelm-case {
-  --project-bg: #fff8ee;
+  --project-bg: #eaded0;
   --project-surface: #f3e2c8;
   --project-accent: #73301e;
   --project-secondary: #006d7b;

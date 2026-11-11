@@ -1,88 +1,72 @@
-﻿# Portfolio — Estelle Coulon
+# Portfolio — Estelle Coulon
 
-Portfolio personnel réalisé avec Astro, TypeScript et du CSS personnalisé : accueil, trois études de cas, atelier personnel, à propos et contact. Les images définitives seront intégrées séparément.
+Portfolio de recherche d’alternance : https://portfolio.estelle-coulon.fr/
+Dépôt : https://github.com/coulon-estelle/mon-portfolio
 
-## Travailler sur le projet
+Trois études de cas principales (OLYVIA, NŨNC, LUMIMIX), quatre projets complémentaires, un atelier personnel, une page À propos, le CV et les coordonnées.
 
-Node 24 (compatible avec la contrainte du package), puis :
+## Installation et vérification
 
-```powershell
+Node.js 22.23.4 minimum (ou Node 24), puis :
+
+```sh
 npm ci
-npm run astro -- dev --background
-npm run astro -- dev status
-npm run astro -- dev logs
-npm run astro -- dev stop
-```
-
-Contrôles et production :
-
-```powershell
 npm run check
 npm run build
 npm run audit:site
-npm run format:check
-npx playwright install chromium
 npm run test:e2e
 ```
 
-Les tests navigateur démarrent et arrêtent leur propre prévisualisation sur le port 4322. Le test du formulaire intercepte la requête localement : aucun message n’est envoyé à Estelle ou à Netlify.
+Les tests nécessitent Chromium : `npx playwright install chromium`. Ils servent les fichiers de `dist/` sur le port 4322 et n’envoient aucun message.
 
-## Où modifier le contenu
+Développement : `npm run astro -- dev --background`.
+Gestion : `npm run astro -- dev status`, `dev logs` et `dev stop`.
 
-- `src/data/site.ts` : coordonnées, liens sociaux, hébergeur et domaine.
-- `src/data/projets.ts` : les trois cartes partagées entre l’accueil et la galerie.
-- `src/data/project-assets.ts` : moodboards, logos, icônes et mockups des projets. Les PNG importés sont optimisés par le service d’images Astro.
-- `src/pages/projets/` : contenu détaillé de chaque étude de cas.
-- `src/data/oeuvres.ts` : œuvres personnelles, image, titre, sous-titre, matériel et catégorie.
-- En haut des pages : chemins des images et liens de ressources encore absents.
-- `src/components/` : éléments partagés et interactions.
-- `src/styles/global.css` : palette, accueil, composants partagés, responsive et préférences.
+## Technologies et justification
 
-Les CSS propres aux pages sont dans leurs balises `style` et restent isolés par Astro. Les polices sont servies localement via Fontsource : aucun appel à Google Fonts. Les licences sont dans les paquets `@fontsource/*` et `CREDITS.md`.
+| Outil                    | Utilisation dans ce portfolio                                                                                    |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| Astro                    | Génération des pages HTML et des images optimisées au build. Aucun rendu serveur requis.                         |
+| TypeScript et JavaScript | Données des projets et œuvres, filtres, menu, carrousel, préférences et agrandissement des dessins.              |
+| CSS personnalisé         | Identité graphique, palettes des projets et adaptation mobile. Aucun thème acheté ni bibliothèque de composants. |
+| Fontsource               | Polices DM Sans, Space Grotesk et Just Me Again Down Here servies localement.                                    |
+| Sharp / Astro Image      | Images WebP adaptées aux tailles d’affichage.                                                                    |
+| Playwright et axe-core   | Vérification des parcours, du clavier, des débordements et de critères d’accessibilité automatisables.           |
 
-### Classement des images
+Les technologies citées dans les études de cas décrivent les projets correspondants, pas nécessairement le portfolio.
 
-```text
-public/images/
-├── commun/                  # fond de l’accueil et portrait
-├── atelier/                 # dessins personnels
-├── illustrations/
-│   ├── fees/
-│   ├── lunes/
-│   └── etoiles/
-└── projets/
-    ├── olyvia/              # logo, icône, moodboard, mockups mobile/desktop
-    ├── nunc/                # logos couleur/clair, icône, moodboard, mockups
-    └── lumimix/             # logo, présentation desktop, mockup mobile
-```
+## Contenu
 
-Les noms de fichiers sont en minuscules, sans espaces ni accents. Les originaux ont été déplacés, sans modification, et tous les chemins du code et des tests ont été actualisés. Les ressources générées sont gérées par Astro : ne pas modifier `dist/` ni `.netlify/` manuellement.
+- `src/data/site.ts` : domaine, coordonnées, CV, réseaux et hébergeur.
+- `src/data/projets.ts` et `src/pages/projets/` : sélection et présentations.
+- `src/data/oeuvres.ts` : onze œuvres personnelles, descriptions et matériel.
+- `src/components/` : navigation, liens sociaux, CV, illustrations et composants partagés.
+- `src/styles/` : styles communs et palettes ; les styles locaux restent dans les pages.
+- `public/` : images sources et PDF. Les fichiers générés sont dans `dist/`.
 
-## Déploiement sur Netlify
+## Hébergement et contact
 
-Le dépôt contient `netlify.toml` et génère un site statique avec `output: 'static'`, sans adaptateur serveur. Toutes les pages et les images optimisées sont produites dans `dist/`. Les contrôles et tests locaux servent directement ces fichiers.
+Hébergeur confirmé : Infomaniak. Site statique : publier le contenu de `dist/`.
+Le workflow `.github/workflows/deploy.yml` utilise les secrets `VPS_HOST`, `VPS_USER`, `VPS_SSH_KEY` et `VPS_KNOWN_HOSTS`, le port SSH 23029 et la destination `/var/www/portfolio/`. Aucun déploiement n’est déclenché par les vérifications locales.
 
-1. Importer le dépôt public GitHub dans Netlify.
-2. Copier les valeurs utiles de `.env.example` dans les variables d’environnement Netlify. Le domaine exact est obligatoire dans `PUBLIC_SITE_URL`, sous la forme `https://votre-domaine.fr`.
-3. Configurer le domaine personnel et vérifier le certificat HTTPS et les redirections vers une adresse unique.
-4. Activer la détection dans **Forms → Enable form detection**, puis redéployer. Le HTML contient un formulaire `contact`, un champ `form-name`, une protection honeypot et une page `/merci`.
-5. Dans **Forms → Submission notifications**, ajouter une notification **Email** pour le formulaire `contact`, avec **estellecoulon6@gmail.com** comme destinataire. Envoyer ensuite un vrai message de test et vérifier sa réception dans Gmail et dans Forms. Cette configuration se fait dans le compte Netlify, pas dans le HTML ; elle n’a pas été activée depuis cet environnement. L’objet du message est préparé dans le formulaire et le champ `email` permet de répondre au visiteur.
-6. Vérifier les coordonnées légales de l’hébergeur et sa documentation, les informations de confidentialité et la politique de conservation des échanges.
-7. Vérifier les pages en ligne, le sitemap, `robots.txt`, les URL canoniques et les partages sociaux après le déploiement.
+Le domaine est défini par défaut dans la configuration ; `PUBLIC_SITE_URL` peut le remplacer. Les URL canoniques, le sitemap et robots.txt sont générés au build.
 
-Sans `PUBLIC_SITE_URL`, le site n’invente pas de domaine : absence de canonical, sitemap vide et `robots.txt` qui bloque l’indexation. Ce blocage doit être levé par la configuration du domaine avant la publication finale.
+Le contact prépare un e-mail dans la messagerie du visiteur. Le visiteur doit ensuite l’envoyer ; le site ne prétend pas transmettre un message depuis le serveur. L’adresse e-mail et le téléphone restent accessibles directement.
 
-Les URL LinkedIn et Behance sont celles fournies par Estelle. Leur mise à jour éditoriale doit être effectuée sur les plateformes ; un lien fonctionnel ne suffit pas à satisfaire la consigne de présence professionnelle.
+## Livrables
 
-## Livrables du cours
+- [POSITIONNEMENT.md](POSITIONNEMENT.md) : cible, message, sélection et parcours.
+- [JOURNAL.md](JOURNAL.md) : traces disponibles, décisions et choix des réseaux.
+- [IA.md](IA.md) : assistance utilisée et corrections apportées.
+- [QUALITE.md](QUALITE.md) : contrôles du site, crédits et limites.
 
-- `IA.md` : usages de l’assistant et décisions/corrections.
-- `JOURNAL.md` : trace réelle disponible, sans semaines ou heures inventées.
-- `QUALITE.md` : contrôles exécutés, corrections et vérifications restantes.
-- `CREDITS.md` : droits et provenance des ressources.
+Les supports de soutenance et le lien de rendu sont remis séparément par Estelle.
 
-L’oral de maquette a déjà eu lieu : ses documents de préparation ne font pas partie de ce suivi. Il reste à terminer les images et leurs crédits, le CV, la configuration du domaine et la publication du site. Aucun changement n’est automatiquement poussé ou publié.
+## PDF consultables sur le site
 
-Le formulaire est présent dans la page contact générée et dans `public/contact-form.html` pour sa détection par Netlify Forms. Les notifications restent à configurer dans Netlify.
+- NŨNC : dossier du projet.
+- TiK•TaK : dossier de rendu.
+- Solaire : journée type de Bernard.
+- Feelm : dossier complet déjà associé à la page.
 
-Exécutez `npm run build` avant l’audit ou les tests pour vérifier la dernière version des fichiers statiques.
+Les PDF ajoutés sont dans `public/documents/projets/` ; celui de Feelm reste dans `public/images/projets/feelm/`. Les boutons ouvrent les documents dans un nouvel onglet et indiquent leur taille. La journée type n’est pas présentée comme un dossier complet. Aucun PDF n’a été associé arbitrairement à OLYVIA ou Bordeaux Surchauffe.

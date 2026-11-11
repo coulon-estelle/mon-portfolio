@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import ProjectDocument from '../../components/ProjectDocument.astro';
 import PageOutro from '../../components/PageOutro.astro';
 import ProjectImage from '../../components/ProjectImage.astro';
 import { projectAssets } from '../../data/project-assets';
@@ -83,6 +84,11 @@ const figmaUrl =
           Voir la journée type en grand <span class="sr-only">(nouvel onglet)</span>
           <span aria-hidden="true">↗</span>
         </a>
+        <ProjectDocument
+          href="/documents/projets/journee-type-solaire.pdf"
+          label="Consulter la journée type"
+          size="742 Ko"
+        />
       </div>
       <figure class="journey-image">
         <a
@@ -137,7 +143,7 @@ const figmaUrl =
     </section>
 
     <PageOutro
-      lead="Autres études de cas"
+      lead="Autres projets"
       heading="Découvrez les autres projets."
       href="/projets"
       label="Retour à la galerie"

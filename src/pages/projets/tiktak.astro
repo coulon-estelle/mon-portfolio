@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import ProjectDocument from '../../components/ProjectDocument.astro';
 import PageOutro from '../../components/PageOutro.astro';
 import ProjectImage from '../../components/ProjectImage.astro';
 import MockupLabel from '../../components/MockupLabel.astro';
@@ -48,6 +49,7 @@ const figmaUrl =
           <span aria-hidden="true">↗</span>
         </a>
       </div>
+      <ProjectDocument href="/documents/projets/dossier-tiktak.pdf" size="16,9 Mo" />
     </section>
 
     <section class="case-columns container" aria-label="Présentation du projet">
@@ -138,7 +140,7 @@ const figmaUrl =
       </div>
     </section>
     <PageOutro
-      lead="Autres études de cas"
+      lead="Autres projets"
       heading="Découvrez les autres projets."
       href="/projets"
       label="Retour à la galerie"

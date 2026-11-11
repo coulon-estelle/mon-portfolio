@@ -4,7 +4,11 @@ import PageOutro from '../components/PageOutro.astro';
 import FairyIllustration from '../components/FairyIllustration.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Layout from '../layouts/Layout.astro';
-import { projets } from '../data/projets';
+import { projets, projetsAccueil } from '../data/projets';
+const galerie = [
+  ...projetsAccueil,
+  ...projets.filter((projet) => !projetsAccueil.includes(projet)),
+];
 // Ajoutez votre illustration dans public/images/ puis son chemin ici.
 const filters = [
   { id: 'all', label: 'Tous les projets' },
@@ -39,8 +43,8 @@ const categories: Record<string, string> = {
           <span>design & web.</span>
         </h1>
         <p class="gallery-description">
-          Une sélection de projets en identité visuelle, conception d’interfaces et développement
-          web. Chaque étude de cas présente le contexte, mon rôle et les choix réalisés.
+          Trois études de cas — OLYVIA, NŨNC et LUMIMIX — pour présenter mon rôle et mes choix,
+          suivies de quelques projets complémentaires.
         </p>
         <a class="gallery-jump" href="#galerie">
           Explorer la sélection <span aria-hidden="true">✧</span>
@@ -79,7 +83,7 @@ const categories: Record<string, string> = {
         ))}
       </div>
       <div class="gallery-grid">
-        {projets.map((projet) => (
+        {galerie.map((projet) => (
           <div class="gallery-item" data-categories={categories[projet.id] || ''}>
             <ProjectCard projet={projet} />
           </div>

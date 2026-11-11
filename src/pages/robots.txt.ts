@@ -4,7 +4,7 @@ import { site } from '../data/site';
 export const GET: APIRoute = () =>
   new Response(
     site.url
-      ? `User-agent: *\nAllow: /\nDisallow: /merci\nSitemap: ${new URL('/sitemap.xml', site.url).href}\n`
+      ? `User-agent: *\nAllow: /\nSitemap: ${new URL('/sitemap.xml', site.url).href}\n`
       : 'User-agent: *\nDisallow: /\n',
     { headers: { 'Content-Type': 'text/plain; charset=utf-8' } },
   );

@@ -125,6 +125,9 @@ const pages = [
   '/projets/nunc',
   '/projets/lumimix',
   '/projets/bordeaux-surchauffe',
+  '/projets/tiktak',
+  '/projets/solaire',
+  '/projets/feelm',
   '/mentions-legales',
 ];
 
@@ -194,7 +197,7 @@ test('Préférences, filtres et liens de projets', async ({ page }) => {
     [],
   );
   await page.goto('/projets');
-  await expect(page.locator('.gallery-item')).toHaveCount(4);
+  await expect(page.locator('.gallery-item')).toHaveCount(7);
   await expect(
     page.getByRole('link', {
       name: 'Découvrir le projet Bordeaux Surchauffe',
@@ -216,7 +219,7 @@ test('Préférences, filtres et liens de projets', async ({ page }) => {
   await page.screenshot({ path: 'test-results/bordeaux-surchauffe.png', fullPage: true });
   await page.goto('/projets');
   await page.getByRole('button', { name: 'Web design', exact: true }).click();
-  await expect(page.locator('.gallery-item:visible')).toHaveCount(2);
+  await expect(page.locator('.gallery-item:visible')).toHaveCount(4);
   await page.getByRole('link', { name: 'Découvrir le projet LUMIMIX', exact: true }).click();
   await expect(page).toHaveURL(/projets\/lumimix/);
   await expect(page.getByRole('link', { name: /aperçu mobile/ })).toHaveAttribute(
@@ -242,12 +245,15 @@ test('Menu, carrousel tactile et clavier', async ({ page }) => {
   await expect(page).toHaveURL(/projets\/lumimix/);
 });
 
-test('Contact : validation et configuration Netlify, aucun envoi réel', async ({ page }) => {
+test('Contact : préparation d’un e-mail, aucun envoi automatique', async ({ page }) => {
   await page.goto('/contact');
   await expect(page.locator('form[name=contact]')).toHaveAttribute('method', 'POST');
-  await expect(page.locator('form[name=contact]')).toHaveAttribute('data-netlify', 'true');
-  await expect(page.locator('input[name=form-name]')).toHaveValue('contact');
-  await page.getByRole('button', { name: 'Envoyer mon message' }).click();
+  await expect(page.locator('form[name=contact]')).toHaveAttribute(
+    'action',
+    'mailto:estellecoulon6@gmail.com',
+  );
+  await expect(page.locator('form[name=contact]')).not.toHaveAttribute('data-netlify');
+  await page.getByRole('button', { name: 'Préparer mon e-mail' }).click();
   expect(
     await page
       .locator('#contact-name')
@@ -256,19 +262,19 @@ test('Contact : validation et configuration Netlify, aucun envoi réel', async (
   await page.getByLabel('Votre nom').fill('Test local');
   await page.getByLabel('Votre e-mail').fill('test@example.com');
   await page.getByLabel('Votre message').fill('Vérification locale du formulaire, sans envoi.');
-  let received = '';
-  await page.route('**/merci', async (route) => {
-    received = route.request().postData() || '';
-    await route.fulfill({
-      status: 200,
-      contentType: 'text/html; charset=utf-8',
-      body: '<h1>Réception simulée</h1>',
-    });
-  });
-  await page.getByRole('button', { name: 'Envoyer mon message' }).click();
-  await expect(page.getByRole('heading', { name: 'Réception simulée' })).toBeVisible();
-  expect(received).toContain('form-name=contact');
-  expect(received).toContain('name=Test+local');
+  await page.getByRole('checkbox', { name: 'Alternance', exact: true }).check();
+  await page.getByRole('button', { name: 'Préparer mon e-mail' }).click();
+  await expect(page.locator('[data-contact-status]')).toContainText(
+    'Vérifiez le message puis envoyez-le',
+  );
+  const prepared = new URL(
+    (await page.locator('[data-contact-fallback]').getAttribute('href')) || '',
+  );
+  expect(prepared.protocol).toBe('mailto:');
+  expect(prepared.searchParams.get('subject')).toContain('Alternance');
+  expect(prepared.searchParams.get('body')).toContain('Test local');
+  expect(prepared.searchParams.get('body')).toContain('test@example.com');
+  await expect(page).toHaveURL(/\/contact\/?$/);
 });
 
 test('Navigation utilisable sans JavaScript', async ({ browser }) => {
@@ -283,6 +289,6 @@ test('Navigation utilisable sans JavaScript', async ({ browser }) => {
     .getByRole('link', { name: 'Projets', exact: true })
     .click();
   await expect(page).toHaveURL(/projets/);
-  await expect(page.locator('.gallery-item')).toHaveCount(3);
+  await expect(page.locator('.gallery-item')).toHaveCount(7);
   await context.close();
 });

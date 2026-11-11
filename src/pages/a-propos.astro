@@ -3,10 +3,11 @@ import Ornament from '../components/Ornament.astro';
 import PageOutro from '../components/PageOutro.astro';
 import Layout from '../layouts/Layout.astro';
 import SocialLinks from '../components/SocialLinks.astro';
-import { projets } from '../data/projets';
+import CvDownload from '../components/CvDownload.astro';
+import { projetsAccueil } from '../data/projets';
+import { Image } from 'astro:assets';
+import portraitImage from '../../public/images/commun/portrait.png';
 // Placez le portrait et le CV dans public/, puis renseignez leurs chemins.
-const portraitImage = '/images/commun/portrait.png';
-const cvUrl = '';
 const skills = [
   {
     name: 'Design',
@@ -65,32 +66,31 @@ const skills = [
         <div class="bio-opportunity">
           <span aria-hidden="true">✧</span>
           <p>
-            Je recherche une <strong>alternance en création numérique ou en communication</strong>,
-            pour continuer à apprendre et participer à des projets variés.
+            Je recherche en priorité une{' '}
+            <strong>alternance en création numérique ou en communication</strong>, pour continuer à
+            apprendre et participer à des projets variés.
           </p>
         </div>
         <div class="bio-actions">
           <a class="button button-primary" href="/contact">
             Me contacter
           </a>
-          {cvUrl ? (
-            <a class="bio-cv" href={cvUrl} download>
-              Télécharger mon CV
-            </a>
-          ) : (
-            <span class="bio-cv-pending">Mon CV sera bientôt disponible</span>
-          )}
         </div>
+        <CvDownload />
         <SocialLinks />
       </div>
       <div class="bio-portrait-wrap">
         <div class="bio-portrait">
           {portraitImage ? (
-            <img
+            <Image
               src={portraitImage}
               alt="Portrait d’Estelle Coulon"
               width="470"
               height="597"
+              widths={[320, 470, 940]}
+              sizes="(max-width: 700px) 85vw, 470px"
+              format="webp"
+              quality={85}
               fetchpriority="high"
             />
           ) : (
@@ -109,8 +109,8 @@ const skills = [
     </section>
     <section class="bio-facts container" aria-label="Quelques repères">
       <div>
-        <span>{projets.length} projets</span>
-        <p>Études de cas</p>
+        <span>{projetsAccueil.length} études de cas</span>
+        <p>Ma sélection principale</p>
       </div>
       <div>
         <span>Mode & MMI</span>

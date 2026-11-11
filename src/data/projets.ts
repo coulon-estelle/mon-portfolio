@@ -57,7 +57,7 @@ export const projets = [
     style: 'nunc',
     accroche: 'Les bonnes soirées commencent ici.',
     description:
-      'Une webapp pensée pour organiser des soirées entre amis en toute sécurité. Une identité chaleureuse et expressive, déclinée en maquettes et supports graphiques.',
+      'Une webapp pensée pour organiser des soirées entre amis et prévoir son retour. Une identité chaleureuse et expressive, déclinée en maquettes et supports graphiques.',
     livrables: 'Identité visuelle · Maquettes · Supports graphiques',
   },
   {

@@ -1609,7 +1609,7 @@ html[data-motion='off'] .project:hover .project-visual img {
 }
 html[data-theme='light'] {
   color-scheme: light;
-  --bg: #faf3f1;
+  --bg: #e8dce9;
   --ink: #361d32;
   --pink: #984363;
   --hot: #b72f68;
@@ -1623,23 +1623,23 @@ html[data-theme='light'] body {
   color: var(--ink);
 }
 html[data-theme='light'] .site-header {
-  background: linear-gradient(100deg, #fff7f3ed, #eee4faed);
+  background: linear-gradient(100deg, #ecdee8f2, #dfd3ebf2);
   border-bottom-color: #9872b340;
 }
 html[data-theme='light'] .nav-contact {
-  background: #f0dbe5;
+  background: #e5cbdc;
   color: #76304f;
   border-color: #b77a94;
 }
 html[data-theme='light'] .hero-shade {
   background:
-    linear-gradient(0deg, #faf3f1 0%, #faf3f166 65%), linear-gradient(90deg, #faf3f1e8, #faf3f14d);
+    linear-gradient(0deg, #e8dce9 0%, #e8dce966 65%), linear-gradient(90deg, #e8dce9e8, #e8dce94d);
 }
 html[data-theme='light'] .hero h1 > span:first-child {
   color: #93435f;
 }
 html[data-theme='light'] .portrait-placeholder {
-  background: radial-gradient(ellipse, #dfc9f0aa, #fff4f455);
+  background: radial-gradient(ellipse, #dfc9f0aa, #e5cddd55);
   border-color: #a881bf;
 }
 html[data-theme='light'] .big-asterisk {
@@ -1660,7 +1660,7 @@ html[data-theme='light'] .button-primary:hover {
   color: #461a32;
 }
 html[data-theme='light'] .project {
-  background: linear-gradient(155deg, var(--card-tint), #fff9f5 96%);
+  background: linear-gradient(155deg, var(--card-tint), #e8dce9 96%);
   box-shadow: 0 8px 28px #77527b16;
 }
 html[data-theme='light'] .project.olyvia {
@@ -1684,36 +1684,36 @@ html[data-theme='light'] .project .project-description {
 html[data-theme='light'] .project::after {
   background: radial-gradient(
     circle at var(--shine-x, 50%) var(--shine-y, 30%),
-    #ffffff88,
+    #f0dfee44,
     transparent 48%
   );
 }
 html[data-theme='light'] .about-section {
   background:
     radial-gradient(ellipse at 10% 80%, #c9e6f188, transparent 60%),
-    linear-gradient(115deg, #f6e5ec, #ece0f5 65%, #f9eeef);
+    linear-gradient(115deg, #e8d1df, #ded0e9 65%, #e8d7e2);
   border-color: #aa81be55;
 }
 html[data-theme='light'] .about-symbol span {
   color: #542c46;
 }
 html[data-theme='light'] .skill-tags span {
-  background: #f7f0fc;
+  background: #e6d9ed;
   border-color: #b291cc;
   color: #76509c;
 }
 html[data-theme='light'] .skill-tags span:nth-child(even) {
-  background: #edf7fc;
+  background: #d9e4ed;
   border-color: #86b3c9;
   color: #276489;
 }
 html[data-theme='light'] .skill-tags span:first-child {
-  color: #984363;
+  color: #81334f;
   border-color: #c18aa3;
-  background: #f9e9f0;
+  background: #e8d2df;
 }
 html[data-theme='light'] .portfolio-footer {
-  background: radial-gradient(ellipse at 50% 15%, #dbc5ed, #efe2f2 40%, #f4e5e8 85%);
+  background: radial-gradient(ellipse at 50% 15%, #d4bbdf, #dfcfe7 40%, #e4d0dd 85%);
   color: #664358;
   border-color: #ae85c8;
 }
@@ -1721,7 +1721,7 @@ html[data-theme='light'] .footer-copyright {
   border-color: #c99ab147;
 }
 html[data-theme='light'] .footer-legal-dialog {
-  background: #fff8fc;
+  background: #eadde9;
   color: var(--ink);
 }
 html[data-theme='light'] .fairy-star {
@@ -1983,7 +1983,7 @@ html[data-theme='light'] .preference-switch[data-theme-toggle][aria-checked='tru
     padding: 7px 0;
   }
   html[data-theme='light'] .site-header .nav-links {
-    background: #faf3f9;
+    background: #e8dce9;
     box-shadow: 0 20px 35px #73517d20;
   }
   .hero,

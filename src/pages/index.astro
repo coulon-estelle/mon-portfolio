@@ -4,10 +4,11 @@ import FairyIllustration from '../components/FairyIllustration.astro';
 import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import SocialLinks from '../components/SocialLinks.astro';
+import CvDownload from '../components/CvDownload.astro';
 import { projetsAccueil as projets } from '../data/projets';
 import { site } from '../data/site';
-// Renseignez ces chemins lorsque vos images sont dans public/images/.
-const heroImage = '/images/commun/hero.png';
+import { Image } from 'astro:assets';
+import heroImage from '../../public/images/commun/hero.png';
 // Ajoutez votre adresse e-mail pour activer le lien de contact.
 const email = site.email;
 ---
@@ -22,13 +23,26 @@ const email = site.email;
           ))}
         </div>
       )}
-      {heroImage && <img class="hero-background" src={heroImage} alt="" fetchpriority="high" />}
+      {heroImage && (
+        <Image
+          class="hero-background"
+          src={heroImage}
+          alt=""
+          width={1920}
+          widths={[480, 960, 1440, 1920]}
+          sizes="100vw"
+          format="webp"
+          quality={80}
+          loading="eager"
+          fetchpriority="high"
+        />
+      )}
       <div class="hero-shade" aria-hidden="true"></div>
       <div class="container hero-inner">
         <div class="hero-copy">
           <p class="eyebrow">
             <span class="little-star" aria-hidden="true">
-              ✳
+              <Ornament kind="star-violet" width={23} eager />
             </span>{' '}
             Portfolio créatif — 2026
           </p>
@@ -45,7 +59,7 @@ const email = site.email;
           </p>
           <p class="hero-role">Étudiante en BUT MMI · Design graphique & interfaces</p>
           <p class="hero-availability">
-            Je recherche une alternance en création numérique ou en communication.
+            Je recherche en priorité une alternance en création numérique ou en communication.
           </p>
           <a class="button button-primary" href="#projets">
             Découvrir mes projets
@@ -63,7 +77,7 @@ const email = site.email;
             <Ornament kind="star-pink" width={32} />
           </span>
           <FairyIllustration
-            variant={2}
+            variant={4}
             width={460}
             eager
             alt="Fée dessinée par Estelle Coulon"
@@ -184,9 +198,7 @@ const email = site.email;
           <Ornament kind="star-blue" width={58} />
         </span>
       </h2>
-      <p>
-        Vous pouvez me contacter pour une proposition d’alternance ou une question sur mon travail.
-      </p>
+      <p>Je recherche en priorité une alternance en création numérique ou en communication.</p>
       {email ? (
         <a class="button button-primary" href={`mailto:${email}`}>
           Écrivez-moi
@@ -194,6 +206,7 @@ const email = site.email;
       ) : (
         <p class="contact-pending">Mes coordonnées arrivent bientôt.</p>
       )}
+      <CvDownload />
     </section>
   </main>
   <script>

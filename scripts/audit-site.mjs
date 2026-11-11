@@ -10,7 +10,6 @@ const routes = [
   '/a-propos',
   '/atelier',
   '/contact',
-  '/merci',
   '/mentions-legales',
   '/projets/olyvia',
   '/projets/tiktak',
@@ -32,6 +31,8 @@ for (const [index, route] of routes.entries()) {
 }
 const errors = [];
 let links = 0;
+const siteOrigin = new URL(process.env.PUBLIC_SITE_URL || 'https://portfolio.estelle-coulon.fr/')
+  .origin;
 for (const file of files) {
   const html = pages.get(file);
   const fail = (message) => errors.push(`${file}: ${message}`);
@@ -39,6 +40,9 @@ for (const file of files) {
   if ((html.match(/<h1\b/g) || []).length !== 1) fail('un H1 unique est requis');
   if (!/<title>[^<]+<\/title>/.test(html)) fail('titre absent');
   if (!/<meta\s+name="description"\s+content="[^"]+"/.test(html)) fail('description absente');
+  const canonical = html.match(/<link\s+rel="canonical"\s+href="([^"]+)"/);
+  if (!canonical || new URL(canonical[1]).origin !== siteOrigin)
+    fail('URL canonique absente ou domaine incorrect');
   if (/[ÃÂ]|â€|âœ|�/.test(html)) fail('encodage à contrôler');
   if (/fonts\.googleapis\.com|fonts\.gstatic\.com/.test(html)) fail('police distante');
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
@@ -64,16 +68,30 @@ for (const file of files) {
     links++;
   }
 }
-for (const document of ['IA.md', 'JOURNAL.md', 'QUALITE.md']) {
+for (const document of ['POSITIONNEMENT.md', 'IA.md', 'JOURNAL.md', 'QUALITE.md']) {
   assert(fs.existsSync(document), `Livrable absent : ${document}`);
 }
 const projectPages = files.filter((file) =>
-  /projets[\\/](?:olyvia|nunc|lumimix|bordeaux-surchauffe)[\\/]index\.html$/.test(file),
+  /projets[\\/](?:olyvia|nunc|lumimix)[\\/]index\.html$/.test(file),
 );
-assert.equal(projectPages.length, 4, 'Les quatre études de cas doivent être rendues');
+assert.equal(projectPages.length, 3, 'Les trois études de cas principales doivent être rendues');
+const sitemap = fs.readFileSync(path.join(output, 'sitemap.xml'), 'utf8');
+const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+assert.equal(
+  sitemapUrls.length,
+  routes.length - 1,
+  'Toutes les pages publiques doivent figurer au sitemap',
+);
+assert(
+  sitemapUrls.every((url) => new URL(url).origin === siteOrigin),
+  'Domaine du sitemap incorrect',
+);
+const robots = fs.readFileSync(path.join(output, 'robots.txt'), 'utf8');
+assert(
+  robots.includes('Allow: /') && robots.includes(`${siteOrigin}/sitemap.xml`),
+  'Indexation ou sitemap non configuré',
+);
 assert.equal(errors.length, 0, errors.join('\n'));
 console.log(
   `${files.length} pages vérifiées : H1, métadonnées, encodage, identifiants et ${links} destinations locales valides.`,
 );
-if (!process.env.PUBLIC_SITE_URL)
-  console.log('À finaliser : PUBLIC_SITE_URL pour les URL canoniques et le sitemap de production.');

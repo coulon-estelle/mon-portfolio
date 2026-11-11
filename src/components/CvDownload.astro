@@ -1,0 +1,45 @@
+---
+import { site } from '../data/site';
+---
+
+<div class="cv-download">
+  <p>Vous souhaitez m’accueillir en alternance ?</p>
+  <a href={site.cv} download="CV-Estelle-Coulon-Alternance.pdf">
+    Télécharger mon CV <span class="cv-format">PDF</span>
+    <span aria-hidden="true">↓</span>
+  </a>
+</div>
+
+<style>
+  .cv-download {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+  .cv-download p {
+    margin: 0 0 14px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+  .cv-download a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    min-height: 46px;
+    padding: 12px 18px;
+    border: 1px solid var(--pink);
+    border-radius: 24px;
+    color: var(--ink);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .cv-download a:hover {
+    background: color-mix(in srgb, var(--pink) 12%, transparent);
+  }
+  .cv-format {
+    color: var(--muted);
+    font-size: 10px;
+  }
+</style>

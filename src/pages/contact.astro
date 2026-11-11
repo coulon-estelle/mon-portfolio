@@ -3,6 +3,7 @@ import Ornament from '../components/Ornament.astro';
 import FairyIllustration from '../components/FairyIllustration.astro';
 import Layout from '../layouts/Layout.astro';
 import SocialLinks from '../components/SocialLinks.astro';
+import CvDownload from '../components/CvDownload.astro';
 import { site } from '../data/site';
 const email = site.email;
 // Ajoutez vos images dans public/images/ et renseignez leurs chemins ici.
@@ -32,9 +33,11 @@ const missions = [
           <span>ensemble.</span>
         </h1>
         <p class="contact-lead">
-          Je recherche une alternance dans la création numérique et la communication. J’aime créer
-          des identités visuelles, imaginer des interfaces et donner vie à des univers graphiques.
+          Je recherche en priorité une alternance dans la création numérique et la communication.
+          J’aime créer des identités visuelles, imaginer des interfaces et donner vie à des univers
+          graphiques.
         </p>
+        <CvDownload />
         <SocialLinks />
       </div>
       <div class="contact-illustration illustration-scene">
@@ -75,23 +78,18 @@ const missions = [
       <form
         class="contact-form"
         name="contact"
-        action="/merci"
+        action={`mailto:${email}`}
         method="POST"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
+        enctype="text/plain"
+        data-contact-email={email}
       >
-        <input type="hidden" name="form-name" value="contact" />
-        <input type="hidden" name="subject" value="Nouveau message — Portfolio Estelle Coulon" />
-        <p hidden>
-          <label>
-            Ne remplissez pas ce champ : <input name="bot-field" tabindex="-1" autocomplete="off" />
-          </label>
-        </p>
-        <p class="eyebrow">Formulaire de contact</p>
+        <p class="eyebrow">Contact par e-mail</p>
         <h2>
           Décrivez <span class="handwritten">votre demande.</span>
         </h2>
-        <p class="form-description">Quelques mots suffisent pour commencer.</p>
+        <p class="form-description">
+          Préparez votre message ici, puis envoyez-le depuis votre messagerie.
+        </p>
         <div class="contact-field">
           <label for="contact-name">
             Votre nom <span aria-hidden="true">*</span>
@@ -145,21 +143,48 @@ const missions = [
           ></textarea>
         </div>
         <p class="form-note">
-          Les champs marqués d’un * sont obligatoires. Vos informations servent uniquement à
-          répondre à votre demande.{' '}
+          Les champs marqués d’un * sont obligatoires. Ce formulaire ouvre votre messagerie : aucun
+          message n’est envoyé automatiquement.{' '}
           <a href="/mentions-legales">Consultez la politique de confidentialité.</a>
         </p>
         <button class="button button-primary" type="submit">
-          Envoyer mon message
+          Préparer mon e-mail
         </button>
+        <p class="form-note" role="status" data-contact-status></p>
 
         <p class="form-fallback">
-          Vous préférez écrire directement ? <a href={`mailto:${email}`}>Envoyez-moi un e-mail.</a>
+          Vous préférez écrire directement ?{' '}
+          <a href={`mailto:${email}`} data-contact-fallback>
+            Envoyez-moi un e-mail.
+          </a>
         </p>
       </form>
     </section>
   </main>
 </Layout>
+
+<script>
+  const contactForm = document.querySelector<HTMLFormElement>('[data-contact-email]');
+  contactForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!contactForm.reportValidity()) return;
+    const data = new FormData(contactForm);
+    const name = String(data.get('name') || '').trim();
+    const email = String(data.get('email') || '').trim();
+    const topics = data.getAll('mission').join(', ');
+    const message = String(data.get('message') || '').trim();
+    const subject = `Contact portfolio${topics ? ` — ${topics}` : ''}`;
+    const body = `Nom : ${name}\nE-mail : ${email}${topics ? `\nSujet : ${topics}` : ''}\n\n${message}`;
+    const url = `mailto:${contactForm.dataset.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const fallback = contactForm.querySelector<HTMLAnchorElement>('[data-contact-fallback]');
+    if (fallback) fallback.href = url;
+    const status = contactForm.querySelector('[data-contact-status]');
+    if (status)
+      status.textContent =
+        'Votre messagerie va s’ouvrir. Vérifiez le message puis envoyez-le. Si rien ne s’ouvre, utilisez le lien e-mail ci-dessous.';
+    window.location.href = url;
+  });
+</script>
 
 <style>
   .contact-page {

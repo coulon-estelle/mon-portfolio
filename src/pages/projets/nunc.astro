@@ -5,6 +5,7 @@ import { projectAssets } from '../../data/project-assets';
 import Ornament from '../../components/Ornament.astro';
 import PageOutro from '../../components/PageOutro.astro';
 import Layout from '../../layouts/Layout.astro';
+import ProjectDocument from '../../components/ProjectDocument.astro';
 // Images à placer dans public/images/ ; renseignez ensuite leurs chemins.
 const logoImage = projectAssets.nunc.logo;
 const webappImage = projectAssets.nunc.home;
@@ -70,6 +71,7 @@ const steps = [
             <span>Projet collectif · BUT MMI</span>
             <span>Identité & interfaces</span>
           </div>
+          <ProjectDocument href="/documents/projets/dossier-nunc.pdf" size="1,1 Mo" />
         </div>
         <div class="citrus-decoration" aria-hidden="true">
           <span class="citrus-spark">
@@ -215,7 +217,7 @@ const steps = [
               aria-label={preview.label + ' (nouvel onglet)'}
             >
               <MockupLabel text={preview.label} />
-              <ProjectImage src={preview.image} alt={`Aper?u de ${preview.title}`} width={600} />
+              <ProjectImage src={preview.image} alt={`Aperçu de ${preview.title}`} width={600} />
             </a>
           </article>
         ))}

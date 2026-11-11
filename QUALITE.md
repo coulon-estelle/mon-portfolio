@@ -1,48 +1,60 @@
-﻿# Qualité web — état au 28 octobre 2026
+# Qualité web — relecture du 10 novembre 2026
 
-Bilan local du portfolio **avant intégration des images définitives**. Les résultats ci-dessous concernent la version contrôlée dans Chromium, pas un certificat de conformité ni une validation de l’hébergement final.
+Contrôles du build statique local. Les résultats ne constituent pas une certification d’accessibilité ni une preuve de publication.
 
-## Résultats exécutés
+## Contrôles propres au portfolio
 
-- `npm run check` : 0 erreur, 0 avertissement, 0 indication après correction des paramètres inutilisés.
-- `npm run build` : compilation SSR avec l’adaptateur Netlify ; les pages sont rendues par la fonction serveur.
-- `npm run audit:site` : 11 pages, 144 destinations locales valides ; langue française, un H1 par page, titres, descriptions, identifiants uniques et absence de caractères corrompus contrôlés.
-- `npm run test:e2e` : **8 tests réussis**. Le serveur local est arrêté automatiquement en fin de contrôle.
-- `npm install` / audit des dépendances : 0 vulnérabilité signalée lors de l’installation des dépendances de cette relecture. À refaire lors de futures mises à jour.
-- Formatage : Prettier avec le plugin Astro, encodage UTF-8 et règles communes au dépôt.
+| Domaine                   | Critère et méthode                                                                                          | Correction / état                                                                                                                                           |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Structure                 | Audit HTML : langue française, un H1, titre, description, identifiants et liens locaux sur toutes les pages | Audit exécuté sur le build ; les erreurs d’accents dans les textes alternatifs OLYVIA et NŨNC sont corrigées.                                               |
+| Sélection                 | Trois études de cas détaillées, autres travaux courts                                                       | OLYVIA, NŨNC et LUMIMIX sont sélectionnés à l’accueil et placés en premier dans la galerie.                                                                 |
+| Responsive                | Playwright à 320, 390 et 1440 px ; contrôle du débordement horizontal et du bas du footer                   | Espacements mobiles de l’accueil et séparation des mots autour des retours à la ligne corrigés.                                                             |
+| Clavier                   | Menu, liens, carrousel et fenêtre d’agrandissement                                                          | Échap, restitution du focus et navigation sans JavaScript vérifiés par les tests.                                                                           |
+| Accessibilité automatisée | axe-core, règles WCAG 2 A/AA et 2.1 AA, thèmes clair et sombre                                              | La relecture initiale a révélé le contraste de la première étiquette de compétences en clair ; couleur foncée corrigée. Résultat final consigné ci-dessous. |
+| Mouvements                | Préférence système et interrupteur du site                                                                  | Les fées sont désactivées si les animations sont réduites ; les étoiles cessent au changement de préférence.                                                |
+| Images                    | Chargement des logos et mockups ; ouverture d’un dessin en grand                                            | WebP générés au build pour les composants Astro. Les JPEG de l’atelier restent servis tels quels.                                                           |
+| Contact                   | Validation des champs et préparation du destinataire, du sujet et du corps de l’e-mail                      | Suppression de Netlify Forms ; aucun faux message de réception. Le visiteur doit envoyer depuis sa messagerie.                                              |
+| CV et réseaux             | Liens explicites sur accueil, Contact et À propos                                                           | CV téléchargeable ; profils LinkedIn et Behance fournis par Estelle. Leur actualisation éditoriale n’est pas attestée par un simple lien.                   |
+| Référencement             | Domaine, canonical, sitemap et robots.txt                                                                   | Domaine confirmé : https://portfolio.estelle-coulon.fr/. Les balises sont générées statiquement.                                                            |
+| Sobriété                  | Site sans runtime serveur, polices locales, images optimisées, pas de mesure d’audience                     | Astro, CSS personnalisé et JavaScript limité aux interactions. Aucun framework client ajouté.                                                               |
+| Juridique                 | Mentions, hébergeur réel, contact et attributions                                                           | Infomaniak renseigné ; anciennes références au traitement Netlify retirées. Voir crédits et limites ci-dessous.                                             |
 
-## Critères propres à ce site
+## Résultats de la relecture
 
-| Domaine             | Pourquoi ce critère compte ici                        | Contrôle et correction                                                                                                                                             | Résultat / limite                                                                                                                   |
-| ------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Structure et SEO    | Plusieurs pages et trois études de cas                | Audit HTML des titres, descriptions, H1, langue, liens et identifiants ; ajout d’Open Graph, du favicon, des canonical conditionnels, du sitemap et de robots      | Contrôles locaux réussis ; domaine personnel à renseigner                                                                           |
-| Navigation          | Cartes liées aux études de cas et filtres de galerie  | Test de filtre Web design, ouverture de LUMIMIX et URL des aperçus cliquables                                                                                      | Réussi                                                                                                                              |
-| Clavier et menu     | Header fixe et menu mobile                            | Échap ferme le menu et rend le focus ; navigation testée sans JavaScript ; liens et contrôles ont un focus visible                                                 | Réussi dans Chromium ; essai lecteur d’écran encore à faire                                                                         |
-| Responsive          | Typographies manuscrites et carrousel                 | Les neuf pages principales testées à 320, 390 et 1440 px en sombre, puis à 390 px en clair                                                                         | Aucun débordement horizontal détecté                                                                                                |
-| Footer              | Espace indésirable signalé sous le pied de page       | Mesure de l’écart entre le bas du footer et le bas du document sur les neuf pages aux quatre configurations                                                        | Écart inférieur ou égal à 1 px                                                                                                      |
-| ARIA et contrastes  | Palettes, interrupteurs et thèmes personnalisés       | axe-core, règles WCAG 2 A/AA et 2.1 AA sur les neuf pages aux quatre configurations                                                                                | 0 violation détectée sur les critères automatisables. Deux palettes corrigées avec `role=img`. Cela ne remplace pas un audit humain |
-| Mouvements          | Paillettes, apparitions et inclinaison des cartes     | Tests avec `prefers-reduced-motion`, interrupteur et persistance après rechargement ; pas de transformation au survol en réduction de mouvements                   | Réussi ; la préférence système reste prioritaire                                                                                    |
-| Carrousel           | Navigation tactile et boutons numérotés sur mobile    | Test du déplacement vers la troisième carte et de l’ouverture du projet ; remplacement de `scrollBy` par `scrollTo` pour ne pas bloquer sur le point intermédiaire | Réussi                                                                                                                              |
-| Contact             | Réception réelle nécessaire au cahier des charges     | Formulaire HTML POST Netlify, champs obligatoires, honeypot et page de retour. La requête est interceptée dans le test : aucun message réel n’est envoyé           | Configuration et validation réussies localement ; activation et réception sur Netlify à vérifier                                    |
-| Galerie personnelle | Voir une œuvre sans changer de page                   | `dialog` natif, titre, sous-titre, matériel, bouton fermer, Échap, restitution du focus                                                                            | Galerie vide en attente d’images : le parcours complet avec une œuvre réelle reste à tester                                         |
-| Code                | Explication devant le jury et maintenance             | Dépendances exactes, types Astro, données centralisées, mise en forme, retrait de CSS obsolète et de 42 déclarations déjà remplacées ou identiques                 | Le code doit encore être relu et compris par Estelle                                                                                |
-| Juridique           | Projets collectifs, formulaire et préférences locales | Page de mentions/confidentialité, rôles individuels, liens sociaux réels, crédits des polices, information Netlify Forms et liens vers le prestataire              | Crédits images, coordonnées complètes de l’hébergeur et politique de conservation à revalider avant publication                     |
+- `npm run check` : 0 erreur, 0 avertissement, 0 indication.
+- `npm run build` : génération statique réussie, images WebP comprises.
+- `npm run audit:site` : 14 pages et 347 destinations locales valides ; domaine des canonical, 13 URL du sitemap et autorisation d’indexation contrôlés.
+- `npm run test:e2e` : 13 tests réussis. Les 13 pages de navigation sont contrôlées dans quatre configurations : 1440, 390 et 320 px en sombre, puis 390 px en clair. Aucune violation axe-core détectée sur les règles testées ; cela ne remplace pas un audit manuel.
+- `npm run format:check` : réussi.
+- Fond d’accueil : original de 1 140 920 octets, versions WebP de 49 026 à 111 910 octets. Portrait : original de 502 311 octets, versions WebP de 43 270 à 87 198 octets. Les originaux sont conservés.
+- La tentative de lecture du domaine public depuis cet environnement n’a pas abouti. Ce résultat ne prouve pas une panne du site ; la validation de la version publiée reste à faire séparément.
 
-## Sobriété et poids observés
+## Crédits et ressources
 
-- Les polices sont locales : aucun appel à Google Fonts. Le build contient 8 fichiers WOFF2 pour un total de **114 108 octets**, et des variantes WOFF de repli. Chaque page ne charge que les fontes effectivement utilisées par le navigateur.
-- Les 8 feuilles CSS du build totalisent **113 468 octets**, avant compression ; c’est un total du site, pas le poids transféré d’une seule page.
-- Les scripts interactifs existent, même si Astro les intègre actuellement dans le HTML : ne pas confondre absence de fichier `.js` séparé et absence de JavaScript.
-- `hero.png` pèse **1 140 920 octets** : optimisation explicitement reportée à l’étape images. Prévoir AVIF/WebP, tailles adaptées et contrôle du rendu.
-- Pas de React/Vue ni de dépendance d’animation côté client. Les paquets de test sont uniquement des outils de développement.
-- Pas de publicité ni de mesure d’audience ajoutée. Les préférences locales sont documentées et peuvent être effacées depuis les mentions.
+- Code : Astro (MIT), TypeScript, JavaScript et CSS personnalisé ; assistance déclarée dans `IA.md`.
+- Polices locales : DM Sans, Space Grotesk et Just Me Again Down Here, via Fontsource, sous SIL Open Font License 1.1. Les licences sont livrées avec les paquets.
+- Fées, lunes, étoiles et œuvres personnelles : fichiers fournis par Estelle ; les originaux restent dans `public/images/`.
+- Portrait : fourni par Estelle, utilisé dans À propos. Le crédit du photographe reste à préciser si applicable.
+- Fond d’accueil `hero.png` : fourni par Estelle ; provenance exacte et droit de publication à documenter.
+- Projets collectifs : les présentations distinguent le rôle personnel et le travail du groupe. Les droits sur les images contenues dans les moodboards restent à vérifier, même si les planches ont été composées par Estelle.
+- Atelier : les références à Alice (Disney), Ophélie (John Everett Millais), Gorillaz et La Grande Vague (Hokusai) sont indiquées dans les descriptions. La source du loup et la pochette exacte de Gorillaz restent à préciser.
+- Aucun visuel raster n’a été généré par IA dans cette conversation.
 
-## Publication et livrables encore à terminer
+Sources :
 
-- **Domaine du portfolio** : non communiqué ; ne pas confondre avec le domaine de LUMIMIX. Définir `PUBLIC_SITE_URL`, reconstruire et vérifier canonical/sitemap/robots. En son absence, robots bloque volontairement l’indexation.
-- **Netlify** : hébergeur confirmé par Estelle. Configuration prête, mais aucun déploiement effectué par cet audit. Activer Forms, redéployer, configurer les notifications et vérifier un envoi réel.
-- **Mentions** : adresse de Netlify vérifiée dans ses conditions officielles ; téléphone de l’hébergeur non vérifié. La durée maximale de douze mois doit être validée puis appliquée dans la messagerie et Netlify Forms.
-- **GitHub** : `coulon-estelle/mon-portfolio` confirmé public par le connecteur GitHub. La version locale modifiée n’a pas été commitée ni poussée par l’assistant. Deux commits locaux observés avant cette relecture, datés du 28 octobre 2026 ; ne pas antidater l’historique.
-- **Réseaux** : liens LinkedIn et Behance fournis et intégrés ; mise à jour des contenus des profils à faire ou à documenter.
-- **Images et CV** : étape suivante. Vérifier crédits, droits, textes alternatifs et poids. Compléter les URL NŨNC/Figma quand elles sont disponibles.
-- **Vérifications complémentaires** : Lighthouse, lecteur d’écran, Safari/iOS, Firefox et envoi du formulaire en production. Aucun score ou résultat non exécuté n’est présenté comme acquis.
+- [Licence Astro](https://github.com/withastro/astro/blob/main/LICENSE)
+- [Hokusai — British Museum](https://www.britishmuseum.org/collection/object/A_1937-0710-0-147)
+- [Ophélie — collection Tate](https://artsandculture.google.com/asset/ophelia/-wGU6cT4JixtPA?hl=en-GB)
+- [Coordonnées officielles Infomaniak](https://www.infomaniak.com/fr/cgv/impressum), consultées le 10 novembre 2026.
+
+Les crédits auparavant séparés ont été regroupés ici pour conserver un dossier réduit aux livrables demandés et à la documentation technique.
+
+## Vérifications humaines et externes restantes
+
+- Essai avec un lecteur d’écran et contrôle manuel des contrastes sur les images et décors.
+- Mesure Lighthouse/performance et vérification HTTPS, redirections, en-têtes de sécurité et indexation sur l’hébergement final.
+- Essai réel de contact depuis la messagerie du visiteur ; aucun e-mail n’a été envoyé automatiquement par les tests.
+- Application de la durée de conservation indiquée dans les mentions et confirmation des droits des ressources tierces.
+- Mise à jour effective des profils LinkedIn et Behance, avec des preuves dans le journal.
+- Présentation et explication du code par Estelle devant le jury.
+- Les supports et le lien de soutenance sont gérés séparément par Estelle. Les PDF associés aux projets du site sont listés dans le README ; les documents partiels sont libellés comme tels.
