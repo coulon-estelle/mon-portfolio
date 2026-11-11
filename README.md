@@ -51,7 +51,9 @@ Le workflow `.github/workflows/deploy.yml` utilise les secrets `VPS_HOST`, `VPS_
 
 Le domaine est défini par défaut dans la configuration ; `PUBLIC_SITE_URL` peut le remplacer. Les URL canoniques, le sitemap et robots.txt sont générés au build.
 
-Le contact prépare un e-mail dans la messagerie du visiteur. Le visiteur doit ensuite l’envoyer ; le site ne prétend pas transmettre un message depuis le serveur. L’adresse e-mail et le téléphone restent accessibles directement.
+Le formulaire transmet les messages à FormSubmit, qui les achemine vers `estellecoulon6@gmail.com`. L’envoi se fait depuis la page, sans ouvrir la messagerie du visiteur. Sans JavaScript, le formulaire utilise la page de traitement de FormSubmit. L’adresse e-mail et le téléphone restent accessibles directement.
+
+**Activation nécessaire une seule fois** : envoyer un premier message depuis le formulaire, ouvrir l’e-mail de confirmation reçu dans Gmail et activer le formulaire. Vérifier les indésirables si nécessaire, puis effectuer un nouvel essai pour confirmer la réception. Les tests locaux interceptent toutes les requêtes vers FormSubmit : ils ne déclenchent pas cette activation et n’envoient aucun message réel. Documentation : https://formsubmit.co/.
 
 ## Livrables
 

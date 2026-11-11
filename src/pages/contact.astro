@@ -78,18 +78,22 @@ const missions = [
       <form
         class="contact-form"
         name="contact"
-        action={`mailto:${email}`}
+        action={`https://formsubmit.co/${email}`}
         method="POST"
-        enctype="text/plain"
-        data-contact-email={email}
+        data-contact-endpoint={`https://formsubmit.co/ajax/${email}`}
       >
-        <p class="eyebrow">Contact par e-mail</p>
+        <input type="hidden" name="_subject" value="Contact — Portfolio Estelle Coulon" />
+        <input type="hidden" name="_template" value="table" />
+        <div hidden>
+          <label>
+            Ne pas remplir <input type="text" name="_honey" tabindex="-1" autocomplete="off" />
+          </label>
+        </div>
+        <p class="eyebrow">Formulaire de contact</p>
         <h2>
           Décrivez <span class="handwritten">votre demande.</span>
         </h2>
-        <p class="form-description">
-          Préparez votre message ici, puis envoyez-le depuis votre messagerie.
-        </p>
+        <p class="form-description">Envoyez-moi votre message directement depuis ce formulaire.</p>
         <div class="contact-field">
           <label for="contact-name">
             Votre nom <span aria-hidden="true">*</span>
@@ -143,20 +147,17 @@ const missions = [
           ></textarea>
         </div>
         <p class="form-note">
-          Les champs marqués d’un * sont obligatoires. Ce formulaire ouvre votre messagerie : aucun
-          message n’est envoyé automatiquement.{' '}
+          Les champs marqués d’un * sont obligatoires. Vos informations sont transmises par
+          FormSubmit pour me permettre de vous répondre.{' '}
           <a href="/mentions-legales">Consultez la politique de confidentialité.</a>
         </p>
         <button class="button button-primary" type="submit">
-          Préparer mon e-mail
+          Envoyer mon message
         </button>
         <p class="form-note" role="status" data-contact-status></p>
 
         <p class="form-fallback">
-          Vous préférez écrire directement ?{' '}
-          <a href={`mailto:${email}`} data-contact-fallback>
-            Envoyez-moi un e-mail.
-          </a>
+          Vous préférez écrire directement ? <a href={`mailto:${email}`}>Envoyez-moi un e-mail.</a>
         </p>
       </form>
     </section>
@@ -164,25 +165,65 @@ const missions = [
 </Layout>
 
 <script>
-  const contactForm = document.querySelector<HTMLFormElement>('[data-contact-email]');
-  contactForm?.addEventListener('submit', (event) => {
+  const contactForm = document.querySelector<HTMLFormElement>('[data-contact-endpoint]');
+  contactForm?.addEventListener('submit', async (event) => {
     event.preventDefault();
-    if (!contactForm.reportValidity()) return;
+    if (!contactForm.reportValidity() || contactForm.dataset.sending === 'true') return;
     const data = new FormData(contactForm);
-    const name = String(data.get('name') || '').trim();
-    const email = String(data.get('email') || '').trim();
+    if (String(data.get('_honey') || '').trim()) return;
+    const endpoint = contactForm.dataset.contactEndpoint;
+    const submit = contactForm.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const status = contactForm.querySelector<HTMLElement>('[data-contact-status]');
+    if (!endpoint || !submit || !status) return;
     const topics = data.getAll('mission').join(', ');
-    const message = String(data.get('message') || '').trim();
-    const subject = `Contact portfolio${topics ? ` — ${topics}` : ''}`;
-    const body = `Nom : ${name}\nE-mail : ${email}${topics ? `\nSujet : ${topics}` : ''}\n\n${message}`;
-    const url = `mailto:${contactForm.dataset.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    const fallback = contactForm.querySelector<HTMLAnchorElement>('[data-contact-fallback]');
-    if (fallback) fallback.href = url;
-    const status = contactForm.querySelector('[data-contact-status]');
-    if (status)
+    const payload = {
+      name: String(data.get('name') || '').trim(),
+      email: String(data.get('email') || '').trim(),
+      message: String(data.get('message') || '').trim(),
+      mission: topics,
+      _subject: `Contact portfolio${topics ? ` — ${topics}` : ''}`,
+      _template: 'table',
+      _honey: '',
+    };
+    contactForm.dataset.sending = 'true';
+    contactForm.setAttribute('aria-busy', 'true');
+    submit.disabled = true;
+    submit.textContent = 'Envoi en cours…';
+    status.setAttribute('role', 'status');
+    status.textContent = 'Votre message est en cours d’envoi.';
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 20000);
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+        credentials: 'omit',
+      });
+      const result = await response.json();
+      if (/activat|confirm|verif/i.test(String(result.message || ''))) {
+        status.setAttribute('role', 'alert');
+        status.textContent =
+          'Le formulaire est en cours d’activation. Votre message est conservé : vous pouvez me joindre par le lien e-mail ci-dessous.';
+        return;
+      }
+      if (!response.ok || (result.success !== true && result.success !== 'true'))
+        throw new Error('Envoi non confirmé');
+      contactForm.reset();
       status.textContent =
-        'Votre messagerie va s’ouvrir. Vérifiez le message puis envoyez-le. Si rien ne s’ouvre, utilisez le lien e-mail ci-dessous.';
-    window.location.href = url;
+        'Votre message a bien été transmis. Merci, je vous répondrai dès que possible.';
+    } catch {
+      status.setAttribute('role', 'alert');
+      status.textContent =
+        'L’envoi n’a pas pu être confirmé. Votre message est conservé. Réessayez dans un instant ou utilisez le lien e-mail ci-dessous.';
+    } finally {
+      window.clearTimeout(timeout);
+      delete contactForm.dataset.sending;
+      contactForm.removeAttribute('aria-busy');
+      submit.disabled = false;
+      submit.textContent = 'Envoyer mon message';
+    }
   });
 </script>
 

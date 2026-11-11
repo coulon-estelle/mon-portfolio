@@ -245,36 +245,79 @@ test('Menu, carrousel tactile et clavier', async ({ page }) => {
   await expect(page).toHaveURL(/projets\/lumimix/);
 });
 
-test('Contact : préparation d’un e-mail, aucun envoi automatique', async ({ page }) => {
+test('Contact : envoi direct simulé, validation et confirmation', async ({ page }) => {
+  let received: Record<string, string> | undefined;
+  let count = 0;
+  await page.route('https://formsubmit.co/**', async (route) => {
+    count++;
+    received = route.request().postDataJSON();
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        success: 'true',
+        message: 'Thanks! Form was submitted successfully.',
+      }),
+    });
+  });
   await page.goto('/contact');
-  await expect(page.locator('form[name=contact]')).toHaveAttribute('method', 'POST');
   await expect(page.locator('form[name=contact]')).toHaveAttribute(
     'action',
-    'mailto:estellecoulon6@gmail.com',
+    'https://formsubmit.co/estellecoulon6@gmail.com',
   );
-  await expect(page.locator('form[name=contact]')).not.toHaveAttribute('data-netlify');
-  await page.getByRole('button', { name: 'Préparer mon e-mail' }).click();
+  await page.getByRole('button', { name: 'Envoyer mon message' }).click();
   expect(
     await page
       .locator('#contact-name')
       .evaluate((input: HTMLInputElement) => input.validity.valueMissing),
   ).toBe(true);
+  expect(count).toBe(0);
   await page.getByLabel('Votre nom').fill('Test local');
   await page.getByLabel('Votre e-mail').fill('test@example.com');
-  await page.getByLabel('Votre message').fill('Vérification locale du formulaire, sans envoi.');
+  await page.getByLabel('Votre message').fill('Vérification locale, aucun envoi réel.');
   await page.getByRole('checkbox', { name: 'Alternance', exact: true }).check();
-  await page.getByRole('button', { name: 'Préparer mon e-mail' }).click();
+  await page.getByRole('button', { name: 'Envoyer mon message' }).click();
   await expect(page.locator('[data-contact-status]')).toContainText(
-    'Vérifiez le message puis envoyez-le',
+    'Votre message a bien été transmis',
   );
-  const prepared = new URL(
-    (await page.locator('[data-contact-fallback]').getAttribute('href')) || '',
-  );
-  expect(prepared.protocol).toBe('mailto:');
-  expect(prepared.searchParams.get('subject')).toContain('Alternance');
-  expect(prepared.searchParams.get('body')).toContain('Test local');
-  expect(prepared.searchParams.get('body')).toContain('test@example.com');
+  expect(count).toBe(1);
+  expect(received?.name).toBe('Test local');
+  expect(received?.email).toBe('test@example.com');
+  expect(received?.mission).toContain('Alternance');
+  expect(received?.message).toContain('aucun envoi réel');
+  await expect(page.locator('#contact-message')).toHaveValue('');
   await expect(page).toHaveURL(/\/contact\/?$/);
+});
+
+test('Contact : erreurs et activation gardent le message sans fausse confirmation', async ({
+  page,
+}) => {
+  for (const outcome of ['network', 'rejected', 'activation']) {
+    await page.route('https://formsubmit.co/**', async (route) => {
+      if (outcome === 'network') return route.abort('failed');
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          success: outcome === 'activation' ? 'true' : 'false',
+          message: outcome === 'activation' ? 'Please activate this form.' : 'Error',
+        }),
+      });
+    });
+    await page.goto('/contact');
+    await page.getByLabel('Votre nom').fill('Test local');
+    await page.getByLabel('Votre e-mail').fill('test@example.com');
+    await page.getByLabel('Votre message').fill('Message à conserver.');
+    await page.getByRole('button', { name: 'Envoyer mon message' }).click();
+    await expect(page.locator('[data-contact-status]')).toHaveAttribute('role', 'alert');
+    await expect(page.locator('[data-contact-status]')).toContainText(
+      outcome === 'activation' ? 'en cours d’activation' : 'n’a pas pu être confirmé',
+    );
+    await expect(page.locator('#contact-message')).toHaveValue('Message à conserver.');
+    await expect(page.getByRole('button', { name: 'Envoyer mon message' })).toBeEnabled();
+    await expect(page).toHaveURL(/\/contact\/?$/);
+    await page.unroute('https://formsubmit.co/**');
+  }
 });
 
 test('Navigation utilisable sans JavaScript', async ({ browser }) => {
