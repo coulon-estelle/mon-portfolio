@@ -1,0 +1,391 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectImage from '../../components/ProjectImage.astro';
+import PageOutro from '../../components/PageOutro.astro';
+import { projectAssets } from '../../data/project-assets';
+import type { ImageMetadata } from 'astro';
+const assets = projectAssets.portfolio;
+const illustrations = import.meta.glob<{ default: ImageMetadata }>(
+  '/public/images/illustrations/**/*.png',
+  { eager: true },
+);
+const groups = [
+  { folder: 'fees', title: 'Les fées', label: 'Fée', names: ['1', '2', '3', '4'] },
+  { folder: 'lunes', title: 'Les lunes', label: 'Lune', names: ['bleue', 'rose'] },
+  {
+    folder: 'etoiles',
+    title: 'Les étoiles',
+    label: 'Étoile',
+    names: ['bleue', 'rose', 'violette'],
+  },
+];
+---
+
+<Layout
+  title="Mon univers illustré — Estelle Coulon"
+  description="Les dessins de mon portfolio, les étapes de création d’une fée et mes deux bannières et ma photo de profil pour les réseaux sociaux professionnels et personnels."
+>
+  <main id="contenu">
+    <section class="intro container" aria-labelledby="illustrations-title">
+      <a class="back" href="/projets">
+        Tous les projets / Mon univers illustré
+      </a>
+      <div class="intro-grid">
+        <div>
+          <p class="eyebrow">Projet personnel · Illustration</p>
+          <h1 id="illustrations-title">
+            Mon univers <span class="handwritten">illustré.</span>
+          </h1>
+          <p>
+            J’ai dessiné les illustrations qui accompagnent mon portfolio : les fées, les lunes et
+            les étoiles. Ces dessins donnent au site un univers qui me ressemble. Toutes les
+            illustrations présentées ici, les bannières et la photo de profil ont été réalisées sur
+            ibis Paint.
+          </p>
+          <p>
+            J’ai aussi créé deux bannières et une photo de profil pour mes réseaux sociaux
+            professionnels et personnels.
+          </p>
+          <a class="jump" href="#dessin">
+            Voir les étapes du dessin ↓
+          </a>
+        </div>
+        <div class="hero-drawing">
+          <ProjectImage
+            src={assets.drawing}
+            alt="Mon illustration d’un personnage aux longs cheveux bruns et à la tenue beige"
+            width={420}
+            eager
+          />
+          <p class="sister-caption">
+            Un dessin réalisé à la demande de ma sœur, dans le même style que mon portfolio. Elle
+            n’est pas représentée en fée, mais ce dessin trouve sa place ici parce qu’il appartient
+            au même univers graphique.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="process container" id="dessin" aria-labelledby="process-title">
+      <div>
+        <p class="eyebrow">Les étapes du dessin · ibis Paint</p>
+        <h2 id="process-title">
+          Dessiner une <span class="handwritten">fée.</span>
+        </h2>
+        <p>
+          Ce GIF montre comment j’ai dessiné une des fées de mon portfolio, du début du dessin
+          jusqu’au résultat final.
+        </p>
+      </div>
+      <figure>
+        <img
+          class="process-gif"
+          src={assets.process}
+          alt="Animation montrant les étapes du dessin d’une fée du portfolio"
+          width="400"
+          height="400"
+          loading="lazy"
+        />
+        <figcaption>Les étapes de création d’une de mes fées.</figcaption>
+      </figure>
+    </section>
+
+    <section class="illustrations container" aria-labelledby="collection-title">
+      <p class="eyebrow">Les dessins du portfolio · ibis Paint</p>
+      <h2 id="collection-title">
+        Toute la <span class="handwritten">collection.</span>
+      </h2>
+      <p>
+        Les quatre fées, les deux lunes et les trois étoiles que j’ai dessinées pour accompagner la
+        navigation et les pages du site.
+      </p>
+      <p>
+        Les fées me représentent physiquement. J’ai choisi de me dessiner en fée des rêves,
+        déclinée en quatre poses dans l’univers de mon portfolio.
+      </p>
+      {groups.map((group) => (
+        <div class="illustration-group">
+          <h3>{group.title}</h3>
+          <div class:list={['illustration-grid', group.folder]}>
+            {Object.entries(illustrations)
+              .filter(([path]) => path.includes(`/${group.folder}/`))
+              .sort(([a], [b]) => a.localeCompare(b))
+              .map(([, illustration], index) => (
+                <figure>
+                  <ProjectImage
+                    src={illustration.default}
+                    alt={`${group.label} ${group.names[index]}, dessin réalisé sur ibis Paint`}
+                    width={440}
+                  />
+                  <figcaption>
+                    {group.label} {group.names[index]}
+                  </figcaption>
+                </figure>
+              ))}
+          </div>
+        </div>
+      ))}
+    </section>
+
+    <section class="social container" aria-labelledby="social-title">
+      <p class="eyebrow">Réseaux sociaux · Pro & perso</p>
+      <h2 id="social-title">
+        Un univers qui <span class="handwritten">m’accompagne.</span>
+      </h2>
+      <p>
+        J’ai décliné mes dessins en deux bannières et une photo de profil pour mes réseaux sociaux.
+      </p>
+      <div class="social-grid">
+        <div class="banners">
+          <figure>
+            <ProjectImage
+              src={assets.banner}
+              alt="Bannière rose aux spirales claires avec une fée à droite"
+              width={1050}
+            />
+            <figcaption>
+              Une première bannière, avec une fée sur un fond rose à spirales.
+            </figcaption>
+          </figure>
+          <figure>
+            <ProjectImage
+              src={assets.fairies}
+              alt="Bannière rose présentant quatre fées dans différentes poses"
+              width={1050}
+            />
+            <figcaption>Une seconde bannière qui réunit les fées.</figcaption>
+          </figure>
+        </div>
+        <figure class="profile">
+          <ProjectImage
+            src={assets.profile}
+            alt="Photo de profil illustrée : une fée aux cheveux bruns sur un fond rose"
+            width={420}
+          />
+          <figcaption>Ma photo de profil illustrée.</figcaption>
+        </figure>
+      </div>
+    </section>
+    <PageOutro
+      lead="Autres projets"
+      heading="Découvrez les autres projets."
+      href="/projets"
+      label="Retour à la galerie"
+      variant={2}
+    />
+  </main>
+</Layout>
+
+<style>
+  .intro {
+    padding-block: 125px 35px;
+  }
+  .back {
+    display: inline-block;
+    margin-bottom: 32px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .intro-grid,
+  .process {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+    gap: clamp(30px, 7vw, 100px);
+  }
+  .intro-grid {
+    align-items: center;
+  }
+  h1 {
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 1.1;
+    margin-block: 18px 28px;
+  }
+  h2 {
+    font-size: clamp(32px, 4vw, 46px);
+    line-height: 1.2;
+    margin-block: 16px 24px;
+  }
+  .handwritten {
+    color: var(--pink);
+  }
+  p:not(.eyebrow) {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.85;
+    max-width: 720px;
+  }
+  .jump {
+    display: inline-block;
+    margin-top: 22px;
+    font-size: 13px;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+  }
+  .hero-drawing :global(img) {
+    display: block;
+    width: 100%;
+    max-height: 450px;
+    object-fit: contain;
+  }
+  .hero-drawing .sister-caption {
+    font-size: 12px;
+    line-height: 1.7;
+    margin-top: 18px;
+  }
+  .process,
+  .illustrations,
+  .social {
+    padding-block: 40px 55px;
+  }
+  .process {
+    align-items: start;
+  }
+  .process .eyebrow {
+    margin-top: 0;
+  }
+  figure {
+    margin: 0;
+    min-width: 0;
+  }
+  .process-gif {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    border-radius: 16px;
+    background: #ffffff18;
+  }
+  figcaption {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .social-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 35px;
+    align-items: start;
+    margin-top: 30px;
+  }
+  .banners {
+    display: grid;
+    gap: 30px;
+  }
+  .social :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+  }
+  .profile {
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: #b878b018;
+  }
+  .illustration-group {
+    margin-top: 32px;
+  }
+  .illustration-group h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  .illustration-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 36px 24px;
+    align-items: center;
+    padding-block: 24px;
+  }
+  .illustration-grid.fees {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .illustration-grid figure {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    --float-angle: -2deg;
+  }
+  .illustration-grid figure:nth-child(2n) {
+    padding-top: 30px;
+    --float-angle: 2deg;
+  }
+  .illustration-grid figure:nth-child(3n) {
+    --float-angle: -1deg;
+  }
+  .illustration-grid figure:nth-child(2n) :global(img) {
+    animation-delay: -2.8s;
+    animation-duration: 7.5s;
+  }
+  .illustration-grid figure:nth-child(3n) :global(img) {
+    animation-delay: -4.5s;
+    animation-duration: 8s;
+  }
+  .illustration-grid :global(img) {
+    display: block;
+    width: 100%;
+    height: 210px;
+    object-fit: contain;
+    animation: illustration-float 7s ease-in-out infinite;
+  }
+  .illustration-grid.fees :global(img) {
+    height: 280px;
+  }
+  .illustration-grid figcaption {
+    text-align: center;
+  }
+  @keyframes illustration-float {
+    0%,
+    100% {
+      transform: translateY(5px) rotate(var(--float-angle));
+    }
+    50% {
+      transform: translateY(-7px) rotate(calc(var(--float-angle) * -1));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .illustration-grid :global(img) {
+      animation: none;
+    }
+  }
+  :global(html[data-motion='off']) .illustration-grid :global(img) {
+    animation: none;
+  }
+  @media (max-width: 700px) {
+    .illustration-grid,
+    .illustration-grid.fees {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .illustration-grid :global(img),
+    .illustration-grid.fees :global(img) {
+      height: 190px;
+    }
+    .intro {
+      padding-top: 110px;
+    }
+    .intro-grid,
+    .process,
+    .social-grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .hero-drawing {
+      max-width: 280px;
+      justify-self: center;
+    }
+    .process figure {
+      width: min(100%, 400px);
+      justify-self: center;
+    }
+    .profile {
+      max-width: 320px;
+      justify-self: center;
+    }
+    .process,
+    .social {
+      padding-block: 25px;
+    }
+  }
+</style>

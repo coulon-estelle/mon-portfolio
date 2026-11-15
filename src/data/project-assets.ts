@@ -21,9 +21,32 @@ import lumimixMobile from '../../public/images/projets/lumimix/mockup-mobile.png
 import bordeauxMoodboard from '../../public/images/projets/bordeaux-surchauffe/moodboard-bordeaux-surchauffe.png';
 import bordeauxLogo from '../../public/images/projets/bordeaux-surchauffe/Logo-bordeaux-surchauffe.png';
 import bordeauxMockup from '../../public/images/projets/bordeaux-surchauffe/mockup-bordeaux-surchauffe.png';
+import dnd01 from '../../public/images/projets/D&D/01-D&D.png';
+import dnd02 from '../../public/images/projets/D&D/02-D&D.png';
+import dnd03 from '../../public/images/projets/D&D/03-D&D.png';
+import dnd04 from '../../public/images/projets/D&D/04-D&D.png';
+import dnd05 from '../../public/images/projets/D&D/05-D&D.png';
+import dnd06 from '../../public/images/projets/D&D/06-D&D.png';
+import portfolioBanner from '../../public/images/projets/portfolio/banner-fée.png';
+import portfolioFairies from '../../public/images/projets/portfolio/bannière-fée.png';
+import portfolioProfile from '../../public/images/projets/portfolio/fée-pp.png';
+import portfolioDrawing from '../../public/images/projets/portfolio/soeur-fée.png';
 
 // Une seule source pour les cartes et les études de cas.
 export const projectAssets = {
+  portfolio: {
+    banner: portfolioBanner,
+    fairies: portfolioFairies,
+    profile: portfolioProfile,
+    drawing: portfolioDrawing,
+    process: '/images/projets/portfolio/dessin-fée.gif',
+  },
+  dnd: {
+    portraits: [dnd01, dnd02, dnd03, dnd04, dnd05, dnd06],
+    offire: dnd02,
+    intro: '/images/projets/D&D/IntroD&D.mov',
+    drawing: '/images/projets/D&D/D&D-dessin.gif',
+  },
   feelm: {
     moodboard: feelmMoodboard,
     mockup: feelmMockup,

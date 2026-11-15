@@ -14,6 +14,8 @@ const routes = [
   '/projets/nunc',
   '/projets/lumimix',
   '/projets/bordeaux-surchauffe',
+  '/projets/dnd',
+  '/projets/portfolio',
   '/mentions-legales',
 ];
 const escapeXml = (value: string) =>

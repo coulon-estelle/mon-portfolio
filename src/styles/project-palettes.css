@@ -1,4 +1,36 @@
 /* Palettes issues des identités et maquettes, partagées entre carte et étude de cas. */
+html .project.portfolio {
+  --project-bg: #30162e;
+  --project-surface: #512a48;
+  --project-accent: #f2b6d5;
+  --project-ink: #fff0f8;
+  --project-muted: #e2c6d8;
+}
+html[data-theme='light'] .project.portfolio {
+  --project-bg: #f5e3ee;
+  --project-surface: #ead0e2;
+  --project-accent: #84365f;
+  --project-ink: #3c2339;
+  --project-muted: #68445d;
+}
+html .project.dnd,
+html main.dnd-case {
+  --project-bg: #27151a;
+  --project-surface: #46272d;
+  --project-accent: #efb39d;
+  --project-secondary: #74d3cf;
+  --project-ink: #fff1e8;
+  --project-muted: #dfc5bc;
+}
+html[data-theme='light'] .project.dnd,
+html[data-theme='light'] main.dnd-case {
+  --project-bg: #faeee5;
+  --project-surface: #eed9cc;
+  --project-accent: #88382e;
+  --project-secondary: #286b69;
+  --project-ink: #3a2021;
+  --project-muted: #6b4743;
+}
 html .project.olyvia,
 html main.olyvia-case {
   --project-bg: #18251c;
@@ -142,6 +174,7 @@ html:is([data-theme], :not([data-theme])) article.project[class] .project-page-l
     .tiktak-case,
     .solaire-case,
     .bordeaux-case,
+    .dnd-case,
     .feelm-case
   ) {
   --bg: var(--project-bg);

@@ -1,0 +1,564 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectImage from '../../components/ProjectImage.astro';
+import PageOutro from '../../components/PageOutro.astro';
+import { projectAssets } from '../../data/project-assets';
+
+const descriptions = [
+  'Alexandre, notre maître du jeu, représenté avec ses cheveux bruns et son béret vert',
+  'Offire, mon personnage : un drakéïde rouge aux yeux turquoise',
+  'Benneth, personnage aux cheveux blonds et aux oreilles pointues',
+  'Personnage aux cheveux blancs, avec une barbe et une tenue bleue',
+  'Dorian, le barde de l’équipe, aux cheveux sombres tressés et à la cape noire',
+  'Calthiel, le mage de l’équipe, à la peau orangée, aux cornes courbées et aux yeux jaunes',
+];
+const captions = [
+  'Alexandre — Maître du jeu, représenté d’après son apparence réelle.',
+  'Offire — mon personnage, un drakéïde rouge.',
+  'Benneth',
+  '',
+  'Dorian — Barde',
+  'Calthiel — Mage',
+];
+---
+
+<Layout
+  title="D&D — Personnages & animation | Estelle Coulon"
+  description="Mes personnages D&D dessinés sur ibis Paint pour Twitch, dont Offire, mon drakéïde rouge, et ma première intro animée sur Procreate Dreams."
+>
+  <main id="contenu" class="dnd-case">
+    <section class="case-hero container" aria-labelledby="dnd-title">
+      <a class="case-back" href="/projets">
+        Tous les projets <span aria-hidden="true">/</span> D&D
+      </a>
+      <div class="hero-layout">
+        <div class="hero-copy">
+          <p class="eyebrow">Projet personnel · Illustration & animation</p>
+          <h1 id="dnd-title">D&D</h1>
+          <p class="case-tagline">
+            Nos personnages <span class="handwritten">à l’écran.</span>
+          </p>
+          <div class="case-tags">
+            <span>Twitch</span>
+            <span>ibis Paint</span>
+            <span>Procreate Dreams</span>
+          </div>
+          <a class="hero-link" href="#portraits-title">
+            Rencontrer les personnages <span aria-hidden="true">↓</span>
+          </a>
+        </div>
+        <div class="hero-portraits" aria-label="Aperçu des personnages">
+          <button
+            type="button"
+            class="hero-portrait portrait-left"
+            data-portrait="2"
+            aria-label="Voir Benneth en grand"
+            aria-haspopup="dialog"
+          >
+            <ProjectImage
+              src={projectAssets.dnd.portraits[2]}
+              alt={descriptions[2]}
+              width={360}
+              eager
+            />
+            <span>Benneth</span>
+          </button>
+          <button
+            type="button"
+            class="hero-portrait portrait-center"
+            data-portrait="1"
+            aria-label="Voir Offire en grand"
+            aria-haspopup="dialog"
+          >
+            <ProjectImage src={projectAssets.dnd.offire} alt={descriptions[1]} width={460} eager />
+            <span>
+              Offire <small>mon personnage</small>
+            </span>
+          </button>
+          <button
+            type="button"
+            class="hero-portrait portrait-right"
+            data-portrait="5"
+            aria-label="Voir Calthiel en grand"
+            aria-haspopup="dialog"
+          >
+            <ProjectImage
+              src={projectAssets.dnd.portraits[5]}
+              alt={descriptions[5]}
+              width={360}
+              eager
+            />
+            <span>
+              Calthiel <small>mage</small>
+            </span>
+          </button>
+          <p class="hero-note handwritten">Notre groupe prend vie ✧</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-columns container" aria-label="Présentation du projet">
+      <div>
+        <p class="eyebrow">Le projet</p>
+        <h2>
+          Des personnages qui <span class="handwritten">nous représentent.</span>
+        </h2>
+        <p>
+          Pour notre projet D&D destiné à être diffusé sur Twitch, j’ai dessiné les personnages qui
+          nous représentent à l’écran.
+        </p>
+      </div>
+      <div>
+        <p class="eyebrow">Mon rôle</p>
+        <h2>
+          Du dessin <span class="handwritten">à l’animation.</span>
+        </h2>
+        <p>
+          J’ai réalisé les portraits sur ibis Paint et l’introduction des vidéos sur Procreate
+          Dreams. Mon personnage est Offire, le drakéïde rouge.
+        </p>
+      </div>
+    </section>
+
+    <section class="portraits container" aria-labelledby="portraits-title">
+      <p class="eyebrow">Illustrations · ibis Paint</p>
+      <h2 id="portraits-title">
+        Les <span class="handwritten">personnages.</span>
+      </h2>
+      <div class="portrait-grid">
+        {projectAssets.dnd.portraits.map((portrait, index) => (
+          <figure>
+            <button
+              type="button"
+              class="portrait-button"
+              data-portrait={index}
+              aria-label={`Voir en grand : ${descriptions[index]}`}
+              aria-haspopup="dialog"
+            >
+              <ProjectImage src={portrait} alt={descriptions[index]} width={520} />
+            </button>
+            {captions[index] && <figcaption>{captions[index]}</figcaption>}
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <section class="intro drawing-section container" aria-labelledby="drawing-title">
+      <div class="drawing-copy">
+        <p class="eyebrow">Du trait au portrait · ibis Paint</p>
+        <h2 id="drawing-title">
+          Dessiner <span class="handwritten">Benneth.</span>
+        </h2>
+        <p>Ce GIF montre comment j’ai dessiné Benneth, le troisième personnage, sur ibis Paint.</p>
+      </div>
+      <img
+        class="drawing-video"
+        src={projectAssets.dnd.drawing}
+        alt="Animation montrant les étapes du dessin de Benneth sur ibis Paint"
+        width="400"
+        height="400"
+        loading="lazy"
+      />
+    </section>
+
+    <section class="intro container" aria-labelledby="intro-title">
+      <p class="eyebrow">Animation · Procreate Dreams</p>
+      <h2 id="intro-title">
+        Ma première <span class="handwritten">intro animée.</span>
+      </h2>
+      <p>
+        J’ai aussi créé l’introduction des vidéos sur Procreate Dreams. C’est ma toute première
+        réalisation vidéo : elle a ses imperfections, mais elle fait partie de mes premiers pas en
+        animation. À découvrir avec indulgence !
+      </p>
+      <video controls playsinline preload="metadata" aria-label="Introduction animée du projet D&D">
+        <source src={projectAssets.dnd.intro} />
+        Votre navigateur ne prend pas en charge cette vidéo.
+      </video>
+      <a class="video-link" href={projectAssets.dnd.intro} download>
+        Télécharger l’intro (.mov) si la lecture ne fonctionne pas
+      </a>
+    </section>
+
+    <PageOutro
+      lead="Autres projets"
+      heading="Découvrez les autres projets."
+      href="/projets"
+      label="Retour à la galerie"
+      variant={2}
+    />
+  </main>
+  <dialog class="portrait-dialog" aria-label="Personnage en grand">
+    <button type="button" class="portrait-close" aria-label="Fermer le portrait">
+      Fermer ×
+    </button>
+    <div class="portrait-full">
+      {projectAssets.dnd.portraits.map((portrait, index) => (
+        <figure data-full-portrait={index} hidden>
+          <ProjectImage src={portrait} alt={descriptions[index]} width={1400} />
+          <figcaption>{descriptions[index]}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </dialog>
+  <script>
+    const dialog = document.querySelector<HTMLDialogElement>('.portrait-dialog');
+    let trigger: HTMLButtonElement | null = null;
+    let previousOverflow = '';
+    document.querySelectorAll<HTMLButtonElement>('[data-portrait]').forEach((button) => {
+      button.addEventListener('click', () => {
+        if (!dialog) return;
+        trigger = button;
+        dialog.querySelectorAll<HTMLElement>('[data-full-portrait]').forEach((figure) => {
+          figure.hidden = figure.dataset.fullPortrait !== button.dataset.portrait;
+        });
+        previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        dialog.showModal();
+      });
+    });
+    dialog?.querySelector('.portrait-close')?.addEventListener('click', () => dialog.close());
+    dialog?.addEventListener('click', (event) => {
+      if (event.target === dialog) {
+        const rect = dialog.getBoundingClientRect();
+        if (
+          event.clientX < rect.left ||
+          event.clientX > rect.right ||
+          event.clientY < rect.top ||
+          event.clientY > rect.bottom
+        )
+          dialog.close();
+      }
+    });
+    dialog?.addEventListener('close', () => {
+      document.body.style.overflow = previousOverflow;
+      trigger?.focus();
+    });
+  </script>
+</Layout>
+
+<style>
+  .case-hero {
+    padding-block: 125px 35px;
+  }
+  .hero-layout {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    align-items: center;
+    gap: 35px;
+  }
+  .hero-copy {
+    min-width: 0;
+  }
+  .hero-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 22px;
+    margin-top: 28px;
+    font-size: 13px;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+  }
+  .hero-portraits {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: center;
+    padding: 35px 8px 65px;
+    isolation: isolate;
+  }
+  .hero-portraits::before {
+    content: '';
+    position: absolute;
+    inset: 5% 0 10%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, #b9674a30, transparent 70%);
+    z-index: -1;
+  }
+  .hero-portrait {
+    position: relative;
+    padding: 8px;
+    background: color-mix(in srgb, var(--project-accent) 15%, transparent);
+    border: 1px solid #ba8b72;
+    border-radius: 12px;
+    box-shadow: 0 20px 45px #160b1633;
+  }
+  .hero-portrait :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+  .hero-portrait > span {
+    display: block;
+    padding: 9px 2px 3px;
+    color: var(--ink);
+    text-align: center;
+    font-size: 15px;
+  }
+  .hero-portrait small {
+    display: block;
+    font-size: 10px;
+  }
+  .portrait-left {
+    rotate: -10deg;
+    translate: 12% 0;
+  }
+  .portrait-center {
+    z-index: 2;
+    scale: 1.18;
+  }
+  .portrait-right {
+    rotate: 11deg;
+    translate: -12% 6%;
+  }
+  .hero-note {
+    position: absolute;
+    bottom: 0;
+    right: 5%;
+    font-size: clamp(26px, 2.8vw, 40px);
+    rotate: -4deg;
+    margin: 0;
+  }
+  .case-back {
+    display: inline-flex;
+    gap: 14px;
+    color: var(--muted);
+    font-size: 11px;
+    margin-bottom: 40px;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(72px, 12vw, 145px);
+    line-height: 1.1;
+    margin: 18px 0 24px;
+  }
+  .case-tagline {
+    font-size: 21px;
+  }
+  .handwritten {
+    color: var(--pink);
+  }
+  .case-tagline .handwritten {
+    font-size: 42px;
+  }
+  .case-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 26px;
+  }
+  .case-tags span {
+    border: 1px solid var(--line);
+    padding: 9px 14px;
+    border-radius: 24px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .case-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(35px, 7vw, 100px);
+    padding-block: 30px 55px;
+  }
+  h2 {
+    font-size: clamp(30px, 3.5vw, 42px);
+    line-height: 1.2;
+    margin: 16px 0 26px;
+  }
+  .case-columns p:not(.eyebrow),
+  .intro > p:not(.eyebrow) {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.85;
+    max-width: 780px;
+  }
+  .drawing-section {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
+    align-items: start;
+    gap: clamp(28px, 6vw, 90px);
+  }
+  .drawing-copy > .eyebrow {
+    margin-top: 0;
+  }
+  .drawing-copy > p:not(.eyebrow) {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.85;
+    max-width: 480px;
+  }
+  .drawing-section .drawing-video {
+    margin: 0;
+    justify-self: end;
+  }
+  .portraits,
+  .intro {
+    padding-block: 25px 55px;
+  }
+  .portrait-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+  }
+  figure {
+    margin: 0;
+    min-width: 0;
+  }
+  figure :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    background: transparent;
+  }
+  .portrait-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: color-mix(in srgb, var(--project-accent) 15%, transparent);
+  }
+  .portrait-button,
+  .hero-portrait {
+    cursor: zoom-in;
+    backdrop-filter: blur(10px);
+    transition:
+      transform 280ms ease,
+      box-shadow 280ms ease,
+      background 280ms ease;
+  }
+  .portrait-button:is(:hover, :focus-visible),
+  .hero-portrait:is(:hover, :focus-visible) {
+    transform: translateY(-8px) scale(1.025);
+    box-shadow: 0 18px 40px #160b1640;
+    background: color-mix(in srgb, var(--project-accent) 25%, transparent);
+    outline: 2px solid var(--project-accent);
+    outline-offset: 4px;
+    z-index: 3;
+  }
+  .portrait-dialog {
+    width: min(820px, calc(100vw - 32px));
+    max-height: 92dvh;
+    padding: 18px;
+    border: 1px solid #efb39d66;
+    border-radius: 20px;
+    background: #27151aeb;
+    color: #fff1e8;
+  }
+  .portrait-dialog::backdrop {
+    background: #120b16c9;
+    backdrop-filter: blur(8px);
+  }
+  .portrait-close {
+    display: block;
+    margin: 0 0 16px auto;
+    padding: 10px 16px;
+    border: 1px solid #efb39d88;
+    border-radius: 25px;
+    background: #ffffff12;
+    color: inherit;
+    cursor: pointer;
+  }
+  .portrait-full :global(img) {
+    width: 100%;
+    max-height: 72dvh;
+    object-fit: contain;
+    background: #ffffff14;
+  }
+  .portrait-full figcaption {
+    color: #fff1e8;
+    text-align: center;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .portrait-button,
+    .hero-portrait {
+      transition: none;
+    }
+    .portrait-button:is(:hover, :focus-visible),
+    .hero-portrait:is(:hover, :focus-visible) {
+      transform: none;
+    }
+  }
+  :global(html[data-motion='off']) .portrait-button,
+  :global(html[data-motion='off']) .hero-portrait {
+    transition: none;
+  }
+  :global(html[data-motion='off']) .portrait-button:is(:hover, :focus-visible),
+  :global(html[data-motion='off']) .hero-portrait:is(:hover, :focus-visible) {
+    transform: none;
+  }
+  figcaption {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  video {
+    display: block;
+    width: 100%;
+    max-height: 75vh;
+    margin-top: 28px;
+    border-radius: 14px;
+    background: #151018;
+  }
+  .drawing-video {
+    display: block;
+    border-radius: 14px;
+    width: min(100%, 460px);
+    aspect-ratio: 1;
+    max-height: none;
+    object-fit: contain;
+    margin-inline: auto;
+  }
+  .video-link {
+    display: inline-block;
+    margin-top: 18px;
+    font-size: 12px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  @media (max-width: 700px) {
+    .drawing-section {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .drawing-section .drawing-video {
+      justify-self: center;
+    }
+    .hero-layout {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .hero-portraits {
+      width: min(100%, 480px);
+      justify-self: center;
+      padding-block: 30px 65px;
+    }
+    .hero-note {
+      font-size: 30px;
+    }
+    .case-hero {
+      padding-block: 110px 30px;
+    }
+    .case-columns {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      padding-block: 25px;
+    }
+    .portrait-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .portraits,
+    .intro {
+      padding-block: 25px;
+    }
+  }
+  @media (max-width: 400px) {
+    .portrait-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,6 +1,30 @@
 import { projectAssets } from './project-assets';
 export const projets = [
   {
+    id: 'portfolio',
+    nom: 'Mon univers illustré',
+    categorie: 'Illustration · Identité personnelle',
+    annee: 'Projet personnel',
+    image: projectAssets.portfolio.fairies,
+    style: 'portfolio',
+    accroche: 'Des dessins pour raconter mon univers.',
+    description:
+      'Les illustrations de mon portfolio, les étapes du dessin d’une fée et mes créations pour les réseaux sociaux : deux bannières et une photo de profil.',
+    livrables: 'Illustrations du portfolio · Bannières · Photo de profil',
+  },
+  {
+    id: 'dnd',
+    nom: 'D&D',
+    categorie: 'Illustration · Animation',
+    annee: 'Projet personnel',
+    image: projectAssets.dnd.offire,
+    style: 'dnd',
+    accroche: 'Nos personnages prennent vie à l’écran.',
+    description:
+      'Des personnages dessinés sur ibis Paint pour nous représenter sur Twitch, et une première intro animée réalisée sur Procreate Dreams.',
+    livrables: 'Portraits de personnages · Introduction animée',
+  },
+  {
     id: 'feelm',
     nom: 'Feelm',
     categorie: 'UI / UX · Plateforme VOD',
