@@ -26,19 +26,19 @@ const groups = [
   },
 ];
 ---
+
 <!-- ===== STRUCTURE : PAGE PORTFOLIO ===== -->
 <!-- Étude de cas portfolio : contexte, contribution et visuels du projet. -->
 
-
 <Layout
   title="Mon univers illustré — Estelle Coulon"
-  description="Les dessins de mon portfolio, les étapes de création d’une fée et mes deux bannières et ma photo de profil pour les réseaux sociaux professionnels et personnels."
+  description="Les illustrations d’Estelle Coulon sur ibis Paint : fées, lunes, étoiles, bannières et photo de profil. Découvrez les étapes du dessin d’une fée."
 >
-  <main id="contenu">
+  <main id="contenu" class="portfolio-case">
     <!-- ===== IMAGES : PRESENTATION DE L UNIVERS ILLUSTRE ===== -->
     <!-- Introduit les dessins réalisés sur ibis Paint et l’illustration demandée par ma sœur. -->
     <section class="intro container" aria-labelledby="illustrations-title">
-      <a class="back" href="/projets">
+      <a class="back" href="/projets/">
         Tous les projets / Mon univers illustré
       </a>
       <div class="intro-grid">
@@ -115,8 +115,8 @@ const groups = [
         navigation et les pages du site.
       </p>
       <p>
-        Les fées me représentent physiquement. J’ai choisi de me dessiner en fée des rêves,
-        déclinée en quatre poses dans l’univers de mon portfolio.
+        Les fées me représentent physiquement. J’ai choisi de me dessiner en fée des rêves, déclinée
+        en quatre poses dans l’univers de mon portfolio.
       </p>
       {groups.map((group) => (
         <div class="illustration-group">
@@ -186,7 +186,7 @@ const groups = [
     <PageOutro
       lead="Autres projets"
       heading="Découvrez les autres projets."
-      href="/projets"
+      href="/projets/"
       label="Retour aux projets"
       variant={2}
     />
@@ -194,6 +194,11 @@ const groups = [
 </Layout>
 
 <style>
+  /* ===== ACCESSIBILITE : CONTRASTE DES LEGENDES EN MODE CLAIR =====
+     Assombrit légèrement le texte secondaire sur les fonds roses, sans changer la composition. */
+  :global(html[data-theme='light']) .portfolio-case {
+    --muted: #694f60;
+  }
   /* ===== STRUCTURE : STYLES DU COMPOSANT =====
      Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .intro {

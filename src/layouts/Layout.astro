@@ -10,6 +10,7 @@ import Footer from '../components/Footer.astro';
 import Cursor from '../components/Cursor.astro';
 import FairyEffects from '../components/FairyEffects.astro';
 import { site } from '../data/site';
+import { absoluteUrl, canonicalPath, structuredData } from '../data/seo';
 import { getImage } from 'astro:assets';
 import faviconStar from '../../public/images/illustrations/etoiles/etoile-rose.png';
 // ===== IMAGES : FAVICON OPTIMISE =====
@@ -30,16 +31,24 @@ interface Props {
 }
 const {
   title,
-  description = 'Estelle Coulon, étudiante en design graphique. Identité visuelle, UI/UX et web design : découvrez mon univers et mes projets.',
+  description = 'Je suis Estelle Coulon, artiste passionnée de design et étudiante en BUT MMI. Découvrez mon univers à travers mes illustrations, mes identités visuelles et mes créations web.',
   noindex = false,
 } = Astro.props;
 // ===== SEO : URL CANONIQUE =====
 // Construit l’adresse absolue de la page à partir du domaine et du chemin courant.
-const canonical = site.url ? new URL(Astro.url.pathname, site.url).href : undefined;
+const canonical = noindex ? undefined : absoluteUrl(canonicalPath(Astro.url.pathname));
+const jsonLd = noindex
+  ? undefined
+  : JSON.stringify(structuredData(Astro.url.pathname, title, description)).replace(/</g, '\\u003c');
+// ===== SEO : IMAGE DE PARTAGE DU LIEN =====
+// Les aperçus sociaux lisent une URL absolue vers le JPEG public, sans exécuter le JavaScript du site.
+const socialImage = new URL('/images/partage-portfolio.jpg', site.url).href;
+const socialImageAlt =
+  'Estelle Coulon — artiste et design : une fée dessinée par Estelle, une lune et des étoiles sur un fond bordeaux et violet.';
 ---
+
 <!-- ===== STRUCTURE : GABARIT COMMUN ===== -->
 <!-- Réunit les styles, métadonnées, en-tête, contenu de page et pied de page. -->
-
 
 <!doctype html>
 <html lang="fr">
@@ -57,7 +66,20 @@ const canonical = site.url ? new URL(Astro.url.pathname, site.url).href : undefi
     <meta property="og:site_name" content="Estelle Coulon — Portfolio" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={socialImageAlt} />
     {canonical && <meta property="og:url" content={canonical} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content={socialImageAlt} />
+    <!-- ===== SEO : IDENTITE ET FIL D ARIANE STRUCTURES ===== -->
+    <!-- JSON-LD statique lisible sans JavaScript ; la page 404 en est exclue. -->
+    {jsonLd && <script is:inline type="application/ld+json" set:html={jsonLd} />}
     <meta name="theme-color" content="#25070e" />
     <!-- ===== COULEURS : PREFERENCES AVANT AFFICHAGE ===== -->
     <!-- Lit le thème et le mouvement mémorisés avant le rendu du contenu. -->

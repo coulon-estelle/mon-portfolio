@@ -18,13 +18,13 @@ const missions = [
   'Autre',
 ];
 ---
+
 <!-- ===== STRUCTURE : PAGE CONTACT ===== -->
 <!-- Contact : coordonnées et formulaire envoyé à FormSubmit. -->
 
-
 <Layout
-  title="Contact — Estelle Coulon"
-  description="Une alternance, un projet créatif ou une question ? Contactez Estelle Coulon, étudiante en design graphique à Pont-de-Roide."
+  title="Contacter Estelle Coulon — Alternance design & UX/UI"
+  description="Contactez Estelle Coulon, étudiante en BUT MMI : alternance en design graphique, UX/UI ou création web dans le secteur de Montbéliard, Belfort et Besançon."
 >
   <main id="contenu" class="contact-page">
     <!-- ===== STRUCTURE : PRESENTATION CONTACT ===== -->
@@ -40,9 +40,9 @@ const missions = [
           <span>ensemble.</span>
         </h1>
         <p class="contact-lead">
-          Je recherche en priorité une alternance dans la création numérique et la communication.
-          J’aime créer des identités visuelles, imaginer des interfaces et donner vie à des univers
-          graphiques.
+          Je recherche en priorité une alternance dans la création numérique et la communication,
+          dans le secteur de Montbéliard, Belfort et Besançon. J’aime créer des identités visuelles,
+          imaginer des interfaces et donner vie à des univers graphiques.
         </p>
         <CvDownload />
         <SocialLinks />
@@ -164,7 +164,7 @@ const missions = [
         <p class="form-note">
           Les champs marqués d’un * sont obligatoires. Vos informations sont transmises par
           FormSubmit pour me permettre de vous répondre.{' '}
-          <a href="/mentions-legales">Consultez la politique de confidentialité.</a>
+          <a href="/mentions-legales/">Consultez la politique de confidentialité.</a>
         </p>
         <button class="button button-primary" type="submit">
           Envoyer mon message
@@ -219,9 +219,10 @@ const missions = [
     status.setAttribute('role', 'status');
     status.textContent = 'Votre message est en cours d’envoi.';
     // ===== FORMULAIRE : DELAI MAXIMUM DE REPONSE =====
-    // Interrompt la requête après 20 secondes pour sortir de l’état d’attente.
+    // Attend jusqu’à une minute : une réponse lente peut arriver après la transmission de l’e-mail.
     const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 20000);
+    const timeout = window.setTimeout(() => controller.abort(), 60000);
+    let explicitlyRejected = false;
     try {
       // ===== FORMULAIRE : ENVOI DIRECT FORMSUBMIT =====
       // Transmet le JSON au prestataire externe ; aucune clé privée ni serveur de messagerie local.
@@ -232,30 +233,34 @@ const missions = [
         signal: controller.signal,
         credentials: 'omit',
       });
-      const result = await response.json();
+      const result: unknown = await response.json();
+      if (!result || typeof result !== 'object') throw new Error('Réponse illisible');
+      const receipt = result as { success?: unknown; message?: unknown };
       // ===== FORMULAIRE : ACTIVATION DU PRESTATAIRE =====
       // Distingue la demande d’activation d’une transmission confirmée du message.
-      if (/activat|confirm|verif/i.test(String(result.message || ''))) {
+      if (/activat|confirm|verif/i.test(String(receipt.message || ''))) {
         status.setAttribute('role', 'alert');
         status.textContent =
           'Le formulaire est en cours d’activation. Votre message est conservé : vous pouvez me joindre par le lien e-mail ci-dessous.';
         return;
       }
-      if (!response.ok || (result.success !== true && result.success !== 'true'))
-        throw new Error('Envoi non confirmé');
+      const success = String(receipt.success).trim().toLowerCase();
+      explicitlyRejected = success === 'false';
+      if (!response.ok || success !== 'true') throw new Error('Envoi non confirmé');
       // ===== FORMULAIRE : CONFIRMATION DE TRANSMISSION =====
       // Efface les champs uniquement après une réponse de succès du prestataire.
       contactForm.reset();
       status.textContent =
         'Votre message a bien été transmis. Merci, je vous répondrai dès que possible.';
-    // ===== FORMULAIRE : GESTION DES ERREURS =====
-    // Annonce l’échec et conserve les champs pour réessayer ou utiliser le lien e-mail.
+      // ===== FORMULAIRE : GESTION DES ERREURS =====
+      // Une confirmation absente ne prouve pas un échec : conserver les champs et éviter les doublons.
     } catch {
       status.setAttribute('role', 'alert');
-      status.textContent =
-        'L’envoi n’a pas pu être confirmé. Votre message est conservé. Réessayez dans un instant ou utilisez le lien e-mail ci-dessous.';
-    // ===== FORMULAIRE : REACTIVATION DU FORMULAIRE =====
-    // Nettoie le délai et rétablit le bouton quel que soit le résultat.
+      status.textContent = explicitlyRejected
+        ? 'Le service n’a pas accepté votre demande. Le texte reste dans le formulaire : réessayez plus tard ou utilisez le lien e-mail ci-dessous.'
+        : 'Votre demande a peut-être été transmise, mais la confirmation n’est pas arrivée. Pour éviter un doublon, ne la renvoyez pas tout de suite. Le texte reste dans le formulaire tant que cette page est ouverte.';
+      // ===== FORMULAIRE : REACTIVATION DU FORMULAIRE =====
+      // Nettoie le délai et rétablit le bouton quel que soit le résultat.
     } finally {
       window.clearTimeout(timeout);
       delete contactForm.dataset.sending;

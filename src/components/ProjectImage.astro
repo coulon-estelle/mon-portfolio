@@ -14,9 +14,9 @@ interface Props {
 }
 const { src, alt, width = 1000, eager = false, class: className } = Astro.props;
 ---
+
 <!-- ===== IMAGES : OPTIMISATION ASTRO ===== -->
 <!-- Produit des images WebP et plusieurs résolutions à partir des fichiers importés. -->
-
 
 <!-- ===== PERFORMANCE : WEBP ET IMAGES RESPONSIVES ===== -->
 <!-- widths et sizes permettent au navigateur de choisir une résolution adaptée ; lazy diffère le chargement. -->
@@ -29,5 +29,7 @@ const { src, alt, width = 1000, eager = false, class: className } = Astro.props;
   format="webp"
   quality={88}
   loading={eager ? 'eager' : 'lazy'}
+  fetchpriority={eager ? 'high' : 'auto'}
+  decoding="async"
   class={className}
 />

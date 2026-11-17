@@ -10,16 +10,16 @@ interface Props {
 }
 const { projet } = Astro.props;
 ---
+
 <!-- ===== PROJETS : CARTE REUTILISABLE ===== -->
 <!-- Reçoit un projet et affiche son image optimisée, son résumé et son lien. -->
-
 
 <article class:list={['project', projet.style]}>
   <div class="project-visual">
     {projet.image ? (
       <Image
         src={projet.image}
-        alt={`Planche de présentation du projet ${projet.nom}`}
+        alt={projet.imageAlt}
         loading="lazy"
         width="900"
         widths={[400, 800, 1200]}
@@ -43,7 +43,7 @@ const { projet } = Astro.props;
     <h3>
       <a
         class="project-page-link"
-        href={`/projets/${projet.id}`}
+        href={`/projets/${projet.id}/`}
         aria-label={`Découvrir le projet ${projet.nom}`}
       >
         {projet.nom}

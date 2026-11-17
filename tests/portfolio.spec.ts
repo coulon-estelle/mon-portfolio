@@ -140,6 +140,8 @@ const pages = [
   '/projets/tiktak',
   '/projets/solaire',
   '/projets/feelm',
+  '/projets/dnd',
+  '/projets/portfolio',
   '/mentions-legales',
 ];
 
@@ -211,13 +213,13 @@ test('Préférences, filtres et liens de projets', async ({ page }) => {
     [],
   );
   await page.goto('/projets');
-  await expect(page.locator('.gallery-item')).toHaveCount(7);
+  await expect(page.locator('.gallery-item')).toHaveCount(9);
   await expect(
     page.getByRole('link', {
       name: 'Découvrir le projet Bordeaux Surchauffe',
       exact: true,
     }),
-  ).toHaveAttribute('href', '/projets/bordeaux-surchauffe');
+  ).toHaveAttribute('href', '/projets/bordeaux-surchauffe/');
   await page
     .getByRole('link', { name: 'Découvrir le projet Bordeaux Surchauffe', exact: true })
     .click();
@@ -312,9 +314,17 @@ test('Contact : envoi direct simulé, validation et confirmation', async ({ page
 test('Contact : erreurs et activation gardent le message sans fausse confirmation', async ({
   page,
 }) => {
-  for (const outcome of ['network', 'rejected', 'activation']) {
+  for (const outcome of ['network', 'rejected', 'activation', 'unreadable', 'timeout']) {
+    if (outcome === 'timeout') await page.clock.install();
     await page.route('https://formsubmit.co/**', async (route) => {
       if (outcome === 'network') return route.abort('failed');
+      if (outcome === 'timeout') return;
+      if (outcome === 'unreadable')
+        return route.fulfill({
+          status: 200,
+          contentType: 'text/html',
+          body: '<html>Réponse invalide</html>',
+        });
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -329,15 +339,50 @@ test('Contact : erreurs et activation gardent le message sans fausse confirmatio
     await page.getByLabel('Votre e-mail').fill('test@example.com');
     await page.getByLabel('Votre message').fill('Message à conserver.');
     await page.getByRole('button', { name: 'Envoyer mon message' }).click();
+    if (outcome === 'timeout') await page.clock.fastForward(61000);
     await expect(page.locator('[data-contact-status]')).toHaveAttribute('role', 'alert');
     await expect(page.locator('[data-contact-status]')).toContainText(
-      outcome === 'activation' ? 'en cours d’activation' : 'n’a pas pu être confirmé',
+      outcome === 'activation'
+        ? 'en cours d’activation'
+        : outcome === 'rejected'
+          ? 'n’a pas accepté'
+          : 'a peut-être été transmise',
     );
     await expect(page.locator('#contact-message')).toHaveValue('Message à conserver.');
     await expect(page.getByRole('button', { name: 'Envoyer mon message' })).toBeEnabled();
     await expect(page).toHaveURL(/\/contact\/?$/);
     await page.unroute('https://formsubmit.co/**');
   }
+});
+
+// ===== FORMULAIRE : CONFIRMATION TARDIVE =====
+// Une confirmation après 20 secondes doit encore produire le message de succès, sans deuxième envoi.
+test('Contact : une confirmation tardive reste acceptée', async ({ page }) => {
+  await page.clock.install();
+  let confirm: (() => Promise<void>) | undefined;
+  let requests = 0;
+  await page.route('https://formsubmit.co/**', (route) => {
+    requests++;
+    confirm = () =>
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({ success: true, message: 'Submitted successfully.' }),
+      });
+  });
+  await page.goto('/contact');
+  await page.getByLabel('Votre nom').fill('Test local');
+  await page.getByLabel('Votre e-mail').fill('test@example.com');
+  await page.getByLabel('Votre message').fill('Réponse tardive simulée, aucun envoi réel.');
+  await page.getByRole('button', { name: 'Envoyer mon message' }).click();
+  await expect.poll(() => requests).toBe(1);
+  await page.clock.fastForward(21000);
+  await expect(page.locator('[data-contact-status]')).toContainText('en cours d’envoi');
+  await expect(page.getByRole('button', { name: 'Envoi en cours…' })).toBeDisabled();
+  await confirm!();
+  await expect(page.locator('[data-contact-status]')).toContainText('a bien été transmis');
+  await expect(page.locator('#contact-message')).toHaveValue('');
+  expect(requests).toBe(1);
 });
 
 // ===== TESTS : VERIFICATION NAVIGATEUR =====
@@ -354,6 +399,58 @@ test('Navigation utilisable sans JavaScript', async ({ browser }) => {
     .getByRole('link', { name: 'Projets', exact: true })
     .click();
   await expect(page).toHaveURL(/projets/);
-  await expect(page.locator('.gallery-item')).toHaveCount(7);
+  await expect(page.locator('.gallery-item')).toHaveCount(9);
+  await context.close();
+});
+
+// ===== SEO : HTML INDEXABLE SANS JAVASCRIPT =====
+// Les moteurs reçoivent les métadonnées, l’identité et le contenu dès la réponse HTML.
+test('SEO : titres, hiérarchie et identité accessibles sans JavaScript', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  const titles = new Set<string>();
+  for (const route of pages) {
+    await page.goto(`${route === '/' ? '' : route}/`);
+    await expect(page.locator('h1')).toHaveCount(1);
+    await expect(page.locator('h1')).toHaveAccessibleName(/\S/);
+    const title = await page.title();
+    expect(title).toContain('Estelle Coulon');
+    expect(titles.has(title)).toBe(false);
+    titles.add(title);
+    const result = await page.evaluate(() => {
+      const meta = (key: string) =>
+        document.querySelector<HTMLMetaElement>(`meta[property="${key}"], meta[name="${key}"]`)
+          ?.content;
+      const graph = JSON.parse(
+        document.querySelector('script[type="application/ld+json"]')!.textContent!,
+      );
+      const headings = Array.from(document.querySelectorAll('main h1, main h2, main h3'))
+        .filter((heading) => !heading.closest('dialog'))
+        .map((heading) => Number(heading.tagName.slice(1)));
+      return {
+        canonical: document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.href,
+        ogUrl: meta('og:url'),
+        noindex: meta('robots')?.includes('noindex') || false,
+        headings,
+        types: graph['@graph'].map((entity: { '@type': string }) => entity['@type']),
+        identity: graph['@graph'].find(
+          (entity: { '@type': string }) => entity['@type'] === 'Person',
+        ).name,
+      };
+    });
+    const expected = `https://portfolio.estelle-coulon.fr${route === '/' ? '' : route}/`;
+    expect(result.canonical).toBe(expected);
+    expect(result.ogUrl).toBe(expected);
+    expect(result.noindex).toBe(false);
+    expect(result.types).toContain('WebSite');
+    expect(result.identity).toBe('Estelle Coulon');
+    expect(result.types).toContain(route === '/a-propos' ? 'ProfilePage' : 'WebPage');
+    result.headings
+      .slice(1)
+      .forEach((level, index) => expect(level - result.headings[index]).toBeLessThanOrEqual(1));
+  }
+  const response = await page.goto('/page-absente-pour-le-test/');
+  expect(response?.status()).toBe(404);
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
   await context.close();
 });

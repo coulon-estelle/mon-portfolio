@@ -10,6 +10,7 @@ export const projets = [
     categorie: 'Illustration · Identité personnelle',
     annee: 'Projet personnel',
     image: projectAssets.portfolio.fairies,
+    imageAlt: 'Quatre fées dessinées par Estelle Coulon sur une bannière rose à spirales',
     style: 'portfolio',
     accroche: 'Des dessins pour raconter mon univers.',
     description:
@@ -22,6 +23,7 @@ export const projets = [
     categorie: 'Illustration · Animation',
     annee: 'Projet personnel',
     image: projectAssets.dnd.offire,
+    imageAlt: 'Offire, un drakéïde rouge aux yeux turquoise, dessiné pour le projet D&D',
     style: 'dnd',
     accroche: 'Nos personnages prennent vie à l’écran.',
     description:
@@ -34,6 +36,7 @@ export const projets = [
     categorie: 'UI / UX · Plateforme VOD',
     annee: 'BUT MMI',
     image: projectAssets.feelm.mockup,
+    imageAlt: 'Maquette Feelm sur un ordinateur : sélection de films sur fond bordeaux',
     style: 'feelm',
     accroche: 'Voir des films ensemble et en discuter.',
     description:
@@ -46,6 +49,7 @@ export const projets = [
     categorie: 'Identité visuelle · UI / UX',
     annee: 'BUT MMI',
     image: projectAssets.solaire.mockup,
+    imageAlt: 'Prototype Solaire sur ordinateur : lunettes sur la plage et interface rose et jaune',
     style: 'solaire',
     accroche: 'Un regard sur les vacances, une expérience à personnaliser.',
     description:
@@ -58,6 +62,7 @@ export const projets = [
     categorie: 'UI / UX · Développement web',
     annee: 'BUT MMI',
     image: projectAssets.tiktak.moodboard,
+    imageAlt: 'Moodboard TiK•TaK : montre dorée, perles, cygnes et textures crème et rose poudré',
     style: 'tiktak',
     accroche: 'Une montre à composer, un style à soi.',
     description:
@@ -70,6 +75,8 @@ export const projets = [
     categorie: 'Identité visuelle · Site web',
     annee: '2026',
     image: projectAssets.olyvia.moodboard,
+    imageAlt:
+      'Moodboard Olyvia présentant les inspirations de son identité visuelle douce et naturelle',
     style: 'olyvia',
     accroche: 'Un regard doux sur une nouvelle étape.',
     description:
@@ -82,6 +89,7 @@ export const projets = [
     categorie: 'Identité visuelle · Application',
     annee: '2026',
     image: projectAssets.nunc.moodboard,
+    imageAlt: 'Moodboard NŨNC présentant les inspirations et couleurs de l’application de soirées',
     style: 'nunc',
     accroche: 'Les bonnes soirées commencent ici.',
     description:
@@ -94,6 +102,7 @@ export const projets = [
     categorie: 'Développement web · Festival électro',
     annee: '2026',
     image: projectAssets.lumimix.moodboard,
+    imageAlt: 'Moodboard LUMIMIX présentant les inspirations lumineuses d’un festival électro',
     style: 'lumimix',
     accroche: 'Faire vibrer la lumière et le son.',
     description:
@@ -106,6 +115,8 @@ export const projets = [
     categorie: 'Datavisualisation · Développement web',
     annee: '2026',
     image: projectAssets.bordeaux.moodboard,
+    imageAlt:
+      'Moodboard Bordeaux Surchauffe présentant les références graphiques du projet de datavisualisation',
     style: 'bordeaux',
     accroche: 'Comprendre la chaleur à l’échelle de sa commune.',
     description:
