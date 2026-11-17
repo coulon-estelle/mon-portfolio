@@ -95,7 +95,7 @@ Ce n’est pas une mesure du transfert total d’une visite : la résolution cho
 
 `ProjectImage` précise maintenant la priorité des images demandées en chargement immédiat et utilise le décodage asynchrone. Le fond principal de l’accueil avait déjà sa priorité haute. Les polices sont locales ; les animations et leurs limites de particules sont conservées. Aucune nouvelle dépendance n’a été ajoutée.
 
-L’image de partage existante avec la fée, au format **JPEG 1 200 × 630**, est réutilisée. Le contrôle vérifie Open Graph, Twitter Card, textes alternatifs, existence du fichier et correspondance de `og:url` avec la canonique. Le rendu précis dépend des plateformes et de leur cache.
+L’image de partage utilise désormais la fée seule, choisie par Estelle, en **PNG 1 200 × 1 200** généré par Astro. Le visuel JPEG composé précédemment reste disponible, mais n’est plus l’image annoncée. Après le remplacement initial par la fée, le PNG avait conservé à tort le type JPEG et les dimensions du visuel précédent. Cette incohérence a été corrigée ; l’audit lit maintenant le fichier avec Sharp pour comparer son format et ses dimensions réels aux métadonnées. Le contrôle vérifie aussi Open Graph, Twitter Card, textes alternatifs et correspondance de `og:url` avec la canonique. Le rendu précis dépend des plateformes et de leur cache.
 
 Les **Core Web Vitals réels n’ont pas été mesurés** : la réduction des ressources améliore les conditions de chargement mais ne permet pas d’annoncer un score LCP, INP ou CLS en production. Mesures à effectuer après publication avec PageSpeed Insights et Search Console : [documentation Google](https://developers.google.com/search/docs/appearance/core-web-vitals).
 

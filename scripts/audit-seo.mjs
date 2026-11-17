@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
+import sharp from 'sharp';
 import { render } from './static-runtime.mjs';
 
 const output = path.resolve('dist');
@@ -116,13 +117,21 @@ for (const file of files) {
     const image = new URL(meta('og:image'));
     if (image.origin !== origin || image.protocol !== 'https:')
       fail('image de partage sans URL HTTPS du site');
-    if (!fs.existsSync(path.join(output, decodeURIComponent(image.pathname))))
-      fail('image de partage absente du build');
+    const imagePath = path.join(output, decodeURIComponent(image.pathname));
+    if (!fs.existsSync(imagePath)) fail('image de partage absente du build');
+    else {
+      const actual = await sharp(imagePath).metadata();
+      const mime = actual.format === 'jpeg' ? 'image/jpeg' : `image/${actual.format}`;
+      if (meta('og:image:type') !== mime) fail('type MIME annoncé différent de l’image de partage');
+      if (
+        Number(meta('og:image:width')) !== actual.width ||
+        Number(meta('og:image:height')) !== actual.height
+      )
+        fail('dimensions annoncées différentes de l’image de partage');
+    }
   } catch {
     fail('URL de l’image de partage invalide');
   }
-  if (meta('og:image:width') !== '1200' || meta('og:image:height') !== '630')
-    fail('dimensions de partage incorrectes');
 
   // ===== IMAGES : TEXTES ALTERNATIFS ET DIMENSIONS =====
   for (const [tag] of html.matchAll(/<img\b[^>]*>/g)) {

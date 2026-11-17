@@ -63,7 +63,7 @@ Après correction et publication, utiliser le test en direct ou la validation pr
 
 ## Contrôles après publication
 
-- Ouvrir l’accueil, le sitemap, `robots.txt` et `/images/partage-portfolio.jpg`.
+- Ouvrir l’accueil, le sitemap, `robots.txt` et l’URL d’image indiquée par la balise `og:image` du HTML publié.
 - Tester l’accueil et `/a-propos/` dans le [test des résultats enrichis](https://search.google.com/test/rich-results) et le [validateur Schema.org](https://validator.schema.org/). La validation locale du code ne constitue pas une validation Google.
 - Mesurer les pages avec [PageSpeed Insights](https://pagespeed.web.dev/), puis consulter les Core Web Vitals disponibles dans Search Console. Les tests locaux ne mesurent pas l’expérience réelle des visiteurs. Source : [Core Web Vitals](https://developers.google.com/search/docs/appearance/core-web-vitals).
 
