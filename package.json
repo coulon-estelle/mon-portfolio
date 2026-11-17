@@ -7,6 +7,9 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "npm run generate:og",
+    "generate:og": "node scripts/generate-discord-image.mjs",
+    "verify:share": "node scripts/verify-social-preview.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",

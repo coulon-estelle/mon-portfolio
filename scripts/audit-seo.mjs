@@ -106,6 +106,8 @@ for (const file of files) {
     'twitter:image:alt',
   ]) {
     if (!meta(key)) fail(`métadonnée absente : ${key}`);
+    if (metas.filter((item) => item.name === key || item.property === key).length !== 1)
+      fail(`métadonnée dupliquée : ${key}`);
   }
   if (meta('og:title') !== title || meta('og:description') !== description)
     fail('Open Graph incohérent');

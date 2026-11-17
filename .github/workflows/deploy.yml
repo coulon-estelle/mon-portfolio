@@ -29,6 +29,11 @@ jobs:
       - name: Construire le site Astro
         run: npm run build
 
+      # ===== TESTS : APERCU DISCORD AVANT TRANSFERT =====
+      # npm run build appelle prebuild, qui prépare automatiquement le PNG public depuis fee-4.
+      - name: Verifier le visuel de partage dans le build
+        run: npm run verify:share -- --local
+
       # ===== SECURITE : IDENTIFIANTS SSH =====
       # Lit les secrets GitHub pour configurer la clé et les hôtes connus sur le runner.
       - name: Configurer SSH
@@ -52,3 +57,8 @@ jobs:
           rsync -az --delete \
             -e "ssh -p 23029 -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes" \
             dist/ "$VPS_USER@$VPS_HOST:/var/www/portfolio/"
+
+      # ===== DEPLOIEMENT : VERIFICATION DU FICHIER PUBLIE =====
+      # Le workflow échoue si le serveur annonce encore une ancienne image ou sert des octets différents.
+      - name: Verifier le partage sur le site public
+        run: npm run verify:share

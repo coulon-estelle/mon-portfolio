@@ -13,7 +13,7 @@ import { site } from '../data/site';
 import { absoluteUrl, canonicalPath, structuredData } from '../data/seo';
 import { getImage } from 'astro:assets';
 import faviconStar from '../../public/images/illustrations/etoiles/etoile-rose.png';
-import sharingFairy from '../../public/images/illustrations/fees/fee-4.png';
+import socialPreview from '../data/social-preview.json';
 // ===== IMAGES : FAVICON OPTIMISE =====
 // Astro génère une petite image PNG à partir de l’étoile personnelle.
 const favicon = await getImage({
@@ -42,16 +42,9 @@ const jsonLd = noindex
   ? undefined
   : JSON.stringify(structuredData(Astro.url.pathname, title, description)).replace(/</g, '\\u003c');
 // ===== SEO : IMAGE DE PARTAGE DU LIEN =====
-// PNG carré optimisé de la fée choisie ; le nom généré change avec l’image pour distinguer les versions.
-const sharingImage = await getImage({
-  src: sharingFairy,
-  width: 1200,
-  height: 1200,
-  format: 'png',
-});
-const socialImage = new URL(sharingImage.src, site.url).href;
-const socialImageAlt =
-  'Une fée des rêves aux cheveux bruns, aux lunettes et aux ailes roses, dessinée par Estelle Coulon pour son portfolio.';
+// Fichier public dédié et versionné ; prebuild le prépare automatiquement depuis fee-4.
+const socialImage = new URL(socialPreview.path, site.url).href;
+const socialImageAlt = socialPreview.alt;
 ---
 
 <!-- ===== STRUCTURE : GABARIT COMMUN ===== -->
@@ -74,15 +67,17 @@ const socialImageAlt =
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImage} />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="1200" />
+    <meta property="og:image:type" content={socialPreview.type} />
+    <meta property="og:image:width" content={String(socialPreview.width)} />
+    <meta property="og:image:height" content={String(socialPreview.height)} />
     <meta property="og:image:alt" content={socialImageAlt} />
     {canonical && <meta property="og:url" content={canonical} />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:width" content={String(socialPreview.width)} />
+    <meta name="twitter:image:height" content={String(socialPreview.height)} />
     <meta name="twitter:image:alt" content={socialImageAlt} />
     <!-- ===== SEO : IDENTITE ET FIL D ARIANE STRUCTURES ===== -->
     <!-- JSON-LD statique lisible sans JavaScript ; la page 404 en est exclue. -->
