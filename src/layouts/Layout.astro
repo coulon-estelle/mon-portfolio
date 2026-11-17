@@ -1,7 +1,10 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import '../styles/global.css';
 import '../styles/project-assets.css';
 import '../styles/project-palettes.css';
+import '../styles/desktop-typography.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Cursor from '../components/Cursor.astro';
@@ -9,6 +12,8 @@ import FairyEffects from '../components/FairyEffects.astro';
 import { site } from '../data/site';
 import { getImage } from 'astro:assets';
 import faviconStar from '../../public/images/illustrations/etoiles/etoile-rose.png';
+// ===== IMAGES : FAVICON OPTIMISE =====
+// Astro génère une petite image PNG à partir de l’étoile personnelle.
 const favicon = await getImage({
   src: faviconStar,
   width: 48,
@@ -16,6 +21,8 @@ const favicon = await getImage({
   fit: 'contain',
   format: 'png',
 });
+// ===== COMPOSANTS : PROPRIETES TYPEES =====
+// Décrit les paramètres que les pages peuvent transmettre au composant.
 interface Props {
   title: string;
   description?: string;
@@ -26,12 +33,19 @@ const {
   description = 'Estelle Coulon, étudiante en design graphique. Identité visuelle, UI/UX et web design : découvrez mon univers et mes projets.',
   noindex = false,
 } = Astro.props;
+// ===== SEO : URL CANONIQUE =====
+// Construit l’adresse absolue de la page à partir du domaine et du chemin courant.
 const canonical = site.url ? new URL(Astro.url.pathname, site.url).href : undefined;
 ---
+<!-- ===== STRUCTURE : GABARIT COMMUN ===== -->
+<!-- Réunit les styles, métadonnées, en-tête, contenu de page et pied de page. -->
+
 
 <!doctype html>
 <html lang="fr">
   <head>
+    <!-- ===== SEO : METADONNEES ET PARTAGE ===== -->
+    <!-- Encodage, viewport, description, canonique et balises Open Graph communs aux pages. -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
@@ -45,7 +59,11 @@ const canonical = site.url ? new URL(Astro.url.pathname, site.url).href : undefi
     <meta property="og:description" content={description} />
     {canonical && <meta property="og:url" content={canonical} />}
     <meta name="theme-color" content="#25070e" />
+    <!-- ===== COULEURS : PREFERENCES AVANT AFFICHAGE ===== -->
+    <!-- Lit le thème et le mouvement mémorisés avant le rendu du contenu. -->
     <script is:inline>
+      // ===== INTERACTION : SCRIPT COTE NAVIGATEUR =====
+      // Ce code agit sur le DOM après le chargement de la page.
       document.documentElement.dataset.js = 'true';
       try {
         const theme = localStorage.getItem('portfolio-theme');
@@ -59,10 +77,14 @@ const canonical = site.url ? new URL(Astro.url.pathname, site.url).href : undefi
   <body>
     <Cursor />
     <FairyEffects />
+    <!-- ===== ACCESSIBILITE : LIEN D EVITEMENT ===== -->
+    <!-- Permet au clavier d’aller directement au contenu principal. -->
     <a class="skip-link" href="#contenu">
       Aller au contenu
     </a>
     <Header />
+    <!-- ===== STRUCTURE : CONTENU DE LA PAGE ===== -->
+    <!-- Astro insère ici le contenu fourni par chaque page utilisant Layout. -->
     <slot />
     <Footer />
   </body>

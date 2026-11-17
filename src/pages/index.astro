@@ -1,4 +1,6 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import Ornament from '../components/Ornament.astro';
 import FairyIllustration from '../components/FairyIllustration.astro';
 import Layout from '../layouts/Layout.astro';
@@ -12,9 +14,14 @@ import heroImage from '../../public/images/commun/hero.png';
 // Ajoutez votre adresse e-mail pour activer le lien de contact.
 const email = site.email;
 ---
+<!-- ===== STRUCTURE : PAGE INDEX ===== -->
+<!-- Accueil : présentation, sélection de projets, parcours et contact. -->
+
 
 <Layout title="Estelle Coulon — Portfolio créatif">
   <main id="contenu">
+    <!-- ===== ACCUEIL : INTRODUCTION ===== -->
+    <!-- Présente le nom, le rôle et les accès aux projets et profils professionnels. -->
     <section class="hero" aria-labelledby="hero-title">
       {!heroImage && (
         <div class="glass-wall" aria-hidden="true">
@@ -97,6 +104,8 @@ const email = site.email;
         </a>
       </div>
     </section>
+    <!-- ===== STRUCTURE : DISCIPLINES ===== -->
+    <!-- Présente les domaines de création dans une liste. -->
     <section class="expertise-band container" aria-label="Mes disciplines">
       <p class="expertise-label">Mes disciplines</p>
       <ul class="expertise-list">
@@ -114,6 +123,8 @@ const email = site.email;
         </li>
       </ul>
     </section>
+    <!-- ===== PROJETS : SELECTION ACCUEIL ===== -->
+    <!-- Affiche uniquement les projets retenus pour la page d’accueil. -->
     <section class="projects-section container" id="projets" aria-labelledby="projects-title">
       <div class="section-heading">
         <span class="section-drawn-star">
@@ -161,6 +172,8 @@ const email = site.email;
         </div>
       </div>
     </section>
+    <!-- ===== STRUCTURE : PARCOURS EN BREF ===== -->
+    <!-- Présente le parcours et les compétences sur l’accueil. -->
     <section class="about-section" id="a-propos" aria-labelledby="about-title">
       <div class="container about-inner">
         <div class="about-fairy">
@@ -189,6 +202,8 @@ const email = site.email;
         </div>
       </div>
     </section>
+    <!-- ===== NAVIGATION : CONTACT ACCUEIL ===== -->
+    <!-- Propose les accès pour prendre contact et télécharger le CV. -->
     <section class="contact-section container" id="contact" aria-labelledby="contact-title">
       <p class="eyebrow">03 / Contact</p>
       <h2 id="contact-title">
@@ -210,6 +225,10 @@ const email = site.email;
     </section>
   </main>
   <script>
+    // ===== INTERACTION : SCRIPT COTE NAVIGATEUR =====
+    // Ce code agit sur le DOM après le chargement de la page.
+    // ===== RESPONSIVE : CARROUSEL MOBILE =====
+    // Repère la piste, les points de navigation et le breakpoint de 700 px.
     const track = document.querySelector<HTMLElement>('#project-carousel');
     const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-slide]'));
     const mobile = window.matchMedia('(max-width: 700px)');
@@ -217,6 +236,8 @@ const email = site.email;
     if (track) {
       const cards = Array.from(track.querySelectorAll<HTMLElement>('.project'));
       let frame = 0;
+      // ===== ACCESSIBILITE : PROJET ACTIF DU CARROUSEL =====
+      // Calcule la carte la plus proche et met à jour aria-current sur son indicateur.
       const update = () => {
         const position = track.getBoundingClientRect().left;
         let closest = 0;
@@ -227,6 +248,8 @@ const email = site.email;
           )
             closest = index;
         });
+        // ===== INTERACTION : NAVIGATION DU CARROUSEL =====
+        // Déplace la piste vers la carte choisie ; respecte les préférences de mouvement.
         dots.forEach((dot, index) => {
           if (index === closest) dot.setAttribute('aria-current', 'true');
           else dot.removeAttribute('aria-current');
@@ -250,6 +273,8 @@ const email = site.email;
       track.addEventListener(
         'scroll',
         () => {
+          // ===== PERFORMANCE : MISE A JOUR AU DEFILEMENT =====
+          // Regroupe le suivi de position sur une frame au lieu de recalculer à chaque événement.
           if (!frame) frame = requestAnimationFrame(update);
         },
         { passive: true },
@@ -265,7 +290,13 @@ const email = site.email;
 </Layout>
 
 <style>
-  /* Respiration de l’accueil sur mobile, sans modifier les illustrations. */
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
+  /* ===== RESPONSIVE : REGLES DE PRESENTATION =====
+     Respiration de l’accueil sur mobile, sans modifier les illustrations. */
+
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 700px). */
   @media (max-width: 700px) {
     .hero-inner {
       padding-top: 136px;

@@ -1,7 +1,11 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import FairyIllustration from './FairyIllustration.astro';
 import Ornament from './Ornament.astro';
 
+// ===== COMPOSANTS : PROPRIETES TYPEES =====
+// Décrit les paramètres que les pages peuvent transmettre au composant.
 interface Props {
   lead: string;
   heading: string;
@@ -14,7 +18,12 @@ interface Props {
 }
 const { lead, heading, href, label, variant = 3, secondaryHref, secondaryLabel, id } = Astro.props;
 ---
+<!-- ===== COMPOSANTS : FIN DE PAGE ===== -->
+<!-- Partage une invitation et un lien de navigation entre plusieurs pages. -->
 
+
+<!-- ===== NAVIGATION : INVITATION EN FIN DE PAGE ===== -->
+<!-- Réunit une illustration, une invitation et un ou deux liens vers la suite du parcours. -->
 <section class="page-outro" id={id} aria-label={lead}>
   <div class="container page-outro-inner">
     <div class="page-outro-fairy">
@@ -44,6 +53,8 @@ const { lead, heading, href, label, variant = 3, secondaryHref, secondaryLabel, 
 </section>
 
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .page-outro {
     width: 100%;
     border-top: 1px solid var(--line);
@@ -102,6 +113,8 @@ const { lead, heading, href, label, variant = 3, secondaryHref, secondaryLabel, 
     font-size: 11px;
     padding: 5px 0;
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 1000px) and (min-width: 701px). */
   @media (max-width: 1000px) and (min-width: 701px) {
     .page-outro-inner {
       grid-template-columns: 130px minmax(0, 1fr) auto;
@@ -112,6 +125,8 @@ const { lead, heading, href, label, variant = 3, secondaryHref, secondaryLabel, 
       font-size: 12px;
     }
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 700px). */
   @media (max-width: 700px) {
     .page-outro-inner {
       grid-template-columns: 90px minmax(0, 1fr);
@@ -145,6 +160,8 @@ const { lead, heading, href, label, variant = 3, secondaryHref, secondaryLabel, 
       font-size: 10px;
     }
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 360px). */
   @media (max-width: 360px) {
     .page-outro-inner {
       grid-template-columns: 65px minmax(0, 1fr);

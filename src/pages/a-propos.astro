@@ -1,4 +1,6 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import Ornament from '../components/Ornament.astro';
 import PageOutro from '../components/PageOutro.astro';
 import Layout from '../layouts/Layout.astro';
@@ -32,12 +34,17 @@ const skills = [
   },
 ];
 ---
+<!-- ===== STRUCTURE : PAGE A-PROPOS ===== -->
+<!-- À propos : parcours, informations personnelles et compétences. -->
+
 
 <Layout
   title="À propos — Estelle Coulon"
   description="Découvrez le parcours d’Estelle Coulon, étudiante en deuxième année de BUT MMI à Montbéliard : de la mode au design graphique et à la création numérique."
 >
   <main id="contenu" class="about-page">
+    <!-- ===== STRUCTURE : INTRODUCTION A PROPOS ===== -->
+    <!-- Introduit la présentation personnelle. -->
     <section class="bio-heading container" aria-labelledby="bio-title">
       <a class="bio-breadcrumb" href="/">
         Accueil <span aria-hidden="true">/</span> À propos
@@ -47,6 +54,8 @@ const skills = [
         Je suis <span>Estelle Coulon.</span>
       </h1>
     </section>
+    <!-- ===== STRUCTURE : PARCOURS PERSONNEL ===== -->
+    <!-- Réunit le récit du parcours et le portrait. -->
     <section class="bio-story container" aria-label="Mon parcours">
       <div class="bio-copy">
         <p>
@@ -107,6 +116,8 @@ const skills = [
         </span>
       </div>
     </section>
+    <!-- ===== DONNEES : REPERES DU PARCOURS ===== -->
+    <!-- Présente quelques informations synthétiques. -->
     <section class="bio-facts container" aria-label="Quelques repères">
       <div>
         <span>{projetsAccueil.length} études de cas</span>
@@ -121,6 +132,8 @@ const skills = [
         <p>Niveau d’anglais</p>
       </div>
     </section>
+    <!-- ===== DONNEES : COMPETENCES ===== -->
+    <!-- Affiche les compétences définies dans la page. -->
     <section class="bio-skills container" aria-labelledby="bio-skills-title">
       <div class="section-heading">
         <div>
@@ -159,6 +172,8 @@ const skills = [
   </main>
 </Layout>
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .about-page {
     overflow: clip;
     background: radial-gradient(ellipse 65% 35% at 100% 0%, #833db342, transparent 85%);
@@ -191,6 +206,8 @@ const skills = [
   .bio-heading h1 > span {
     color: var(--pink);
   }
+  /* ===== STRUCTURE : MISE EN PAGE DU PARCOURS =====
+     Organise les textes et le portrait de la page À propos. */
   .bio-story {
     display: grid;
     grid-template-columns: 1.1fr 1fr;
@@ -362,6 +379,8 @@ const skills = [
     line-height: 1.6;
     margin: 12px 0 0;
   }
+  /* ===== STRUCTURE : MISE EN PAGE DES COMPETENCES =====
+     Organise la section consacrée aux compétences. */
   .bio-skills {
     padding-block: 85px;
   }
@@ -468,6 +487,8 @@ const skills = [
   :global(html[data-theme='light']) .bio-manifesto {
     background: linear-gradient(115deg, #f1d4e1, #e3d5ef 50%, #dfecf3);
   }
+  /* ===== ANIMATION : MOUVEMENT BIO-LIGHT =====
+     Définit les étapes du mouvement utilisé par les propriétés animation. */
   @keyframes bio-light {
     from {
       transform: translateX(-12%) rotate(-5deg);
@@ -476,7 +497,11 @@ const skills = [
       transform: translateX(12%) rotate(5deg);
     }
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 1000px). */
   @media (max-width: 1000px) {
+    /* ===== STRUCTURE : MISE EN PAGE DU PARCOURS =====
+       Organise les textes et le portrait de la page À propos. */
     .bio-story {
       gap: 40px;
     }
@@ -490,6 +515,8 @@ const skills = [
       gap: 15px;
     }
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 700px). */
   @media (max-width: 700px) {
     .bio-heading {
       padding-top: 105px;
@@ -506,6 +533,8 @@ const skills = [
       font-size: clamp(64px, 18vw, 96px);
       line-height: 0.94;
     }
+    /* ===== STRUCTURE : MISE EN PAGE DU PARCOURS =====
+       Organise les textes et le portrait de la page À propos. */
     .bio-story {
       display: flex;
       flex-direction: column-reverse;
@@ -574,6 +603,8 @@ const skills = [
       font-size: 9px;
       margin-top: 8px;
     }
+    /* ===== STRUCTURE : MISE EN PAGE DES COMPETENCES =====
+       Organise la section consacrée aux compétences. */
     .bio-skills {
       padding-block: 50px;
     }

@@ -1,3 +1,5 @@
+// ===== SEO : FICHIER ROBOTS =====
+// Génère les consignes d’indexation et l’adresse du sitemap.
 import type { APIRoute } from 'astro';
 import { site } from '../data/site';
 

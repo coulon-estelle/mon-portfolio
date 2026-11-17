@@ -2,6 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import { site } from '../data/site';
 ---
+<!-- ===== STRUCTURE : PAGE MENTIONS-LEGALES ===== -->
+<!-- Mentions : éditeur, hébergement, confidentialité et préférences locales. -->
+
 
 <Layout
   title="Mentions légales & confidentialité — Estelle Coulon"
@@ -13,6 +16,8 @@ import { site } from '../data/site';
       Mentions légales <br />
       <span class="handwritten">& confidentialité.</span>
     </h1>
+    <!-- ===== STRUCTURE : EDITEUR DU SITE ===== -->
+    <!-- Identifie la responsable de publication et ses coordonnées. -->
     <section>
       <h2>Édition du site</h2>
       <p>
@@ -24,6 +29,8 @@ import { site } from '../data/site';
         <a href={`tel:${site.phoneHref}`}>{site.phone}</a>.
       </p>
     </section>
+    <!-- ===== DEPLOIEMENT : INFORMATIONS D HEBERGEMENT ===== -->
+    <!-- Lit les coordonnées publiques de l’hébergeur dans les données centralisées du site. -->
     <section>
       <h2>Hébergement</h2>
       {site.host.name && site.host.address ? (
@@ -46,6 +53,8 @@ import { site } from '../data/site';
         </p>
       )}
     </section>
+    <!-- ===== IMAGES : CREATIONS ET CREDITS ===== -->
+    <!-- Distingue les créations personnelles, les contributions collectives et les références. -->
     <section>
       <h2>Créations et crédits</h2>
       <p>
@@ -65,6 +74,8 @@ import { site } from '../data/site';
         Gorillaz sont précisées dans les descriptions concernées.
       </p>
     </section>
+    <!-- ===== FORMULAIRE : INFORMATION SUR LES DONNEES ===== -->
+    <!-- Explique le passage par FormSubmit et les possibilités de contact et d’exercice des droits. -->
     <section>
       <h2>Contact et données personnelles</h2>
       <p>
@@ -102,6 +113,8 @@ import { site } from '../data/site';
         .
       </p>
     </section>
+    <!-- ===== INTERACTION : PREFERENCES MEMORISEES ===== -->
+    <!-- Décrit le stockage local du thème et des animations et propose leur effacement. -->
     <section>
       <h2>Préférences et navigation</h2>
       <p>
@@ -123,6 +136,10 @@ import { site } from '../data/site';
   </main>
 </Layout>
 <script>
+  // ===== INTERACTION : SCRIPT COTE NAVIGATEUR =====
+  // Ce code agit sur le DOM après le chargement de la page.
+  // ===== INTERACTION : EFFACER LES PREFERENCES LOCALES =====
+  // Supprime les deux réglages de localStorage puis avertit les composants du site.
   document.querySelector('[data-reset-preferences]')?.addEventListener('click', () => {
     try {
       localStorage.removeItem('portfolio-theme');
@@ -136,6 +153,8 @@ import { site } from '../data/site';
   });
 </script>
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .legal-page {
     padding-top: 145px;
     padding-bottom: 70px;
@@ -178,6 +197,8 @@ import { site } from '../data/site';
     font-size: 12px;
     color: var(--blue);
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 700px). */
   @media (max-width: 700px) {
     .legal-page {
       padding-top: 105px;

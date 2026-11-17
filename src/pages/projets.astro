@@ -1,10 +1,14 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import Ornament from '../components/Ornament.astro';
 import PageOutro from '../components/PageOutro.astro';
 import FairyIllustration from '../components/FairyIllustration.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Layout from '../layouts/Layout.astro';
 import { projets, projetsAccueil } from '../data/projets';
+// ===== PROJETS : ORDRE DE LA GALERIE =====
+// Place la sélection de l’accueil avant les projets complémentaires.
 const galerie = [
   ...projetsAccueil,
   ...projets.filter((projet) => !projetsAccueil.includes(projet)),
@@ -17,6 +21,8 @@ const filters = [
   { id: 'web', label: 'Web design' },
   { id: 'illustration', label: 'Illustration / Animation' },
 ];
+// ===== DONNEES : DISCIPLINES DES PROJETS =====
+// Associe chaque identifiant aux catégories utilisées par les filtres.
 const categories: Record<string, string> = {
   portfolio: 'illustration identite',
   dnd: 'illustration',
@@ -29,12 +35,17 @@ const categories: Record<string, string> = {
   'bordeaux-surchauffe': 'web donnees',
 };
 ---
+<!-- ===== STRUCTURE : PAGE PROJETS ===== -->
+<!-- Galerie : cartes issues des données et filtres par discipline. -->
+
 
 <Layout
   title="Galerie de projets — Estelle Coulon"
   description="Découvrez les projets d’Estelle Coulon en identité visuelle, conception d’interfaces et développement web, avec le contexte et les étapes de chaque réalisation."
 >
   <main id="contenu" class="gallery-page">
+    <!-- ===== PROJETS : INTRODUCTION GALERIE ===== -->
+    <!-- Présente la sélection de projets et le lien vers la liste. -->
     <section class="gallery-hero container" aria-labelledby="gallery-title">
       <div class="gallery-intro">
         <a class="gallery-back" href="/">
@@ -66,6 +77,8 @@ const categories: Record<string, string> = {
         <FairyIllustration variant={3} width={430} eager />
       </div>
     </section>
+    <!-- ===== PROJETS : CARTES ET FILTRES ===== -->
+    <!-- Construit la galerie depuis les données et associe chaque carte à ses disciplines. -->
     <section class="gallery-selection container" id="galerie" aria-labelledby="selection-title">
       <div class="gallery-selection-heading">
         <div>
@@ -102,6 +115,10 @@ const categories: Record<string, string> = {
     />
   </main>
   <script>
+    // ===== INTERACTION : SCRIPT COTE NAVIGATEUR =====
+    // Ce code agit sur le DOM après le chargement de la page.
+    // ===== INTERACTION : FILTRES DES PROJETS =====
+    // Compare data-categories au filtre choisi et utilise hidden sans recharger la page.
     const filters = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
     const items = document.querySelectorAll<HTMLElement>('.gallery-item');
     filters.forEach((button) =>
@@ -114,6 +131,8 @@ const categories: Record<string, string> = {
           item.hidden = !visible;
           if (visible) count++;
         });
+        // ===== ACCESSIBILITE : ETAT DU FILTRE ET COMPTEUR =====
+        // Actualise aria-pressed et le nombre de projets dans la zone annoncée.
         filters.forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
         const counter = document.querySelector('.gallery-count');
         if (counter) counter.textContent = `${count} projet${count > 1 ? 's' : ''} à découvrir`;
@@ -123,6 +142,8 @@ const categories: Record<string, string> = {
 </Layout>
 
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .gallery-page {
     overflow: clip;
     background: radial-gradient(ellipse 65% 32% at 100% 5%, #91308335, transparent 80%);
@@ -269,6 +290,8 @@ const categories: Record<string, string> = {
     color: var(--muted);
     margin: 0 0 4px;
   }
+  /* ===== INTERACTION : PRESENTATION DES FILTRES =====
+     Dispose les boutons servant à filtrer les projets. */
   .gallery-filters {
     display: flex;
     flex-wrap: wrap;
@@ -308,6 +331,8 @@ const categories: Record<string, string> = {
     outline: 2px solid var(--blue);
     outline-offset: 4px;
   }
+  /* ===== PROJETS : GRILLE DE LA GALERIE =====
+     Dispose les cartes de projets dans la page de sélection. */
   .gallery-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -326,10 +351,14 @@ const categories: Record<string, string> = {
   :global(html[data-theme='light']) .gallery-page {
     background: radial-gradient(ellipse 65% 32% at 100% 5%, #c4a1e733, transparent 80%);
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 1000px). */
   @media (max-width: 1000px) {
     .gallery-hero {
       gap: 20px;
     }
+    /* ===== PROJETS : GRILLE DE LA GALERIE =====
+       Dispose les cartes de projets dans la page de sélection. */
     .gallery-grid {
       gap: 22px;
     }
@@ -337,6 +366,8 @@ const categories: Record<string, string> = {
       font-size: 13px;
     }
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 700px). */
   @media (max-width: 700px) {
     .gallery-hero {
       padding-top: 104px;
@@ -388,6 +419,8 @@ const categories: Record<string, string> = {
     .gallery-selection-heading h2 {
       font-size: 31px;
     }
+    /* ===== INTERACTION : PRESENTATION DES FILTRES =====
+       Dispose les boutons servant à filtrer les projets. */
     .gallery-filters {
       gap: 8px;
       margin-bottom: 25px;
@@ -397,6 +430,8 @@ const categories: Record<string, string> = {
       font-size: 10px;
       padding: 10px 14px;
     }
+    /* ===== PROJETS : GRILLE DE LA GALERIE =====
+       Dispose les cartes de projets dans la page de sélection. */
     .gallery-grid {
       grid-template-columns: 1fr;
       gap: 26px;

@@ -1,10 +1,14 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import { Image } from 'astro:assets';
 import fairyOne from '../../public/images/illustrations/fees/fee-1.png';
 import fairyTwo from '../../public/images/illustrations/fees/fee-2.png';
 import fairyThree from '../../public/images/illustrations/fees/fee-3.png';
 import fairyFour from '../../public/images/illustrations/fees/fee-4.png';
 
+// ===== COMPOSANTS : PROPRIETES TYPEES =====
+// Décrit les paramètres que les pages peuvent transmettre au composant.
 interface Props {
   variant?: 1 | 2 | 3 | 4;
   hint?: boolean;
@@ -23,6 +27,9 @@ const {
 } = Astro.props;
 const drawings = { 1: fairyOne, 2: fairyTwo, 3: fairyThree, 4: fairyFour };
 ---
+<!-- ===== ANIMATION : FEE INTERACTIVE ===== -->
+<!-- Affiche une illustration personnelle et déclenche des étoiles au clic. -->
+
 
 <button
   type="button"
@@ -70,6 +77,8 @@ const drawings = { 1: fairyOne, 2: fairyTwo, 3: fairyThree, 4: fairyFour };
 </button>
 
 <script>
+  // ===== INTERACTION : SCRIPT COTE NAVIGATEUR =====
+  // Ce code agit sur le DOM après le chargement de la page.
   const fairies = document.querySelectorAll<HTMLButtonElement>('[data-fairy]');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const animations = new Set<Animation>();
@@ -78,7 +87,11 @@ const drawings = { 1: fairyOne, 2: fairyTwo, 3: fairyThree, 4: fairyFour };
   layer.className = 'fairy-burst-layer';
   layer.setAttribute('aria-hidden', 'true');
   document.body.appendChild(layer);
+  // ===== ACCESSIBILITE : RESPECT DU CHOIX DE MOUVEMENT =====
+  // Autorise l’effet seulement si le système et le réglage du site le permettent.
   const allowed = () => !reducedMotion.matches && document.documentElement.dataset.motion !== 'off';
+  // ===== PERFORMANCE : NETTOYAGE DES ANIMATIONS =====
+  // Annule les animations en cours et retire les étoiles temporaires du DOM.
   const clear = () => {
     animations.forEach((animation) => animation.cancel());
     animations.clear();
@@ -101,6 +114,8 @@ const drawings = { 1: fairyOne, 2: fairyTwo, 3: fairyThree, 4: fairyFour };
     animation.oncancel = finish;
   };
   fairies.forEach((fairy) =>
+    // ===== ANIMATION : ETOILES AU CLIC SUR UNE FEE =====
+    // Anime le dessin et génère des particules ; un bouton natif répond aussi au clavier.
     fairy.addEventListener('click', () => {
       if (!allowed() || shaking.has(fairy) || layer.childElementCount >= 72) return;
       const image = fairy.querySelector('img');
@@ -122,6 +137,8 @@ const drawings = { 1: fairyOne, 2: fairyTwo, 3: fairyThree, 4: fairyFour };
       );
       const bounds = fairy.getBoundingClientRect();
       const colors = ['var(--pink)', 'var(--blue)', 'var(--purple)'];
+      // ===== ANIMATION : CHUTE DES ETOILES =====
+      // Crée 18 étoiles et les anime avec la Web Animations API avant de les supprimer.
       for (let index = 0; index < 18; index++) {
         const star = document.createElement('span');
         star.className = 'fairy-burst-star';
@@ -175,6 +192,8 @@ const drawings = { 1: fairyOne, 2: fairyTwo, 3: fairyThree, 4: fairyFour };
 </script>
 
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .fairy-illustration {
     position: relative;
     display: block;
@@ -216,6 +235,8 @@ const drawings = { 1: fairyOne, 2: fairyTwo, 3: fairyThree, 4: fairyFour };
   .fairy-mobile-arrow {
     display: none;
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 700px). */
   @media (max-width: 700px) {
     .fairy-click-hint {
       left: calc(-14% - 20px);

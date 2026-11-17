@@ -1,4 +1,8 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
+// ===== COMPOSANTS : PROPRIETES TYPEES =====
+// Décrit les paramètres que les pages peuvent transmettre au composant.
 interface Props {
   href: string;
   label?: string;
@@ -6,6 +10,9 @@ interface Props {
 }
 const { href, label = 'Voir le dossier complet', size } = Astro.props;
 ---
+<!-- ===== COMPOSANTS : DOCUMENT PDF ===== -->
+<!-- Affiche un lien de dossier avec son format et sa taille annoncée. -->
+
 
 <div class="project-document">
   <a href={href} target="_blank" rel="noopener noreferrer">
@@ -34,6 +41,8 @@ const { href, label = 'Voir le dossier complet', size } = Astro.props;
 </div>
 
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .project-document {
     margin-top: 24px;
     max-width: 390px;

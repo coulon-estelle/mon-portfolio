@@ -1,9 +1,16 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
+// ===== COMPOSANTS : PROPRIETES TYPEES =====
+// Décrit les paramètres que les pages peuvent transmettre au composant.
 interface Props {
   text: string;
 }
 const { text } = Astro.props;
 ---
+<!-- ===== COMPOSANTS : LEGENDE DE MAQUETTE ===== -->
+<!-- Affiche le texte transmis par la page au-dessus d’un aperçu. -->
+
 
 <span class="mockup-label">
   <span>{text}</span>

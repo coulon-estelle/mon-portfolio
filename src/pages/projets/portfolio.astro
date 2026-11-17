@@ -1,14 +1,20 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import Layout from '../../layouts/Layout.astro';
 import ProjectImage from '../../components/ProjectImage.astro';
 import PageOutro from '../../components/PageOutro.astro';
 import { projectAssets } from '../../data/project-assets';
 import type { ImageMetadata } from 'astro';
 const assets = projectAssets.portfolio;
+// ===== IMAGES : IMPORT AUTOMATIQUE DES DESSINS =====
+// import.meta.glob charge les métadonnées des PNG du dossier illustrations à la compilation.
 const illustrations = import.meta.glob<{ default: ImageMetadata }>(
   '/public/images/illustrations/**/*.png',
   { eager: true },
 );
+// ===== DONNEES : CLASSEMENT DES ILLUSTRATIONS =====
+// Définit les groupes fées, lunes et étoiles et leurs légendes.
 const groups = [
   { folder: 'fees', title: 'Les fées', label: 'Fée', names: ['1', '2', '3', '4'] },
   { folder: 'lunes', title: 'Les lunes', label: 'Lune', names: ['bleue', 'rose'] },
@@ -20,12 +26,17 @@ const groups = [
   },
 ];
 ---
+<!-- ===== STRUCTURE : PAGE PORTFOLIO ===== -->
+<!-- Étude de cas portfolio : contexte, contribution et visuels du projet. -->
+
 
 <Layout
   title="Mon univers illustré — Estelle Coulon"
   description="Les dessins de mon portfolio, les étapes de création d’une fée et mes deux bannières et ma photo de profil pour les réseaux sociaux professionnels et personnels."
 >
   <main id="contenu">
+    <!-- ===== IMAGES : PRESENTATION DE L UNIVERS ILLUSTRE ===== -->
+    <!-- Introduit les dessins réalisés sur ibis Paint et l’illustration demandée par ma sœur. -->
     <section class="intro container" aria-labelledby="illustrations-title">
       <a class="back" href="/projets">
         Tous les projets / Mon univers illustré
@@ -66,6 +77,8 @@ const groups = [
       </div>
     </section>
 
+    <!-- ===== IMAGES : ETAPES DU DESSIN ===== -->
+    <!-- Présente le GIF de réalisation d’une fée avec son explication. -->
     <section class="process container" id="dessin" aria-labelledby="process-title">
       <div>
         <p class="eyebrow">Les étapes du dessin · ibis Paint</p>
@@ -90,6 +103,8 @@ const groups = [
       </figure>
     </section>
 
+    <!-- ===== IMAGES : COLLECTION DU PORTFOLIO ===== -->
+    <!-- Affiche les fées, lunes et étoiles regroupées par type. -->
     <section class="illustrations container" aria-labelledby="collection-title">
       <p class="eyebrow">Les dessins du portfolio · ibis Paint</p>
       <h2 id="collection-title">
@@ -127,6 +142,8 @@ const groups = [
       ))}
     </section>
 
+    <!-- ===== IMAGES : BANNIERES ET PROFIL ===== -->
+    <!-- Présente les créations destinées aux réseaux sociaux. -->
     <section class="social container" aria-labelledby="social-title">
       <p class="eyebrow">Réseaux sociaux · Pro & perso</p>
       <h2 id="social-title">
@@ -177,6 +194,8 @@ const groups = [
 </Layout>
 
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .intro {
     padding-block: 125px 35px;
   }
@@ -192,6 +211,8 @@ const groups = [
     grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
     gap: clamp(30px, 7vw, 100px);
   }
+  /* ===== STRUCTURE : TEXTE ET ILLUSTRATION =====
+     Organise le texte d’introduction à côté du dessin. */
   .intro-grid {
     align-items: center;
   }
@@ -261,6 +282,8 @@ const groups = [
     font-size: 12px;
     line-height: 1.6;
   }
+  /* ===== IMAGES : BANNIERES ET PHOTO DE PROFIL =====
+     Organise les différents formats des créations pour les réseaux sociaux. */
   .social-grid {
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
@@ -291,6 +314,8 @@ const groups = [
     font-size: 24px;
     margin-bottom: 20px;
   }
+  /* ===== IMAGES : DESSINS LIBRES =====
+     Dispose les illustrations sans cartes ni fonds. */
   .illustration-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -335,6 +360,8 @@ const groups = [
   .illustration-grid figcaption {
     text-align: center;
   }
+  /* ===== ANIMATION : MOUVEMENT ILLUSTRATION-FLOAT =====
+     Définit les étapes du mouvement utilisé par les propriétés animation. */
   @keyframes illustration-float {
     0%,
     100% {
@@ -344,6 +371,8 @@ const groups = [
       transform: translateY(-7px) rotate(calc(var(--float-angle) * -1));
     }
   }
+  /* ===== ACCESSIBILITE : PREFERENCES DE MOUVEMENT =====
+     Applique les règles suivantes sous la condition (prefers-reduced-motion: reduce). */
   @media (prefers-reduced-motion: reduce) {
     .illustration-grid :global(img) {
       animation: none;
@@ -352,6 +381,8 @@ const groups = [
   :global(html[data-motion='off']) .illustration-grid :global(img) {
     animation: none;
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 700px). */
   @media (max-width: 700px) {
     .illustration-grid,
     .illustration-grid.fees {
@@ -367,6 +398,8 @@ const groups = [
     }
     .intro-grid,
     .process,
+    /* ===== IMAGES : BANNIERES ET PHOTO DE PROFIL =====
+       Organise les différents formats des créations pour les réseaux sociaux. */
     .social-grid {
       grid-template-columns: 1fr;
       gap: 28px;

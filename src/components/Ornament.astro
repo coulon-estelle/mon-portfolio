@@ -1,4 +1,6 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import { Image } from 'astro:assets';
 import pinkMoon from '../../public/images/illustrations/lunes/lune-rose.png';
 import blueMoon from '../../public/images/illustrations/lunes/lune-bleue.png';
@@ -6,6 +8,8 @@ import pinkStar from '../../public/images/illustrations/etoiles/etoile-rose.png'
 import blueStar from '../../public/images/illustrations/etoiles/etoile-bleue.png';
 import violetStar from '../../public/images/illustrations/etoiles/etoile-violette.png';
 
+// ===== COMPOSANTS : PROPRIETES TYPEES =====
+// Décrit les paramètres que les pages peuvent transmettre au composant.
 interface Props {
   kind?: 'moon-pink' | 'moon-blue' | 'star-pink' | 'star-blue' | 'star-violet';
   width?: number;
@@ -20,6 +24,9 @@ const drawings = {
   'star-violet': violetStar,
 };
 ---
+<!-- ===== IMAGES : ORNEMENTS DECORATIFS ===== -->
+<!-- Choisit une lune ou une étoile et masque cette décoration aux lecteurs d’écran. -->
+
 
 <span class="drawn-ornament" aria-hidden="true" style={`--ornament-width:${width}px`}>
   <Image
@@ -35,6 +42,8 @@ const drawings = {
   />
 </span>
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .drawn-ornament {
     display: inline-block;
     width: var(--ornament-width);

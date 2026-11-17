@@ -1,6 +1,11 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import { site } from '../data/site';
 ---
+<!-- ===== NAVIGATION : RESEAUX SOCIAUX ===== -->
+<!-- Utilise les adresses centralisées pour ouvrir les profils professionnels. -->
+
 
 <nav class="social-cta" aria-label="Mes profils professionnels">
   <a href={site.creativeNetwork} target="_blank" rel="noopener noreferrer">
@@ -25,6 +30,8 @@ import { site } from '../data/site';
 </nav>
 
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .social-cta {
     display: flex;
     flex-wrap: wrap;
@@ -58,6 +65,8 @@ import { site } from '../data/site';
     color: var(--pink);
     font-size: 16px;
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 450px). */
   @media (max-width: 450px) {
     .social-cta a {
       width: 100%;

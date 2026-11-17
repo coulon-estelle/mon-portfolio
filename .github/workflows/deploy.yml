@@ -1,5 +1,9 @@
+# ===== DEPLOIEMENT : PUBLICATION DU BUILD STATIQUE =====
+# GitHub Actions construit dist puis transfère les fichiers vers le VPS par SSH.
 name: Deploy Portfolio
 
+# ===== DEPLOIEMENT : DECLENCHEMENT =====
+# Lance le workflow après un push sur main ou un lancement manuel.
 on:
   push:
     branches: [main]
@@ -25,6 +29,8 @@ jobs:
       - name: Construire le site Astro
         run: npm run build
 
+      # ===== SECURITE : IDENTIFIANTS SSH =====
+      # Lit les secrets GitHub pour configurer la clé et les hôtes connus sur le runner.
       - name: Configurer SSH
         env:
           SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
@@ -36,6 +42,8 @@ jobs:
           chmod 700 ~/.ssh
           chmod 600 ~/.ssh/id_ed25519 ~/.ssh/known_hosts
 
+      # ===== DEPLOIEMENT : SYNCHRONISATION DU DOSSIER DIST =====
+      # rsync synchronise les fichiers ; --delete retire sur le serveur ceux absents du build.
       - name: Deployer sur le VPS
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}

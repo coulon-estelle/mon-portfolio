@@ -1,4 +1,6 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import Layout from '../../layouts/Layout.astro';
 import ProjectImage from '../../components/ProjectImage.astro';
 import PageOutro from '../../components/PageOutro.astro';
@@ -21,12 +23,17 @@ const features = [
   },
 ];
 ---
+<!-- ===== STRUCTURE : PAGE FEELM ===== -->
+<!-- Étude de cas feelm : contexte, contribution et visuels du projet. -->
+
 
 <Layout
   title="Feelm — Plateforme VOD pour cinéphiles | Estelle Coulon"
   description="Feelm, un concept de plateforme VOD avec séances programmées, clubs de cinéma et forum. Projet UX/UI de BUT MMI et dossier PDF à télécharger."
 >
   <main id="contenu" class="feelm-case">
+    <!-- ===== PROJETS : INTRODUCTION DU PROJET ===== -->
+    <!-- Présente le projet, ses disciplines et les ressources disponibles. -->
     <section class="case-hero container" aria-labelledby="feelm-title">
       <a class="case-back" href="/projets">
         Tous les projets <span aria-hidden="true">/</span> Feelm
@@ -81,6 +88,8 @@ const features = [
       </div>
     </section>
 
+    <!-- ===== PROJETS : CONCEPT DE FEELM ===== -->
+    <!-- Présente les usages de la plateforme à partir du tableau des fonctionnalités. -->
     <section class="concept container" aria-labelledby="feelm-concept">
       <p class="eyebrow">Le concept</p>
       <h2 id="feelm-concept">
@@ -101,6 +110,8 @@ const features = [
       </p>
     </section>
 
+    <!-- ===== IMAGES : IDENTITE VISUELLE FEELM ===== -->
+    <!-- Montre le moodboard et les recherches graphiques du projet. -->
     <section class="identity container" aria-labelledby="feelm-identity">
       <figure class="moodboard">
         <ProjectImage
@@ -150,9 +161,13 @@ const features = [
 </Layout>
 
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .feelm-case {
     overflow: clip;
   }
+  /* ===== STRUCTURE : INTRODUCTION DU PROJET =====
+     Définit les espacements de la première section de l’étude de cas. */
   .case-hero {
     padding-block: 145px 55px;
   }
@@ -332,7 +347,11 @@ const features = [
     padding-block: 10px;
     border-bottom: 1px solid var(--line);
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 700px). */
   @media (max-width: 700px) {
+    /* ===== STRUCTURE : INTRODUCTION DU PROJET =====
+       Définit les espacements de la première section de l’étude de cas. */
     .case-hero {
       padding-block: 110px 25px;
     }

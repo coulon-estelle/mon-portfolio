@@ -1,6 +1,10 @@
+// ===== SEO : PLAN DU SITE XML =====
+// Génère les URL publiques depuis la liste de routes et le domaine configuré.
 import type { APIRoute } from 'astro';
 import { site } from '../data/site';
 
+// ===== SEO : ROUTES PUBLIQUES A INDEXER =====
+// Liste les pages incluses au sitemap ; à compléter lors de l’ajout d’une page.
 const routes = [
   '/',
   '/projets',
@@ -18,6 +22,8 @@ const routes = [
   '/projets/portfolio',
   '/mentions-legales',
 ];
+// ===== SEO : ECHAPPEMENT XML =====
+// Protège les caractères spéciaux avant de les insérer dans le sitemap.
 const escapeXml = (value: string) =>
   value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('"', '&quot;');
 

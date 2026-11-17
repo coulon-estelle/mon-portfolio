@@ -1,6 +1,9 @@
 ﻿---
 import Layout from '../layouts/Layout.astro';
 ---
+<!-- ===== STRUCTURE : PAGE 404 ===== -->
+<!-- Page introuvable : fournit un accès pour revenir vers le site. -->
+
 
 <Layout
   noindex
@@ -23,6 +26,8 @@ import Layout from '../layouts/Layout.astro';
   </main>
 </Layout>
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .not-found {
     padding-block: 170px 100px;
   }
@@ -50,6 +55,8 @@ import Layout from '../layouts/Layout.astro';
     font-size: 12px;
     color: var(--blue);
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 700px). */
   @media (max-width: 700px) {
     .not-found {
       padding-block: 120px 65px;

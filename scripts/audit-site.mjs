@@ -1,3 +1,5 @@
+// ===== TESTS : AUDIT DES PAGES =====
+// Vérifie les métadonnées, les liens locaux et la cohérence du sitemap après compilation.
 import fs from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
@@ -33,6 +35,8 @@ const errors = [];
 let links = 0;
 const siteOrigin = new URL(process.env.PUBLIC_SITE_URL || 'https://portfolio.estelle-coulon.fr/')
   .origin;
+// ===== SEO : CONTROLE DES PAGES GENEREES =====
+// Vérifie langue, H1, titre, description, canonique et absence de doublons d’identifiants.
 for (const file of files) {
   const html = pages.get(file);
   const fail = (message) => errors.push(`${file}: ${message}`);
@@ -75,6 +79,8 @@ const projectPages = files.filter((file) =>
   /projets[\\/](?:olyvia|nunc|lumimix)[\\/]index\.html$/.test(file),
 );
 assert.equal(projectPages.length, 3, 'Les trois études de cas principales doivent être rendues');
+// ===== SEO : COHERENCE DU SITEMAP =====
+// Compare le nombre et le domaine des URL avec les routes attendues par cet audit.
 const sitemap = fs.readFileSync(path.join(output, 'sitemap.xml'), 'utf8');
 const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 assert.equal(

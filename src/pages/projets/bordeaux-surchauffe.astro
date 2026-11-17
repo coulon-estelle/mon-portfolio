@@ -1,4 +1,6 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import Layout from '../../layouts/Layout.astro';
 import ProjectImage from '../../components/ProjectImage.astro';
 import MockupLabel from '../../components/MockupLabel.astro';
@@ -7,12 +9,17 @@ import { projectAssets } from '../../data/project-assets';
 const assets = projectAssets.bordeaux;
 const websiteUrl = 'https://bordeaux-surchauffe.netlify.app/';
 ---
+<!-- ===== STRUCTURE : PAGE BORDEAUX-SURCHAUFFE ===== -->
+<!-- Étude de cas bordeaux-surchauffe : contexte, contribution et visuels du projet. -->
+
 
 <Layout
   title="Bordeaux Surchauffe — Datavisualisation | Estelle Coulon"
   description="Bordeaux Surchauffe : un projet en binôme pour comprendre la chaleur et l’exposition des habitants de Bordeaux Métropole grâce aux données ouvertes."
 >
   <main id="contenu" class="bordeaux-case">
+    <!-- ===== PROJETS : INTRODUCTION BORDEAUX SURCHAUFFE ===== -->
+    <!-- Présente le projet de datavisualisation et son accès au site. -->
     <section class="bordeaux-hero container" aria-labelledby="bordeaux-title">
       <a class="case-back" href="/projets">
         Tous les projets <span aria-hidden="true">/</span> Bordeaux Surchauffe
@@ -43,6 +50,8 @@ const websiteUrl = 'https://bordeaux-surchauffe.netlify.app/';
       </div>
     </section>
 
+    <!-- ===== PROJETS : CONTEXTE DE LA DATAVISUALISATION ===== -->
+    <!-- Explique le sujet et le travail en binôme autour des communes de Bordeaux Métropole. -->
     <section class="bordeaux-context container" aria-label="Présentation du projet">
       <div>
         <p class="eyebrow">Contexte & commande</p>
@@ -66,6 +75,8 @@ const websiteUrl = 'https://bordeaux-surchauffe.netlify.app/';
       </div>
     </section>
 
+    <!-- ===== IMAGES : APERCUS DU PROJET ===== -->
+    <!-- Montre les maquettes et les accès aux réalisations ou prototypes. -->
     <section
       class="case-previews bordeaux-previews container"
       aria-labelledby="bordeaux-preview-title"
@@ -100,6 +111,8 @@ const websiteUrl = 'https://bordeaux-surchauffe.netlify.app/';
 </Layout>
 
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .bordeaux-case {
     overflow: clip;
     --heat: #efb074;
@@ -230,6 +243,8 @@ const websiteUrl = 'https://bordeaux-surchauffe.netlify.app/';
   :global(html[data-theme='light']) .bordeaux-case {
     --heat: #8a421c;
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 700px). */
   @media (max-width: 700px) {
     .bordeaux-hero {
       padding-top: 115px;

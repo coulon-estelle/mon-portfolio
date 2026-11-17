@@ -1,3 +1,5 @@
+// ===== DONNEES : SOURCE PROJECT-ASSETS =====
+// Centralise le contenu utilisé par les pages et les composants du portfolio.
 import olyviaMoodboard from '../../public/images/projets/olyvia/moodboard.png';
 import feelmMoodboard from '../../public/images/projets/feelm/moodboard-feelm.png';
 import feelmMockup from '../../public/images/projets/feelm/mockup-feelm.png';
@@ -33,6 +35,8 @@ import portfolioProfile from '../../public/images/projets/portfolio/fée-pp.png'
 import portfolioDrawing from '../../public/images/projets/portfolio/soeur-fée.png';
 
 // Une seule source pour les cartes et les études de cas.
+// ===== IMAGES : REGISTRE DES VISUELS =====
+// Partage les images importées et les chemins de médias entre les cartes et les pages.
 export const projectAssets = {
   portfolio: {
     banner: portfolioBanner,

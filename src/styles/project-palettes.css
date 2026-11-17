@@ -1,4 +1,8 @@
-/* Palettes issues des identités et maquettes, partagées entre carte et étude de cas. */
+/* ===== COULEURS : FEUILLE PROJECT-PALETTES =====
+   Styles CSS écrits dans le projet ; cette feuille n’utilise pas Tailwind. */
+/* ===== COULEURS : REGLES DE PRESENTATION =====
+   Palettes issues des identités et maquettes, partagées entre carte et étude de cas. */
+
 html .project.portfolio {
   --project-bg: #30162e;
   --project-surface: #512a48;
@@ -164,7 +168,9 @@ html:is([data-theme], :not([data-theme])) article.project[class] .project-page-l
   outline-color: var(--project-accent);
 }
 
-/* Priorité sur les styles locaux Astro ; les palettes restent limitées au contenu du projet. */
+/* ===== COULEURS : REGLES DE PRESENTATION =====
+   Priorité sur les styles locaux Astro ; les palettes restent limitées au contenu du projet. */
+
 :root
   body
   main[id='contenu']:is(

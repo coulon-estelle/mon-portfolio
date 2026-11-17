@@ -1,6 +1,10 @@
+// ===== TESTS : SCENARIOS PLAYWRIGHT =====
+// Teste les interactions, les visuels, le responsive et des critères d’accessibilité.
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
+// ===== TESTS : VERIFICATION NAVIGATEUR =====
+// Visuels des projets : moodboards, logos et mockups chargés
 test('Visuels des projets : moodboards, logos et mockups chargés', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
@@ -34,6 +38,8 @@ test('Visuels des projets : moodboards, logos et mockups chargés', async ({ pag
   }
 });
 
+// ===== TESTS : VERIFICATION NAVIGATEUR =====
+// Atelier : les dessins s’ouvrent en grand sans changer de page
 test('Atelier : les dessins s’ouvrent en grand sans changer de page', async ({ page }) => {
   await page.goto('/atelier');
   await expect(page.locator('.art-card')).toHaveCount(11);
@@ -58,6 +64,8 @@ test('Atelier : les dessins s’ouvrent en grand sans changer de page', async ({
   await expect(drawing).toBeFocused();
 });
 
+// ===== TESTS : VERIFICATION NAVIGATEUR =====
+// NŨNC : le U accentué utilise bien la police manuscrite
 test('NŨNC : le U accentué utilise bien la police manuscrite', async ({ page }) => {
   await page.goto('/');
   await page.evaluate(() => document.fonts.ready);
@@ -77,6 +85,8 @@ test('NŨNC : le U accentué utilise bien la police manuscrite', async ({ page }
   await session.detach();
 });
 
+// ===== TESTS : VERIFICATION NAVIGATEUR =====
+// Étoiles et paillettes : palette plus sombre en mode clair
 test('Étoiles et paillettes : palette plus sombre en mode clair', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
@@ -96,6 +106,8 @@ test('Étoiles et paillettes : palette plus sombre en mode clair', async ({ page
   expect(colors).toEqual(['rgb(152, 67, 99)', 'rgb(39, 100, 137)', 'rgb(119, 80, 159)']);
 });
 
+// ===== TESTS : VERIFICATION NAVIGATEUR =====
+// Fées : étoiles au clic et au clavier, arrêt des animations
 test('Fées : étoiles au clic et au clavier, arrêt des animations', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
@@ -182,6 +194,8 @@ for (const viewport of [
   });
 }
 
+// ===== TESTS : VERIFICATION NAVIGATEUR =====
+// Préférences, filtres et liens de projets
 test('Préférences, filtres et liens de projets', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('.project.bordeaux')).toHaveCount(0);
@@ -228,6 +242,8 @@ test('Préférences, filtres et liens de projets', async ({ page }) => {
   );
 });
 
+// ===== TESTS : VERIFICATION NAVIGATEUR =====
+// Menu, carrousel tactile et clavier
 test('Menu, carrousel tactile et clavier', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
@@ -245,6 +261,8 @@ test('Menu, carrousel tactile et clavier', async ({ page }) => {
   await expect(page).toHaveURL(/projets\/lumimix/);
 });
 
+// ===== TESTS : VERIFICATION NAVIGATEUR =====
+// Contact : envoi direct simulé, validation et confirmation
 test('Contact : envoi direct simulé, validation et confirmation', async ({ page }) => {
   let received: Record<string, string> | undefined;
   let count = 0;
@@ -289,6 +307,8 @@ test('Contact : envoi direct simulé, validation et confirmation', async ({ page
   await expect(page).toHaveURL(/\/contact\/?$/);
 });
 
+// ===== TESTS : VERIFICATION NAVIGATEUR =====
+// Contact : erreurs et activation gardent le message sans fausse confirmation
 test('Contact : erreurs et activation gardent le message sans fausse confirmation', async ({
   page,
 }) => {
@@ -320,6 +340,8 @@ test('Contact : erreurs et activation gardent le message sans fausse confirmatio
   }
 });
 
+// ===== TESTS : VERIFICATION NAVIGATEUR =====
+// Navigation utilisable sans JavaScript
 test('Navigation utilisable sans JavaScript', async ({ browser }) => {
   const context = await browser.newContext({
     javaScriptEnabled: false,

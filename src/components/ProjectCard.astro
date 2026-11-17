@@ -1,11 +1,18 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import type { projets } from '../data/projets';
 import { Image } from 'astro:assets';
+// ===== COMPOSANTS : PROPRIETES TYPEES =====
+// Décrit les paramètres que les pages peuvent transmettre au composant.
 interface Props {
   projet: (typeof projets)[number];
 }
 const { projet } = Astro.props;
 ---
+<!-- ===== PROJETS : CARTE REUTILISABLE ===== -->
+<!-- Reçoit un projet et affiche son image optimisée, son résumé et son lien. -->
+
 
 <article class:list={['project', projet.style]}>
   <div class="project-visual">

@@ -1,3 +1,7 @@
+/* ===== STRUCTURE : FEUILLE GLOBAL =====
+   Styles CSS écrits dans le projet ; cette feuille n’utilise pas Tailwind. */
+/* ===== TYPOGRAPHIE : POLICES LOCALES =====
+   Charge les fontes depuis les dépendances du projet, sans requête vers Google Fonts. */
 @import '@fontsource/dm-sans/400.css';
 @import '@fontsource/dm-sans/500.css';
 @import '@fontsource/dm-sans/600.css';
@@ -6,6 +10,8 @@
 @import '@fontsource/space-grotesk/500.css';
 @import '@fontsource/space-grotesk/700.css';
 @import '@fontsource/just-me-again-down-here/400.css';
+/* ===== COULEURS : VARIABLES DE LA CHARTE =====
+   Déclare la palette et les familles de caractères partagées par les composants. */
 :root {
   --color-noir-rouge: #25070e;
   --color-fuchsia: #fe377e;
@@ -54,10 +60,14 @@ summary:focus-visible {
   background: var(--hot);
   color: white;
 }
+/* ===== RESPONSIVE : LARGEUR DU CONTENU =====
+   Limite la largeur desktop et conserve des marges latérales. */
 .container {
   width: min(1280px, calc(100% - 112px));
   margin-inline: auto;
 }
+/* ===== ACCESSIBILITE : ACCES DIRECT AU CONTENU =====
+   Masque visuellement le lien d’évitement jusqu’à la prise de focus. */
 .skip-link {
   position: fixed;
   top: -100px;
@@ -70,6 +80,8 @@ summary:focus-visible {
 .skip-link:focus {
   top: 12px;
 }
+/* ===== NAVIGATION : PRESENTATION DU HEADER =====
+   Place le menu au-dessus des pages avec un fond et une bordure. */
 .site-header {
   margin-bottom: -92px;
   border-bottom: 1px solid var(--line);
@@ -109,6 +121,8 @@ summary:focus-visible {
 .nav-contact span {
   margin-left: 20px;
 }
+/* ===== STRUCTURE : SECTION HERO DE L ACCUEIL =====
+   Définit la zone de présentation et son contexte de positionnement. */
 .hero {
   position: relative;
   overflow: hidden;
@@ -141,6 +155,8 @@ summary:focus-visible {
     radial-gradient(ellipse at 70% 30%, #5fc6ee66, transparent 45%),
     conic-gradient(from 190deg, #270d34, #9b2876, #291347, #5f3ba5, #270d34);
 }
+/* ===== IMAGES : FOND DE L ACCUEIL =====
+   Place l’image de fond dans la section de présentation. */
 .hero-background {
   position: absolute;
   width: 100%;
@@ -163,6 +179,8 @@ summary:focus-visible {
   grid-template-columns: 1.25fr 1fr;
   align-items: center;
 }
+/* ===== TYPOGRAPHIE : PETITS TITRES DE REPERAGE =====
+   Définit le style des libellés qui introduisent les sections. */
 .eyebrow {
   font-size: 11px;
   text-transform: uppercase;
@@ -189,6 +207,8 @@ h2,
 h3 {
   font-family: 'Space Grotesk', sans-serif;
 }
+/* ===== TYPOGRAPHIE : TITRE PRINCIPAL =====
+   Définit les proportions initiales du titre de l’accueil. */
 h1 {
   position: relative;
   font-size: clamp(80px, 8.8vw, 138px);
@@ -264,6 +284,8 @@ h1 > span:first-child {
   color: var(--hot);
   transform: rotate(-12deg);
 }
+/* ===== TYPOGRAPHIE : ACCENTS MANUSCRITS =====
+   Applique la police manuscrite aux mots mis en avant. */
 .handwritten {
   font-family: var(--font-display);
   font-weight: 400;
@@ -353,6 +375,8 @@ h2 .handwritten {
   color: var(--muted);
   margin-bottom: 5px;
 }
+/* ===== PROJETS : GRILLE DES CARTES =====
+   Organise les cartes de la sélection de l’accueil. */
 .project-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -363,6 +387,8 @@ h2 .handwritten {
   overflow: hidden;
   border-radius: 6px;
 }
+/* ===== IMAGES : DIMENSIONS DES APERCUS =====
+   Contrôle le cadrage des images dans les cartes. */
 .project-visual img {
   width: 100%;
   height: 100%;
@@ -565,12 +591,16 @@ h2 .handwritten {
   margin-top: 15px;
   color: var(--pink) !important;
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (min-width: 1600px). */
 @media (min-width: 1600px) {
   .hero,
   .hero-inner {
     min-height: 930px;
   }
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 1000px). */
 @media (max-width: 1000px) {
   .container {
     width: calc(100% - 64px);
@@ -613,6 +643,8 @@ h2 .handwritten {
     font-size: 220px;
   }
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 700px). */
 @media (max-width: 700px) {
   .container {
     width: calc(100% - 40px);
@@ -755,6 +787,8 @@ h2 .handwritten {
     top: -12px;
   }
 }
+/* ===== ACCESSIBILITE : PREFERENCES DE MOUVEMENT =====
+   Applique les règles suivantes sous la condition (prefers-reduced-motion: reduce). */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -767,7 +801,9 @@ h2 .handwritten {
   }
 }
 
-/* Palette secondaire commune à toute la page. */
+/* ===== COULEURS : REGLES DE PRESENTATION =====
+   Palette secondaire commune à toute la page. */
+
 :root {
   --blue: #8bcbed;
   --purple: #b997ed;
@@ -915,6 +951,8 @@ h2 .handwritten {
   border-bottom-color: var(--blue);
   color: var(--blue) !important;
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 700px). */
 @media (max-width: 700px) {
   .expertise-band {
     padding-block: 30px 35px;
@@ -936,7 +974,9 @@ h2 .handwritten {
     font-size: 1.4em;
   }
 }
-/* Le rose reste la couleur d’accent principale. */
+/* ===== COULEURS : REGLES DE PRESENTATION =====
+   Le rose reste la couleur d’accent principale. */
+
 .button-primary span {
   color: #fff0f6;
 }
@@ -968,7 +1008,9 @@ h2 .handwritten {
   color: var(--pink);
 }
 
-/* Cartes fidèles à la référence : visuel et contenu dans un même cadre. */
+/* ===== IMAGES : REGLES DE PRESENTATION =====
+   Cartes fidèles à la référence : visuel et contenu dans un même cadre. */
+
 .project-grid {
   gap: clamp(24px, 5.4vw, 82px);
   align-items: stretch;
@@ -1037,6 +1079,8 @@ h2 .handwritten {
   color: #d4c6cc;
   margin: 0;
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 1000px) and (min-width: 701px). */
 @media (max-width: 1000px) and (min-width: 701px) {
   .project-grid {
     gap: 22px;
@@ -1054,6 +1098,8 @@ h2 .handwritten {
     font-size: 12px;
   }
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 700px). */
 @media (max-width: 700px) {
   .project-grid {
     gap: 30px;
@@ -1077,7 +1123,9 @@ h2 .handwritten {
   }
 }
 
-/* Pied de page : dégradé central et emplacement réservé à l’illustration. */
+/* ===== IMAGES : REGLES DE PRESENTATION =====
+   Pied de page : dégradé central et emplacement réservé à l’illustration. */
+
 .portfolio-footer {
   border-top: 1px solid #882bd8;
   background: radial-gradient(ellipse at 50% 15%, #481772 0%, #35103e 32%, #290202 76%);
@@ -1159,6 +1207,8 @@ h2 .handwritten {
   line-height: 1.5;
   margin: 0;
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 700px). */
 @media (max-width: 700px) {
   .footer-main {
     min-height: 245px;
@@ -1190,7 +1240,9 @@ h2 .handwritten {
   }
 }
 
-/* Boutons sobres, sans flèche. */
+/* ===== STRUCTURE : REGLES DE PRESENTATION =====
+   Boutons sobres, sans flèche. */
+
 .button {
   justify-content: center;
   gap: 0;
@@ -1219,7 +1271,9 @@ h2 .handwritten {
   border-color: var(--pink);
 }
 
-/* Contraste renforcé pour les actions principales. */
+/* ===== COULEURS : REGLES DE PRESENTATION =====
+   Contraste renforcé pour les actions principales. */
+
 .button-primary {
   background: #eba7bf;
   color: #290914;
@@ -1234,7 +1288,9 @@ h2 .handwritten {
   border-color: #ffd8e7;
 }
 
-/* Une atmosphère de poussière d’étoiles, toujours derrière les interactions. */
+/* ===== ANIMATION : REGLES DE PRESENTATION =====
+   Une atmosphère de poussière d’étoiles, toujours derrière les interactions. */
+
 body {
   isolation: isolate;
 }
@@ -1442,6 +1498,8 @@ body {
     0 0 25px #eba7bf40,
     0 0 45px #b997ed20;
 }
+/* ===== ACCESSIBILITE : PREFERENCES DE MOUVEMENT =====
+   Applique les règles suivantes sous la condition (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference). */
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .project:hover {
     transform: perspective(1000px) translateY(-8px) rotateX(var(--tilt-x, 0deg))
@@ -1458,6 +1516,8 @@ body {
     transform: scale(1.035);
   }
 }
+/* ===== ACCESSIBILITE : PREFERENCES DE MOUVEMENT =====
+   Applique les règles suivantes sous la condition (prefers-reduced-motion: no-preference). */
 @media (prefers-reduced-motion: no-preference) {
   .fairy-reveal {
     opacity: 0;
@@ -1471,6 +1531,8 @@ body {
     translate: 0 0;
   }
 }
+/* ===== ANIMATION : MOUVEMENT FAIRY-TWINKLE =====
+   Définit les étapes du mouvement utilisé par les propriétés animation. */
 @keyframes fairy-twinkle {
   0%,
   100% {
@@ -1482,6 +1544,8 @@ body {
     transform: translateY(-8px) scale(1);
   }
 }
+/* ===== ANIMATION : MOUVEMENT FAIRY-FLOAT =====
+   Définit les étapes du mouvement utilisé par les propriétés animation. */
 @keyframes fairy-float {
   0%,
   100% {
@@ -1493,6 +1557,8 @@ body {
     rotate: 3deg;
   }
 }
+/* ===== ANIMATION : MOUVEMENT FAIRY-DRIFT =====
+   Définit les étapes du mouvement utilisé par les propriétés animation. */
 @keyframes fairy-drift {
   from {
     transform: translate(0, 0);
@@ -1501,6 +1567,8 @@ body {
     transform: translate(40px, -40px);
   }
 }
+/* ===== ANIMATION : MOUVEMENT FAIRY-STAR-TURN =====
+   Définit les étapes du mouvement utilisé par les propriétés animation. */
 @keyframes fairy-star-turn {
   0%,
   100% {
@@ -1510,6 +1578,8 @@ body {
     rotate: 35deg;
   }
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 700px). */
 @media (max-width: 700px) {
   .fairy-glow {
     width: 80vw;
@@ -1534,6 +1604,8 @@ body {
     font-size: 32px;
   }
 }
+/* ===== ACCESSIBILITE : PREFERENCES DE MOUVEMENT =====
+   Applique les règles suivantes sous la condition (prefers-reduced-motion: reduce). */
 @media (prefers-reduced-motion: reduce) {
   .fairy-reveal {
     opacity: 1;
@@ -1547,7 +1619,9 @@ body {
   }
 }
 
-/* Signature manuscrite de l’introduction. */
+/* ===== TYPOGRAPHIE : REGLES DE PRESENTATION =====
+   Signature manuscrite de l’introduction. */
+
 .hero h1 {
   font-family: var(--font-display);
   font-weight: 400;
@@ -1558,6 +1632,8 @@ body {
 .hero h1 .title-star {
   font-family: 'Space Grotesk', sans-serif;
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 700px). */
 @media (max-width: 700px) {
   .hero h1 {
     font-size: clamp(86px, 23vw, 126px);
@@ -1565,7 +1641,9 @@ body {
   }
 }
 
-/* Navigation ancrée au bord supérieur de la fenêtre. */
+/* ===== NAVIGATION : REGLES DE PRESENTATION =====
+   Navigation ancrée au bord supérieur de la fenêtre. */
+
 .site-header {
   position: fixed;
   top: 0;
@@ -1576,7 +1654,9 @@ body {
   z-index: 50;
 }
 
-/* Préférences d’affichage. */
+/* ===== ACCESSIBILITE : REGLES DE PRESENTATION =====
+   Préférences d’affichage. */
+
 .display-controls {
   display: flex;
   align-items: center;
@@ -1584,6 +1664,8 @@ body {
 html[data-motion='off'] {
   scroll-behavior: auto;
 }
+/* ===== ACCESSIBILITE : ARRET GLOBAL DES ANIMATIONS =====
+   Le choix de désactiver les mouvements neutralise animations et transitions. */
 html[data-motion='off'] *,
 html[data-motion='off'] *::before,
 html[data-motion='off'] *::after {
@@ -1622,6 +1704,8 @@ html[data-theme='light'] body {
   background: var(--bg);
   color: var(--ink);
 }
+/* ===== COULEURS : DECLINAISON DU THEME CLAIR =====
+   Adapte les composants à la palette claire choisie dans le header. */
 html[data-theme='light'] .site-header {
   background: linear-gradient(100deg, #ecdee8f2, #dfd3ebf2);
   border-bottom-color: #9872b340;
@@ -1731,6 +1815,8 @@ html[data-theme='light'] .fairy-star {
 html[data-theme='light'] .little-star {
   color: var(--blue);
 }
+/* ===== ANIMATION : MOUVEMENT FAIRY-TWINKLE-LIGHT =====
+   Définit les étapes du mouvement utilisé par les propriétés animation. */
 @keyframes fairy-twinkle-light {
   0%,
   100% {
@@ -1742,11 +1828,15 @@ html[data-theme='light'] .little-star {
     transform: translateY(-8px) scale(1);
   }
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 1100px). */
 @media (max-width: 1100px) {
   .nav-links {
     gap: 18px;
   }
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 800px). */
 @media (max-width: 800px) {
   .nav {
     height: auto;
@@ -1775,6 +1865,8 @@ html[data-theme='light'] .little-star {
     scroll-padding-top: 145px;
   }
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 400px). */
 @media (max-width: 400px) {
   .nav .signature {
     font-size: 27px;
@@ -1787,7 +1879,9 @@ html[data-theme='light'] .little-star {
   }
 }
 
-/* Interrupteurs d’affichage : libellé fixe et petit curseur coulissant. */
+/* ===== STRUCTURE : REGLES DE PRESENTATION =====
+   Interrupteurs d’affichage : libellé fixe et petit curseur coulissant. */
+
 .display-controls {
   gap: 18px;
   margin-left: 4px;
@@ -1876,6 +1970,8 @@ html[data-theme='light'] .preference-switch[data-theme-toggle][aria-checked='tru
 html[data-theme='light'] .preference-switch[data-theme-toggle][aria-checked='true'] .switch-thumb {
   background: var(--blue);
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 800px). */
 @media (max-width: 800px) {
   .display-controls {
     gap: 22px;
@@ -1887,10 +1983,14 @@ html[data-theme='light'] .preference-switch[data-theme-toggle][aria-checked='tru
   }
 }
 
-/* Refonte téléphone uniquement : le desktop conserve sa mise en page. */
+/* ===== RESPONSIVE : REGLES DE PRESENTATION =====
+   Refonte téléphone uniquement : le desktop conserve sa mise en page. */
+
 .mobile-menu-toggle {
   display: none;
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 700px). */
 @media (max-width: 700px) {
   html {
     scroll-padding-top: 90px;
@@ -2292,6 +2392,8 @@ html[data-theme='light'] .preference-switch[data-theme-toggle][aria-checked='tru
     opacity: 0.08;
   }
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 360px). */
 @media (max-width: 360px) {
   .container {
     width: calc(100% - 32px);
@@ -2321,10 +2423,14 @@ html[data-theme='light'] .preference-switch[data-theme-toggle][aria-checked='tru
   }
 }
 
-/* Carrousel tactile réservé aux téléphones. */
+/* ===== RESPONSIVE : REGLES DE PRESENTATION =====
+   Carrousel tactile réservé aux téléphones. */
+
 .carousel-controls {
   display: none;
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 700px). */
 @media (max-width: 700px) {
   .project-grid {
     display: flex;
@@ -2401,6 +2507,8 @@ html[data-theme='light'] .preference-switch[data-theme-toggle][aria-checked='tru
     border-radius: 8px;
   }
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 360px). */
 @media (max-width: 360px) {
   .project-grid {
     margin-right: -16px;
@@ -2415,7 +2523,9 @@ html[data-theme='light'] .preference-switch[data-theme-toggle][aria-checked='tru
   color: var(--pink);
 }
 
-/* Le pied de page termine la fenêtre, même sur les pages courtes. */
+/* ===== STRUCTURE : REGLES DE PRESENTATION =====
+   Le pied de page termine la fenêtre, même sur les pages courtes. */
+
 html {
   min-height: 100%;
   background: var(--bg);
@@ -2435,7 +2545,9 @@ body > main {
   margin-bottom: 0;
 }
 
-/* Contenir les débordements des décorations et des apparitions. */
+/* ===== STRUCTURE : REGLES DE PRESENTATION =====
+   Contenir les débordements des décorations et des apparitions. */
+
 body {
   position: relative;
   overflow-x: clip;
@@ -2451,7 +2563,9 @@ astro-dev-toolbar {
   height: 0 !important;
 }
 
-/* La carte NŨNC entière mène à son étude de cas. */
+/* ===== NAVIGATION : REGLES DE PRESENTATION =====
+   La carte NŨNC entière mène à son étude de cas. */
+
 .project-page-link::after {
   content: '';
   position: absolute;
@@ -2464,7 +2578,9 @@ astro-dev-toolbar {
   outline-offset: 5px;
 }
 
-/* Qualité : accès clavier, navigation sans JavaScript et cible professionnelle. */
+/* ===== ACCESSIBILITE : REGLES DE PRESENTATION =====
+   Qualité : accès clavier, navigation sans JavaScript et cible professionnelle. */
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -2512,6 +2628,8 @@ html:not([data-js='true']) .gallery-filters,
 html:not([data-js='true']) .art-toolbar {
   display: none;
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 700px). */
 @media (max-width: 700px) {
   .hero-availability {
     font-size: 12px;
@@ -2547,6 +2665,8 @@ html:not([data-js='true']) .art-toolbar {
     font-size: 11px;
   }
 }
+/* ===== ACCESSIBILITE : PREFERENCES DE MOUVEMENT =====
+   Applique les règles suivantes sous la condition (prefers-reduced-motion: reduce). */
 @media (prefers-reduced-motion: reduce) {
   .project:hover,
   .project:hover .project-art,
@@ -2557,7 +2677,9 @@ html:not([data-js='true']) .art-toolbar {
   }
 }
 
-/* Illustrations personnelles : tailles adaptées à leur place dans la page. */
+/* ===== IMAGES : REGLES DE PRESENTATION =====
+   Illustrations personnelles : tailles adaptées à leur place dans la page. */
+
 .hero-art .hero-fairy {
   max-width: 460px;
   margin-inline: auto;
@@ -2576,6 +2698,8 @@ html:not([data-js='true']) .art-toolbar {
   max-width: 100%;
   margin: 0 auto 22px;
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 700px). */
 @media (max-width: 700px) {
   .hero-art .hero-fairy {
     max-width: 250px;
@@ -2598,7 +2722,9 @@ html:not([data-js='true']) .art-toolbar {
   }
 }
 
-/* Dessins personnels : scènes composées et petits repères de section. */
+/* ===== IMAGES : REGLES DE PRESENTATION =====
+   Dessins personnels : scènes composées et petits repères de section. */
+
 .illustration-scene {
   position: relative;
   isolation: isolate;
@@ -2678,6 +2804,8 @@ html:not([data-js='true']) .art-toolbar {
   z-index: 2;
   pointer-events: none;
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 700px). */
 @media (max-width: 700px) {
   .scene-star-left {
     width: 30px;
@@ -2724,6 +2852,8 @@ html:not([data-js='true']) .art-toolbar {
     max-width: 30px;
   }
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 700px). */
 @media (max-width: 700px) {
   .hero h1 .title-star {
     width: 34px;

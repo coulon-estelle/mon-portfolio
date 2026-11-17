@@ -1,4 +1,6 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import Ornament from '../components/Ornament.astro';
 import FairyIllustration from '../components/FairyIllustration.astro';
 import Layout from '../layouts/Layout.astro';
@@ -16,12 +18,17 @@ const missions = [
   'Autre',
 ];
 ---
+<!-- ===== STRUCTURE : PAGE CONTACT ===== -->
+<!-- Contact : coordonnées et formulaire envoyé à FormSubmit. -->
+
 
 <Layout
   title="Contact — Estelle Coulon"
   description="Une alternance, un projet créatif ou une question ? Contactez Estelle Coulon, étudiante en design graphique à Pont-de-Roide."
 >
   <main id="contenu" class="contact-page">
+    <!-- ===== STRUCTURE : PRESENTATION CONTACT ===== -->
+    <!-- Présente la recherche d’alternance, le CV et les réseaux professionnels. -->
     <section class="contact-intro container" aria-labelledby="contact-page-title">
       <div>
         <a class="contact-breadcrumb" href="/">
@@ -50,6 +57,8 @@ const missions = [
         <FairyIllustration variant={4} width={320} eager />
       </div>
     </section>
+    <!-- ===== FORMULAIRE : COORDONNEES ET MESSAGE ===== -->
+    <!-- Réunit les coordonnées et les champs de la demande. -->
     <section class="contact-content container" aria-label="Coordonnées et formulaire de contact">
       <div class="contact-information">
         <p class="eyebrow">Coordonnées</p>
@@ -75,6 +84,8 @@ const missions = [
           </div>
         </dl>
       </div>
+      <!-- ===== FORMULAIRE : CHAMPS ET ENVOI POST ===== -->
+      <!-- Les contraintes required, type=email et maxlength assurent la validation HTML native. -->
       <form
         class="contact-form"
         name="contact"
@@ -84,6 +95,8 @@ const missions = [
       >
         <input type="hidden" name="_subject" value="Contact — Portfolio Estelle Coulon" />
         <input type="hidden" name="_template" value="table" />
+        <!-- ===== FORMULAIRE : PIEGE ANTISPAM ===== -->
+        <!-- Ce champ caché doit rester vide lors d’une demande normale. -->
         <div hidden>
           <label>
             Ne pas remplir <input type="text" name="_honey" tabindex="-1" autocomplete="off" />
@@ -122,6 +135,8 @@ const missions = [
             maxlength="254"
           />
         </div>
+        <!-- ===== ACCESSIBILITE : GROUPE DES SUJETS ===== -->
+        <!-- fieldset et legend regroupent les cases à cocher et les labels nomment les champs. -->
         <fieldset class="mission-options">
           <legend>Vous souhaitez parler de…</legend>
           <div>
@@ -154,6 +169,8 @@ const missions = [
         <button class="button button-primary" type="submit">
           Envoyer mon message
         </button>
+        <!-- ===== ACCESSIBILITE : ANNONCE DU RESULTAT ===== -->
+        <!-- La zone de statut reçoit la progression, la confirmation ou les erreurs d’envoi. -->
         <p class="form-note" role="status" data-contact-status></p>
 
         <p class="form-fallback">
@@ -165,17 +182,25 @@ const missions = [
 </Layout>
 
 <script>
+  // ===== INTERACTION : SCRIPT COTE NAVIGATEUR =====
+  // Ce code agit sur le DOM après le chargement de la page.
   const contactForm = document.querySelector<HTMLFormElement>('[data-contact-endpoint]');
+  // ===== FORMULAIRE : VALIDATION AVANT ENVOI =====
+  // Intercepte la soumission ; reportValidity utilise les contraintes HTML et évite les doubles envois.
   contactForm?.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!contactForm.reportValidity() || contactForm.dataset.sending === 'true') return;
     const data = new FormData(contactForm);
+    // ===== FORMULAIRE : CHAMP ANTISPAM =====
+    // Ignore une demande dont le champ caché destiné aux robots a été rempli.
     if (String(data.get('_honey') || '').trim()) return;
     const endpoint = contactForm.dataset.contactEndpoint;
     const submit = contactForm.querySelector<HTMLButtonElement>('button[type="submit"]');
     const status = contactForm.querySelector<HTMLElement>('[data-contact-status]');
     if (!endpoint || !submit || !status) return;
     const topics = data.getAll('mission').join(', ');
+    // ===== FORMULAIRE : PREPARATION DU MESSAGE =====
+    // Récupère les champs, nettoie les espaces et regroupe les cases cochées.
     const payload = {
       name: String(data.get('name') || '').trim(),
       email: String(data.get('email') || '').trim(),
@@ -185,15 +210,21 @@ const missions = [
       _template: 'table',
       _honey: '',
     };
+    // ===== ACCESSIBILITE : ETAT EN COURS D ENVOI =====
+    // Désactive le bouton, signale aria-busy et annonce la progression via le statut.
     contactForm.dataset.sending = 'true';
     contactForm.setAttribute('aria-busy', 'true');
     submit.disabled = true;
     submit.textContent = 'Envoi en cours…';
     status.setAttribute('role', 'status');
     status.textContent = 'Votre message est en cours d’envoi.';
+    // ===== FORMULAIRE : DELAI MAXIMUM DE REPONSE =====
+    // Interrompt la requête après 20 secondes pour sortir de l’état d’attente.
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), 20000);
     try {
+      // ===== FORMULAIRE : ENVOI DIRECT FORMSUBMIT =====
+      // Transmet le JSON au prestataire externe ; aucune clé privée ni serveur de messagerie local.
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
@@ -202,6 +233,8 @@ const missions = [
         credentials: 'omit',
       });
       const result = await response.json();
+      // ===== FORMULAIRE : ACTIVATION DU PRESTATAIRE =====
+      // Distingue la demande d’activation d’une transmission confirmée du message.
       if (/activat|confirm|verif/i.test(String(result.message || ''))) {
         status.setAttribute('role', 'alert');
         status.textContent =
@@ -210,13 +243,19 @@ const missions = [
       }
       if (!response.ok || (result.success !== true && result.success !== 'true'))
         throw new Error('Envoi non confirmé');
+      // ===== FORMULAIRE : CONFIRMATION DE TRANSMISSION =====
+      // Efface les champs uniquement après une réponse de succès du prestataire.
       contactForm.reset();
       status.textContent =
         'Votre message a bien été transmis. Merci, je vous répondrai dès que possible.';
+    // ===== FORMULAIRE : GESTION DES ERREURS =====
+    // Annonce l’échec et conserve les champs pour réessayer ou utiliser le lien e-mail.
     } catch {
       status.setAttribute('role', 'alert');
       status.textContent =
         'L’envoi n’a pas pu être confirmé. Votre message est conservé. Réessayez dans un instant ou utilisez le lien e-mail ci-dessous.';
+    // ===== FORMULAIRE : REACTIVATION DU FORMULAIRE =====
+    // Nettoie le délai et rétablit le bouton quel que soit le résultat.
     } finally {
       window.clearTimeout(timeout);
       delete contactForm.dataset.sending;
@@ -228,6 +267,8 @@ const missions = [
 </script>
 
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .contact-page {
     overflow: clip;
     background: radial-gradient(ellipse 65% 35% at 100% 0%, #8a216850, transparent 80%);
@@ -402,6 +443,8 @@ const missions = [
     color: var(--muted);
     line-height: 1.7;
   }
+  /* ===== FORMULAIRE : PRESENTATION DU FORMULAIRE =====
+     Définit le cadre et les espacements de la zone de saisie. */
   .contact-form {
     border: 1px solid #b997ed77;
     border-radius: 18px;
@@ -427,6 +470,8 @@ const missions = [
     color: var(--muted);
     margin: 17px 0 30px;
   }
+  /* ===== FORMULAIRE : PRESENTATION DES CHAMPS =====
+     Organise les labels et les champs de saisie. */
   .contact-field {
     margin-bottom: 27px;
   }
@@ -473,6 +518,8 @@ const missions = [
     border-color: var(--blue);
     box-shadow: 0 1px 0 var(--blue);
   }
+  /* ===== FORMULAIRE : CHOIX DES SUJETS =====
+     Présente les cases à cocher des sujets de la demande. */
   .mission-options {
     border: 0;
     padding: 0;
@@ -552,6 +599,8 @@ const missions = [
     border-color: #b58ac9;
     box-shadow: 0 15px 50px #77527b12;
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 1000px). */
   @media (max-width: 1000px) {
     .contact-intro {
       gap: 30px;
@@ -559,6 +608,8 @@ const missions = [
     .contact-content {
       gap: 35px;
     }
+    /* ===== FORMULAIRE : PRESENTATION DU FORMULAIRE =====
+       Définit le cadre et les espacements de la zone de saisie. */
     .contact-form {
       padding: 28px;
     }
@@ -571,6 +622,8 @@ const missions = [
       font-size: 12px;
     }
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 700px). */
   @media (max-width: 700px) {
     .contact-intro {
       grid-template-columns: 1fr;
@@ -644,6 +697,8 @@ const missions = [
       font-size: 23px;
       margin-bottom: 9px;
     }
+    /* ===== FORMULAIRE : PRESENTATION DU FORMULAIRE =====
+       Définit le cadre et les espacements de la zone de saisie. */
     .contact-form {
       padding: 27px 21px;
       border-radius: 14px;

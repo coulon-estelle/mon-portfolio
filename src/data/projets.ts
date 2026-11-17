@@ -1,4 +1,8 @@
+// ===== DONNEES : SOURCE PROJETS =====
+// Centralise le contenu utilisé par les pages et les composants du portfolio.
 import { projectAssets } from './project-assets';
+// ===== PROJETS : CATALOGUE DES PROJETS =====
+// Chaque objet fournit les informations de carte et son identifiant de page.
 export const projets = [
   {
     id: 'portfolio',
@@ -111,6 +115,8 @@ export const projets = [
 ];
 
 // La galerie peut évoluer sans modifier la sélection de l’accueil.
+// ===== PROJETS : SELECTION PRINCIPALE =====
+// Conserve Olyvia, NŨNC et Lumimix pour la galerie de l’accueil.
 export const projetsAccueil = projets.filter((projet) =>
   ['olyvia', 'nunc', 'lumimix'].includes(projet.id),
 );

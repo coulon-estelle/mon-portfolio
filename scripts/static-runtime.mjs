@@ -1,3 +1,5 @@
+// ===== TESTS : LECTURE DU SITE STATIQUE =====
+// Lit les fichiers de dist pour les tests locaux ; ne constitue pas le serveur de production.
 import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 
@@ -27,9 +29,13 @@ export async function render(request) {
   } catch {
     return new Response(null, { status: 400 });
   }
+  // ===== SECURITE : LIMITATION AU DOSSIER DIST =====
+  // Refuse les chemins résolus à l’extérieur du build statique.
   const file = path.resolve(root, '.' + pathname);
   if (file !== root && !file.startsWith(root + path.sep))
     return new Response(null, { status: 403 });
+  // ===== NAVIGATION : RESOLUTION DES PAGES STATIQUES =====
+  // Cherche le fichier demandé puis son index.html, sinon renvoie la page 404.
   const candidates = [file, path.join(file, 'index.html')];
   for (const candidate of candidates) {
     if (!(await stat(candidate).catch(() => null))?.isFile()) continue;

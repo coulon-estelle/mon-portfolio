@@ -1,3 +1,5 @@
+// ===== TESTS : SERVEUR DU BUILD =====
+// Sert le résultat du build pour les vérifications Playwright et ferme le serveur ensuite.
 import { createServer } from 'node:http';
 import { render } from '../scripts/static-runtime.mjs';
 export default async function setup() {

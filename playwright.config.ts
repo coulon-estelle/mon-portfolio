@@ -1,3 +1,5 @@
+// ===== TESTS : CONFIGURATION NAVIGATEUR =====
+// Définit le navigateur, le serveur local et le dossier des tests.
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({

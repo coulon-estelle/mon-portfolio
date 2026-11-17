@@ -1,4 +1,6 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import MockupLabel from '../../components/MockupLabel.astro';
 import ProjectImage from '../../components/ProjectImage.astro';
 import { projectAssets } from '../../data/project-assets';
@@ -27,12 +29,17 @@ const steps = [
   },
 ];
 ---
+<!-- ===== STRUCTURE : PAGE OLYVIA ===== -->
+<!-- Étude de cas olyvia : contexte, contribution et visuels du projet. -->
+
 
 <Layout
   title="OLYVIA — Identité visuelle & site web | Estelle Coulon"
   description="Étude de cas OLYVIA : création d’une identité visuelle douce et naturelle pour un site d’information sur la ménopause, du logo aux supports de communication."
 >
   <main id="contenu" class="olyvia-case">
+    <!-- ===== PROJETS : INTRODUCTION DU PROJET ===== -->
+    <!-- Présente le projet, ses disciplines et les ressources disponibles. -->
     <section class="case-hero container" aria-labelledby="olyvia-title">
       <a class="case-back" href="/projets">
         Tous les projets <span aria-hidden="true">/</span> OLYVIA
@@ -67,6 +74,8 @@ const steps = [
         </div>
       </div>
     </section>
+    <!-- ===== PROJETS : CONTEXTE ET CONTRIBUTION ===== -->
+    <!-- Distingue la demande du projet et le travail réalisé. -->
     <section class="case-context case-two-columns container" aria-label="Présentation du projet">
       <div>
         <p class="eyebrow">Le point de départ</p>
@@ -106,6 +115,8 @@ const steps = [
         </p>
       </div>
     </section>
+    <!-- ===== PROJETS : ETAPES DE REALISATION ===== -->
+    <!-- Présente les étapes décrites dans les données de la page. -->
     <section class="case-process container" aria-labelledby="olyvia-process">
       <div class="section-heading">
         <div>
@@ -125,6 +136,8 @@ const steps = [
         ))}
       </ol>
     </section>
+    <!-- ===== PROJETS : CHOIX GRAPHIQUES OLYVIA ===== -->
+    <!-- Présente l’identité visuelle et les livrables associés à ma contribution. -->
     <section
       class="case-design case-two-columns container"
       aria-label="Choix graphiques et résultat"
@@ -168,6 +181,8 @@ const steps = [
         </p>
       </div>
     </section>
+    <!-- ===== IMAGES : APERCUS DU PROJET ===== -->
+    <!-- Montre les maquettes et les accès aux réalisations ou prototypes. -->
     <section class="case-previews container" aria-labelledby="olyvia-previews">
       <p class="eyebrow">Déclinaisons web</p>
       <h2 id="olyvia-previews">
@@ -218,6 +233,8 @@ const steps = [
   </main>
 </Layout>
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .olyvia-case {
     --sage: #b7c6a3;
     --petal: #e6b9c3;
@@ -227,6 +244,8 @@ const steps = [
       radial-gradient(ellipse 65% 28% at 100% 0%, #7b94604a, transparent 85%),
       radial-gradient(ellipse 45% 22% at 0 35%, #b886a31c, transparent 80%);
   }
+  /* ===== STRUCTURE : INTRODUCTION DU PROJET =====
+     Définit les espacements de la première section de l’étude de cas. */
   .case-hero {
     padding-top: 140px;
     padding-bottom: 55px;
@@ -353,6 +372,8 @@ const steps = [
     color: var(--sage);
     animation: fairy-float 8s ease-in-out infinite;
   }
+  /* ===== STRUCTURE : CONTEXTE EN COLONNES =====
+     Répartit les textes du projet dans une grille. */
   .case-two-columns {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -571,7 +592,11 @@ const steps = [
     background: #e5ebdb44;
     border-color: #738a5f55;
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 700px). */
   @media (max-width: 700px) {
+    /* ===== STRUCTURE : INTRODUCTION DU PROJET =====
+       Définit les espacements de la première section de l’étude de cas. */
     .case-hero {
       padding-top: 105px;
       padding-bottom: 20px;
@@ -610,6 +635,8 @@ const steps = [
     .peony-spark {
       font-size: 24px;
     }
+    /* ===== STRUCTURE : CONTEXTE EN COLONNES =====
+       Répartit les textes du projet dans une grille. */
     .case-two-columns {
       grid-template-columns: 1fr;
       gap: 28px;

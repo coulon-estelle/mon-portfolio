@@ -1,16 +1,25 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import Ornament from '../components/Ornament.astro';
 import PageOutro from '../components/PageOutro.astro';
 import Layout from '../layouts/Layout.astro';
 import { oeuvres } from '../data/oeuvres';
+// ===== DONNEES : CATEGORIES DE L ATELIER =====
+// Déduit les catégories sans doublons à partir du tableau des œuvres.
 const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categorie))];
 ---
+<!-- ===== STRUCTURE : PAGE ATELIER ===== -->
+<!-- Atelier : œuvres personnelles, filtres et consultation dans une fenêtre modale. -->
+
 
 <Layout
   title="Atelier personnel — Dessins & peintures | Estelle Coulon"
   description="L’atelier personnel d’Estelle Coulon : dessins, peintures et expérimentations. Découvrez les œuvres en grand et les matériaux utilisés."
 >
   <main id="contenu" class="art-page">
+    <!-- ===== STRUCTURE : INTRODUCTION ATELIER ===== -->
+    <!-- Présente la galerie de dessins et de peintures. -->
     <section class="art-heading container">
       <a class="art-breadcrumb" href="/">
         Accueil <span aria-hidden="true">/</span> Atelier personnel
@@ -44,6 +53,8 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
       <Ornament kind="star-pink" width={15} />
       <span class="divider-line"></span>
     </div>
+    <!-- ===== IMAGES : GALERIE DES OEUVRES ===== -->
+    <!-- Génère les filtres et les cartes depuis le tableau des œuvres. -->
     <section class="art-gallery container" aria-labelledby="art-gallery-title">
       <div class="art-gallery-heading">
         <h2 id="art-gallery-title">
@@ -147,6 +158,8 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
       variant={4}
     />
   </main>
+  <!-- ===== ACCESSIBILITE : FENETRE MODALE ===== -->
+  <!-- La balise dialog ouvre le visuel au premier plan et permet la fermeture avec Échap. -->
   <dialog
     id="art-lightbox"
     class="art-lightbox"
@@ -174,10 +187,14 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
     </div>
   </dialog>
   <script>
+    // ===== INTERACTION : SCRIPT COTE NAVIGATEUR =====
+    // Ce code agit sur le DOM après le chargement de la page.
     const dialog = document.querySelector<HTMLDialogElement>('#art-lightbox');
     const modalImage = dialog?.querySelector<HTMLImageElement>('.art-modal-image img');
     let trigger: HTMLButtonElement | null = null;
     let previousOverflow = '';
+    // ===== IMAGES : OUVERTURE D UNE OEUVRE EN GRAND =====
+    // Copie les données du bouton dans la modale puis appelle showModal.
     document.querySelectorAll<HTMLButtonElement>('.art-open').forEach((button) =>
       button.addEventListener('click', () => {
         if (!dialog || !modalImage) return;
@@ -197,6 +214,8 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
           .join(' · ');
         const materials = dialog.querySelector('ul')!;
         materials.replaceChildren();
+        // ===== DONNEES : MATERIEL DE L OEUVRE =====
+        // Transforme la liste stockée sur le bouton en éléments li dans la modale.
         const values: string[] = JSON.parse(button.dataset.materials || '[]');
         values.forEach((value) => {
           const item = document.createElement('li');
@@ -223,11 +242,15 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
           dialog.close();
       }
     });
+    // ===== ACCESSIBILITE : RETOUR DU FOCUS =====
+    // Rétablit le défilement et le focus sur le bouton ayant ouvert la modale.
     dialog?.addEventListener('close', () => {
       document.documentElement.style.overflow = previousOverflow;
       modalImage?.removeAttribute('src');
       trigger?.focus();
     });
+    // ===== INTERACTION : FILTRES DE L ATELIER =====
+    // Masque les œuvres hors catégorie et met à jour le compteur et aria-pressed.
     const filters = document.querySelectorAll<HTMLButtonElement>('[data-art-filter]');
     filters.forEach((button) =>
       button.addEventListener('click', () => {
@@ -247,6 +270,8 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
 </Layout>
 
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .art-page {
     overflow: clip;
     background: radial-gradient(ellipse 70% 35% at 100% 0%, #713eaa35, transparent 80%);
@@ -392,6 +417,8 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
     white-space: nowrap;
     margin: 0;
   }
+  /* ===== IMAGES : GRILLE DE L ATELIER =====
+     Définit la disposition des cartes des œuvres. */
   .art-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -563,6 +590,8 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
   :global(html[data-theme='light']) .art-card:nth-child(3n + 3) {
     --art-wash: #f1dfe8;
   }
+  /* ===== ACCESSIBILITE : PREFERENCES DE MOUVEMENT =====
+     Applique les règles suivantes sous la condition (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference). */
   @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
     .art-card:hover {
       transform: translateY(-5px);
@@ -623,6 +652,8 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
     font-size: 13px;
     line-height: 1.9;
   }
+  /* ===== ACCESSIBILITE : PRESENTATION DE LA MODALE =====
+     Dimensionne la fenêtre native dialog contenant l’œuvre et ses informations. */
   .art-lightbox {
     width: min(1160px, calc(100% - 56px));
     max-height: 90vh;
@@ -638,6 +669,8 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
     background: #100512dc;
     backdrop-filter: blur(10px);
   }
+  /* ===== STRUCTURE : OEUVRE ET INFORMATIONS =====
+     Répartit le grand visuel et son texte dans la modale. */
   .art-modal-layout {
     display: grid;
     grid-template-columns: 1fr 300px;
@@ -739,14 +772,22 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
     color: var(--muted);
     margin: 35px 0 0;
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 900px). */
   @media (max-width: 900px) {
+    /* ===== IMAGES : GRILLE DE L ATELIER =====
+       Définit la disposition des cartes des œuvres. */
     .art-grid {
       grid-template-columns: 1fr 1fr;
     }
+    /* ===== STRUCTURE : OEUVRE ET INFORMATIONS =====
+       Répartit le grand visuel et son texte dans la modale. */
     .art-modal-layout {
       grid-template-columns: 1fr 260px;
     }
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 700px). */
   @media (max-width: 700px) {
     .art-heading {
       padding-top: 105px;
@@ -804,6 +845,8 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
       flex-direction: column;
       gap: 15px;
     }
+    /* ===== IMAGES : GRILLE DE L ATELIER =====
+       Définit la disposition des cartes des œuvres. */
     .art-grid {
       gap: 27px 14px;
     }
@@ -841,11 +884,15 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
     .art-empty > p {
       font-size: 12px;
     }
+    /* ===== ACCESSIBILITE : PRESENTATION DE LA MODALE =====
+       Dimensionne la fenêtre native dialog contenant l’œuvre et ses informations. */
     .art-lightbox {
       width: calc(100% - 24px);
       max-height: 94dvh;
       border-radius: 12px;
     }
+    /* ===== STRUCTURE : OEUVRE ET INFORMATIONS =====
+       Répartit le grand visuel et son texte dans la modale. */
     .art-modal-layout {
       display: flex;
       flex-direction: column;
@@ -883,6 +930,8 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
       display: none;
     }
   }
+  /* ===== ACCESSIBILITE : PREFERENCES DE MOUVEMENT =====
+     Applique les règles suivantes sous la condition (prefers-reduced-motion: reduce). */
   @media (prefers-reduced-motion: reduce) {
     .art-open:hover .art-image img {
       transform: scale(1.08);
@@ -891,7 +940,11 @@ const categories = ['Toutes', ...new Set(oeuvres.map((oeuvre) => oeuvre.categori
   :global(html[data-motion='off']) .art-open:hover .art-image img {
     transform: scale(1.08);
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 600px). */
   @media (max-width: 600px) {
+    /* ===== IMAGES : GRILLE DE L ATELIER =====
+       Définit la disposition des cartes des œuvres. */
     .art-grid {
       grid-template-columns: minmax(0, 1fr);
       gap: 25px;

@@ -1,4 +1,6 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import Layout from '../../layouts/Layout.astro';
 import ProjectDocument from '../../components/ProjectDocument.astro';
 import PageOutro from '../../components/PageOutro.astro';
@@ -10,12 +12,17 @@ const websiteUrl = 'https://tiktak.estelle-coulon.fr/';
 const figmaUrl =
   'https://www.figma.com/proto/lhQjGGtgFyHcrVLUNgcWmo/Tik-Tak?node-id=100-2904&t=Am4nVN4w06BVVZ3f-1&scaling=min-zoom&content-scaling=fixed&page-id=23%3A2&starting-point-node-id=100%3A2904';
 ---
+<!-- ===== STRUCTURE : PAGE TIKTAK ===== -->
+<!-- Étude de cas tiktak : contexte, contribution et visuels du projet. -->
+
 
 <Layout
   title="TiK•TaK — Montres personnalisables | Estelle Coulon"
   description="Découvrez TiK•TaK, un projet de BUT MMI consacré à la conception d’un site de montres personnalisables : parcours utilisateur, prototype Figma et développement web."
 >
   <main id="contenu" class="tiktak-case">
+    <!-- ===== PROJETS : INTRODUCTION DU PROJET ===== -->
+    <!-- Présente le projet, ses disciplines et les ressources disponibles. -->
     <section class="case-hero container" aria-labelledby="tiktak-title">
       <a class="case-back" href="/projets">
         Tous les projets <span aria-hidden="true">/</span> TiK•TaK
@@ -52,6 +59,8 @@ const figmaUrl =
       <ProjectDocument href="/documents/projets/dossier-tiktak.pdf" size="16,9 Mo" />
     </section>
 
+    <!-- ===== PROJETS : PRESENTATION ET ROLE ===== -->
+    <!-- Explique le contexte et la contribution personnelle. -->
     <section class="case-columns container" aria-label="Présentation du projet">
       <div>
         <p class="eyebrow">Le projet</p>
@@ -75,6 +84,8 @@ const figmaUrl =
       </div>
     </section>
 
+    <!-- ===== IMAGES : INSPIRATIONS DE TIKTAK ===== -->
+    <!-- Affiche le moodboard et l’icône pour présenter les choix graphiques. -->
     <section class="case-identity container" aria-labelledby="tiktak-identity">
       <p class="eyebrow">L’univers graphique</p>
       <h2 id="tiktak-identity">
@@ -97,6 +108,8 @@ const figmaUrl =
       </figure>
     </section>
 
+    <!-- ===== IMAGES : APERCUS DU PROJET ===== -->
+    <!-- Montre les maquettes et les accès aux réalisations ou prototypes. -->
     <section class="case-previews container" aria-labelledby="tiktak-previews">
       <p class="eyebrow">Du prototype au site</p>
       <h2 id="tiktak-previews">
@@ -150,6 +163,8 @@ const figmaUrl =
 </Layout>
 
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .case-brand-logo {
     width: min(360px, 100%);
     padding: 20px 30px;
@@ -199,6 +214,8 @@ const figmaUrl =
     line-height: 1.6;
     margin-top: 18px;
   }
+  /* ===== IMAGES : GRILLE DES MAQUETTES =====
+     Dispose les aperçus des interfaces dans la section de présentation. */
   .preview-grid {
     display: grid;
     grid-template-columns: 0.8fr 1.2fr;
@@ -214,6 +231,8 @@ const figmaUrl =
     overflow: clip;
     background: radial-gradient(ellipse 65% 25% at 100% 0%, #b997ed22, transparent 85%);
   }
+  /* ===== STRUCTURE : INTRODUCTION DU PROJET =====
+     Définit les espacements de la première section de l’étude de cas. */
   .case-hero {
     padding-block: 145px 65px;
   }
@@ -284,6 +303,8 @@ const figmaUrl =
     text-decoration: underline;
     text-underline-offset: 4px;
   }
+  /* ===== STRUCTURE : COLONNES DU CONTENU =====
+     Organise les explications du projet en colonnes sur grand écran. */
   .case-columns {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -336,7 +357,11 @@ const figmaUrl =
   .case-focus p:not(.eyebrow) {
     max-width: 800px;
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 700px). */
   @media (max-width: 700px) {
+    /* ===== IMAGES : GRILLE DES MAQUETTES =====
+       Dispose les aperçus des interfaces dans la section de présentation. */
     .preview-grid {
       grid-template-columns: 1fr;
       gap: 25px;
@@ -349,6 +374,8 @@ const figmaUrl =
       width: 65px;
       height: 65px;
     }
+    /* ===== STRUCTURE : INTRODUCTION DU PROJET =====
+       Définit les espacements de la première section de l’étude de cas. */
     .case-hero {
       padding-block: 110px 30px;
     }
@@ -360,6 +387,8 @@ const figmaUrl =
       grid-template-columns: 1fr;
       gap: 28px;
     }
+    /* ===== STRUCTURE : COLONNES DU CONTENU =====
+       Organise les explications du projet en colonnes sur grand écran. */
     .case-columns {
       padding-block: 25px;
     }

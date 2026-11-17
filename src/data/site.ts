@@ -1,5 +1,9 @@
+// ===== DONNEES : SOURCE SITE =====
+// Centralise le contenu utilisé par les pages et les composants du portfolio.
 // Domaine, hébergeur et liens confirmés par Estelle.
 // Les variables PUBLIC_ sont publiques et ne doivent contenir aucun secret.
+// ===== DEPLOIEMENT : DOMAINE ET INFORMATIONS PUBLIQUES =====
+// Centralise coordonnées et domaine ; les variables PUBLIC_ sont exposées au site.
 export const site = {
   name: 'Estelle Coulon',
   email: 'estellecoulon6@gmail.com',

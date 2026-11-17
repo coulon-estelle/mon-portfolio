@@ -1,8 +1,12 @@
+<!-- ===== NAVIGATION : MENU PRINCIPAL ===== -->
+<!-- Liens actifs, menu mobile et préférences de thème et de mouvement. -->
 <header class="site-header">
   <nav class="container nav" aria-label="Navigation principale">
     <a class="signature" href="/" aria-label="Estelle Coulon, accueil">
       Estelle C<span>.</span>
     </a>
+    <!-- ===== NAVIGATION : BOUTON DU MENU MOBILE ===== -->
+    <!-- aria-controls relie le bouton au panneau et aria-expanded indique son état. -->
     <button
       class="mobile-menu-toggle"
       type="button"
@@ -12,31 +16,8 @@
       Menu <span aria-hidden="true">☰</span>
     </button>
     <div class="nav-links" id="header-navigation">
-      <a
-        href="/projets"
-        aria-current={Astro.url.pathname.startsWith('/projets') ? 'page' : undefined}
-      >
-        Projets
-      </a>
-      <a
-        href="/atelier"
-        aria-current={Astro.url.pathname.startsWith('/atelier') ? 'page' : undefined}
-      >
-        Atelier
-      </a>
-      <a
-        href="/a-propos"
-        aria-current={Astro.url.pathname.startsWith('/a-propos') ? 'page' : undefined}
-      >
-        À propos
-      </a>
-      <a
-        class="nav-contact"
-        href="/contact"
-        aria-current={Astro.url.pathname.startsWith('/contact') ? 'page' : undefined}
-      >
-        On en parle ?
-      </a>
+      <!-- ===== INTERACTION : REGLAGES D AFFICHAGE ===== -->
+      <!-- Les boutons role=switch exposent leur état avec aria-checked. -->
       <div class="display-controls" role="group" aria-label="Préférences d’affichage">
         <button
           type="button"
@@ -65,11 +46,69 @@
           </span>
         </button>
       </div>
+      <a
+        href="/projets"
+        aria-current={Astro.url.pathname.startsWith('/projets') ? 'page' : undefined}
+      >
+        Projets
+      </a>
+      <a
+        href="/atelier"
+        aria-current={Astro.url.pathname.startsWith('/atelier') ? 'page' : undefined}
+      >
+        Atelier
+      </a>
+      <a
+        href="/a-propos"
+        aria-current={Astro.url.pathname.startsWith('/a-propos') ? 'page' : undefined}
+      >
+        À propos
+      </a>
+      <a
+        class="nav-contact"
+        href="/contact"
+        aria-current={Astro.url.pathname.startsWith('/contact') ? 'page' : undefined}
+      >
+        On en parle ?
+      </a>
     </div>
   </nav>
 </header>
 
+<style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (min-width: 701px). */
+  @media (min-width: 701px) {
+    .site-header .nav {
+      gap: clamp(20px, 3vw, 44px);
+    }
+    .site-header .nav-links {
+      display: flex;
+      flex: 1;
+      gap: clamp(16px, 2.5vw, 36px);
+    }
+    .site-header .display-controls {
+      margin: 0 auto 0 0;
+      flex-basis: auto;
+      flex-shrink: 0;
+    }
+  }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 700px). */
+  @media (max-width: 700px) {
+    .site-header .display-controls {
+      order: 1;
+    }
+  }
+</style>
+
 <script>
+  // ===== INTERACTION : SCRIPT COTE NAVIGATEUR =====
+  // Ce code agit sur le DOM après le chargement de la page.
+  // ===== NAVIGATION : MENU MOBILE =====
+  // Le bouton bascule aria-expanded ; le CSS affiche le panneau selon cet état.
   const menuButton = document.querySelector<HTMLButtonElement>('.mobile-menu-toggle');
   const navigation = document.querySelector<HTMLElement>('#header-navigation');
   const closeMenu = () => menuButton?.setAttribute('aria-expanded', 'false');
@@ -80,6 +119,8 @@
     );
   });
   navigation?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+  // ===== ACCESSIBILITE : FERMETURE AU CLAVIER =====
+  // Échap ferme le menu et redonne le focus à son bouton.
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && menuButton?.getAttribute('aria-expanded') === 'true') {
       closeMenu();
@@ -98,6 +139,8 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const motionButton = document.querySelector<HTMLButtonElement>('[data-motion-toggle]');
   const themeButton = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  // ===== ACCESSIBILITE : SYNCHRONISATION DES PREFERENCES =====
+  // Met à jour les interrupteurs ARIA et respecte la réduction des mouvements du système.
   const sync = () => {
     const paused = root.dataset.motion === 'off' || reducedMotion.matches;
     const light = root.dataset.theme === 'light';
@@ -113,17 +156,23 @@
       .querySelector('meta[name="theme-color"]')
       ?.setAttribute('content', light ? '#e8dce9' : '#25070e');
   };
+  // ===== INTERACTION : MEMORISATION LOCALE =====
+  // Enregistre le thème et les animations dans localStorage, sans serveur.
   const save = (key: string, value: string) => {
     try {
       localStorage.setItem(key, value);
     } catch {}
   };
+  // ===== ANIMATION : ACTIVER OU ARRETER LES MOUVEMENTS =====
+  // Change data-motion puis prévient les composants par un événement personnalisé.
   motionButton?.addEventListener('click', () => {
     root.dataset.motion = root.dataset.motion === 'off' ? 'on' : 'off';
     save('portfolio-motion', root.dataset.motion);
     sync();
     window.dispatchEvent(new Event('portfolio-preferences'));
   });
+  // ===== COULEURS : BASCULE CLAIR SOMBRE =====
+  // Change data-theme ; les sélecteurs CSS appliquent la palette correspondante.
   themeButton?.addEventListener('click', () => {
     root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
     save('portfolio-theme', root.dataset.theme);

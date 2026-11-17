@@ -1,4 +1,6 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import MockupLabel from '../../components/MockupLabel.astro';
 import ProjectImage from '../../components/ProjectImage.astro';
 import { projectAssets } from '../../data/project-assets';
@@ -23,12 +25,17 @@ const steps = [
   },
 ];
 ---
+<!-- ===== STRUCTURE : PAGE LUMIMIX ===== -->
+<!-- Étude de cas lumimix : contexte, contribution et visuels du projet. -->
+
 
 <Layout
   title="LUMIMIX — Développement web & festival électro | Estelle Coulon"
   description="Étude de cas LUMIMIX : développement d’un site de festival électro avec Astro, Tailwind CSS et PocketBase, adaptation desktop et contenus dynamiques."
 >
   <main id="contenu" class="lumimix-case">
+    <!-- ===== PROJETS : INTRODUCTION DU PROJET ===== -->
+    <!-- Présente le projet, ses disciplines et les ressources disponibles. -->
     <section class="case-hero container" aria-labelledby="lumimix-title">
       <a class="case-back" href="/projets">
         Tous les projets <span aria-hidden="true">/</span> LUMIMIX
@@ -60,6 +67,8 @@ const steps = [
         </div>
       </div>
     </section>
+    <!-- ===== PROJETS : CONTEXTE ET CONTRIBUTION ===== -->
+    <!-- Distingue la demande du projet et le travail réalisé. -->
     <section class="case-context case-two-columns container" aria-label="Présentation du projet">
       <div>
         <p class="eyebrow">Le point de départ</p>
@@ -97,6 +106,8 @@ const steps = [
         </p>
       </div>
     </section>
+    <!-- ===== PROJETS : ETAPES DE REALISATION ===== -->
+    <!-- Présente les étapes décrites dans les données de la page. -->
     <section class="case-process container" aria-labelledby="lumimix-process">
       <div class="section-heading">
         <div>
@@ -116,6 +127,8 @@ const steps = [
         ))}
       </ol>
     </section>
+    <!-- ===== PROJETS : CHOIX TECHNIQUES DE LUMIMIX ===== -->
+    <!-- Décrit les technologies de ce projet présenté, distinctes de celles du portfolio. -->
     <section
       class="case-design case-two-columns container"
       aria-label="Choix techniques et résultat"
@@ -161,6 +174,8 @@ const steps = [
         </p>
       </div>
     </section>
+    <!-- ===== IMAGES : APERCUS DU PROJET ===== -->
+    <!-- Montre les maquettes et les accès aux réalisations ou prototypes. -->
     <section class="case-previews container" aria-labelledby="lumimix-previews">
       <p class="eyebrow">Un univers, plusieurs écrans</p>
       <h2 id="lumimix-previews">
@@ -200,6 +215,8 @@ const steps = [
   </main>
 </Layout>
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .preview-site-link {
     display: block;
     border-radius: 12px;
@@ -217,6 +234,8 @@ const steps = [
       radial-gradient(ellipse 65% 26% at 100% 0%, #6535a35c, transparent 85%),
       radial-gradient(ellipse 45% 23% at 0 30%, #337baf20, transparent 80%);
   }
+  /* ===== STRUCTURE : INTRODUCTION DU PROJET =====
+     Définit les espacements de la première section de l’étude de cas. */
   .case-hero {
     padding-top: 140px;
     padding-bottom: 55px;
@@ -325,6 +344,8 @@ const steps = [
     color: var(--pink);
     animation: fairy-twinkle 6s ease-in-out infinite;
   }
+  /* ===== STRUCTURE : CONTEXTE EN COLONNES =====
+     Répartit les textes du projet dans une grille. */
   .case-two-columns {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -587,7 +608,11 @@ const steps = [
   :global(html[data-theme='light']) .case-steps li {
     background: linear-gradient(140deg, #eee3fa88, #f1faff66);
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 700px). */
   @media (max-width: 700px) {
+    /* ===== STRUCTURE : INTRODUCTION DU PROJET =====
+       Définit les espacements de la première section de l’étude de cas. */
     .case-hero {
       padding-top: 105px;
       padding-bottom: 20px;
@@ -622,6 +647,8 @@ const steps = [
     .galaxy-star {
       font-size: 30px;
     }
+    /* ===== STRUCTURE : CONTEXTE EN COLONNES =====
+       Répartit les textes du projet dans une grille. */
     .case-two-columns {
       grid-template-columns: 1fr;
       gap: 28px;

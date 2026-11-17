@@ -1,4 +1,8 @@
-/* Visuels réels des projets : logos lisibles et mockups sans recadrage. */
+/* ===== IMAGES : FEUILLE PROJECT-ASSETS =====
+   Styles CSS écrits dans le projet ; cette feuille n’utilise pas Tailwind. */
+/* ===== IMAGES : REGLES DE PRESENTATION =====
+   Visuels réels des projets : logos lisibles et mockups sans recadrage. */
+
 .project.bordeaux {
   --card-accent: #e9a77d;
   --card-tint: #49252e;
@@ -94,6 +98,8 @@ html[data-theme='light'] .nunc-logo-color {
 .olyvia-preview-grid figure {
   min-width: 0;
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 700px). */
 @media (max-width: 700px) {
   .nunc-case .case-brand-logo {
     width: min(300px, 100%);
@@ -125,7 +131,9 @@ html[data-theme='light'] .nunc-logo-color {
   }
 }
 
-/* Annotations manuscrites des mockups, avec une fl?che vers le visuel. */
+/* ===== IMAGES : REGLES DE PRESENTATION =====
+   Annotations manuscrites des mockups, avec une fl?che vers le visuel. */
+
 .case-previews .project-preview-link {
   display: grid;
   grid-template-columns: minmax(100px, 0.65fr) minmax(0, 2fr);
@@ -169,6 +177,8 @@ html[data-theme='light'] .nunc-case .project-preview-link {
   outline: 2px solid var(--blue);
   outline-offset: 8px;
 }
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (max-width: 700px). */
 @media (max-width: 700px) {
   .case-previews .project-preview-link {
     grid-template-columns: minmax(90px, 0.7fr) minmax(0, 2fr);

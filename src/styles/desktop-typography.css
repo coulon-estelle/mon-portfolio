@@ -1,0 +1,75 @@
+/* ===== TYPOGRAPHIE : FEUILLE DESKTOP-TYPOGRAPHY =====
+   Styles CSS écrits dans le projet ; cette feuille n’utilise pas Tailwind. */
+/* Lisibilité desktop : agrandir les petits textes en conservant les titres,
+   les proportions manuscrites, les interlignes et la composition d’origine. */
+/* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+   Applique les règles suivantes sous la condition (min-width: 701px). */
+@media (min-width: 701px) {
+  body {
+    --type-body: 1.0625rem;
+    --type-caption: 0.8125rem;
+    --type-button: 0.9375rem;
+  }
+
+  body
+    main#contenu
+    :is(
+      p:not(.hero-description, .case-tagline, .hero-note, .handwritten),
+      label,
+      input,
+      textarea,
+      select
+    ) {
+    font-size: var(--type-body);
+  }
+
+  body
+    main#contenu
+    :is(
+      figcaption,
+      small,
+      .eyebrow,
+      .project-meta,
+      .case-back,
+      .gallery-back,
+      .back,
+      .gallery-count,
+      .carousel-hint,
+      .sister-caption,
+      .form-note,
+      .form-status,
+      .step-number
+    ) {
+    font-size: var(--type-caption);
+  }
+
+  body
+    main#contenu
+    :is(
+      button,
+      .button,
+      .case-button,
+      .hero-link,
+      .jump,
+      .gallery-jump,
+      .page-outro-link,
+      .video-link,
+      .case-tags span,
+      .skill-tags span,
+      .social-link,
+      .cv-download a,
+      .social-cta a,
+      .page-outro-secondary
+    ) {
+    font-size: var(--type-button);
+  }
+
+  body .site-header .nav-links > a,
+  body .portfolio-footer :is(a, p) {
+    font-size: 0.9375rem;
+  }
+
+  body .site-header .preference-switch {
+    font-size: 0.8125rem;
+  }
+}

@@ -1,9 +1,13 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import Layout from '../../layouts/Layout.astro';
 import ProjectImage from '../../components/ProjectImage.astro';
 import PageOutro from '../../components/PageOutro.astro';
 import { projectAssets } from '../../data/project-assets';
 
+// ===== ACCESSIBILITE : TEXTES ALTERNATIFS DES PERSONNAGES =====
+// Décrit les portraits pour les personnes qui ne voient pas les images.
 const descriptions = [
   'Alexandre, notre maître du jeu, représenté avec ses cheveux bruns et son béret vert',
   'Offire, mon personnage : un drakéïde rouge aux yeux turquoise',
@@ -12,6 +16,8 @@ const descriptions = [
   'Dorian, le barde de l’équipe, aux cheveux sombres tressés et à la cape noire',
   'Calthiel, le mage de l’équipe, à la peau orangée, aux cornes courbées et aux yeux jaunes',
 ];
+// ===== DONNEES : NOMS ET ROLES DES PERSONNAGES =====
+// Renseigne les noms connus et laisse vide le prénom non confirmé.
 const captions = [
   'Alexandre — Maître du jeu, représenté d’après son apparence réelle.',
   'Offire — mon personnage, un drakéïde rouge.',
@@ -21,12 +27,17 @@ const captions = [
   'Calthiel — Mage',
 ];
 ---
+<!-- ===== STRUCTURE : PAGE DND ===== -->
+<!-- Étude de cas dnd : contexte, contribution et visuels du projet. -->
+
 
 <Layout
   title="D&D — Personnages & animation | Estelle Coulon"
   description="Mes personnages D&D dessinés sur ibis Paint pour Twitch, dont Offire, mon drakéïde rouge, et ma première intro animée sur Procreate Dreams."
 >
   <main id="contenu" class="dnd-case">
+    <!-- ===== PROJETS : INTRODUCTION DU PROJET ===== -->
+    <!-- Présente le projet, ses disciplines et les ressources disponibles. -->
     <section class="case-hero container" aria-labelledby="dnd-title">
       <a class="case-back" href="/projets">
         Tous les projets <span aria-hidden="true">/</span> D&D
@@ -97,6 +108,8 @@ const captions = [
       </div>
     </section>
 
+    <!-- ===== PROJETS : PRESENTATION ET ROLE ===== -->
+    <!-- Explique le contexte et la contribution personnelle. -->
     <section class="case-columns container" aria-label="Présentation du projet">
       <div>
         <p class="eyebrow">Le projet</p>
@@ -120,6 +133,8 @@ const captions = [
       </div>
     </section>
 
+    <!-- ===== IMAGES : PERSONNAGES D&D ===== -->
+    <!-- Affiche les portraits et les boutons d’ouverture en grand. -->
     <section class="portraits container" aria-labelledby="portraits-title">
       <p class="eyebrow">Illustrations · ibis Paint</p>
       <h2 id="portraits-title">
@@ -143,6 +158,8 @@ const captions = [
       </div>
     </section>
 
+    <!-- ===== IMAGES : DESSIN DE BENNETH ===== -->
+    <!-- Place le texte à gauche du GIF carré sur desktop et empile sur mobile. -->
     <section class="intro drawing-section container" aria-labelledby="drawing-title">
       <div class="drawing-copy">
         <p class="eyebrow">Du trait au portrait · ibis Paint</p>
@@ -161,6 +178,8 @@ const captions = [
       />
     </section>
 
+    <!-- ===== IMAGES : INTRODUCTION ANIMEE D&D ===== -->
+    <!-- Affiche le film réalisé sur Procreate Dreams avec lecture contrôlée et lien de téléchargement. -->
     <section class="intro container" aria-labelledby="intro-title">
       <p class="eyebrow">Animation · Procreate Dreams</p>
       <h2 id="intro-title">
@@ -188,6 +207,8 @@ const captions = [
       variant={2}
     />
   </main>
+  <!-- ===== ACCESSIBILITE : FENETRE MODALE ===== -->
+  <!-- La balise dialog ouvre le visuel au premier plan et permet la fermeture avec Échap. -->
   <dialog class="portrait-dialog" aria-label="Personnage en grand">
     <button type="button" class="portrait-close" aria-label="Fermer le portrait">
       Fermer ×
@@ -202,9 +223,13 @@ const captions = [
     </div>
   </dialog>
   <script>
+    // ===== INTERACTION : SCRIPT COTE NAVIGATEUR =====
+    // Ce code agit sur le DOM après le chargement de la page.
     const dialog = document.querySelector<HTMLDialogElement>('.portrait-dialog');
     let trigger: HTMLButtonElement | null = null;
     let previousOverflow = '';
+    // ===== IMAGES : AGRANDISSEMENT DES PERSONNAGES =====
+    // Affiche seulement le portrait demandé dans la fenêtre dialog.
     document.querySelectorAll<HTMLButtonElement>('[data-portrait]').forEach((button) => {
       button.addEventListener('click', () => {
         if (!dialog) return;
@@ -230,6 +255,8 @@ const captions = [
           dialog.close();
       }
     });
+    // ===== ACCESSIBILITE : FERMETURE DU PORTRAIT =====
+    // Rétablit le défilement et replace le focus sur le portrait sélectionné.
     dialog?.addEventListener('close', () => {
       document.body.style.overflow = previousOverflow;
       trigger?.focus();
@@ -238,9 +265,15 @@ const captions = [
 </Layout>
 
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
+  /* ===== STRUCTURE : INTRODUCTION DU PROJET =====
+     Définit les espacements de la première section de l’étude de cas. */
   .case-hero {
     padding-block: 125px 35px;
   }
+  /* ===== STRUCTURE : COMPOSITION DE L INTRODUCTION =====
+     Place les textes et les visuels dans les colonnes de l’introduction. */
   .hero-layout {
     display: grid;
     grid-template-columns: 0.85fr 1.15fr;
@@ -355,6 +388,8 @@ const captions = [
     font-size: 11px;
     color: var(--muted);
   }
+  /* ===== STRUCTURE : COLONNES DU CONTENU =====
+     Organise les explications du projet en colonnes sur grand écran. */
   .case-columns {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -373,6 +408,8 @@ const captions = [
     line-height: 1.85;
     max-width: 780px;
   }
+  /* ===== STRUCTURE : TEXTE A GAUCHE ET GIF A DROITE =====
+     Aligne le début du texte avec le haut du GIF dans une grille. */
   .drawing-section {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
@@ -396,6 +433,8 @@ const captions = [
   .intro {
     padding-block: 25px 55px;
   }
+  /* ===== IMAGES : GRILLE DES PERSONNAGES =====
+     Dispose les portraits en colonnes ; les media queries adaptent ce nombre. */
   .portrait-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -412,6 +451,8 @@ const captions = [
     border-radius: 14px;
     background: transparent;
   }
+  /* ===== INTERACTION : PORTRAIT CLIQUABLE =====
+     Présente le portrait comme un bouton avec un fond semi-transparent. */
   .portrait-button {
     display: block;
     width: 100%;
@@ -438,6 +479,8 @@ const captions = [
     outline-offset: 4px;
     z-index: 3;
   }
+  /* ===== IMAGES : PORTRAIT EN GRAND =====
+     Limite la taille de la fenêtre au viewport et conserve le portrait visible. */
   .portrait-dialog {
     width: min(820px, calc(100vw - 32px));
     max-height: 92dvh;
@@ -471,6 +514,8 @@ const captions = [
     color: #fff1e8;
     text-align: center;
   }
+  /* ===== ACCESSIBILITE : PREFERENCES DE MOUVEMENT =====
+     Applique les règles suivantes sous la condition (prefers-reduced-motion: reduce). */
   @media (prefers-reduced-motion: reduce) {
     .portrait-button,
     .hero-portrait {
@@ -503,6 +548,8 @@ const captions = [
     border-radius: 14px;
     background: #151018;
   }
+  /* ===== IMAGES : FORMAT CARRE DU GIF =====
+     Limite la largeur du GIF de Benneth et conserve un ratio carré. */
   .drawing-video {
     display: block;
     border-radius: 14px;
@@ -519,7 +566,11 @@ const captions = [
     text-decoration: underline;
     text-underline-offset: 4px;
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 700px). */
   @media (max-width: 700px) {
+    /* ===== STRUCTURE : TEXTE A GAUCHE ET GIF A DROITE =====
+       Aligne le début du texte avec le haut du GIF dans une grille. */
     .drawing-section {
       grid-template-columns: 1fr;
       gap: 24px;
@@ -527,6 +578,8 @@ const captions = [
     .drawing-section .drawing-video {
       justify-self: center;
     }
+    /* ===== STRUCTURE : COMPOSITION DE L INTRODUCTION =====
+       Place les textes et les visuels dans les colonnes de l’introduction. */
     .hero-layout {
       grid-template-columns: 1fr;
       gap: 20px;
@@ -539,14 +592,20 @@ const captions = [
     .hero-note {
       font-size: 30px;
     }
+    /* ===== STRUCTURE : INTRODUCTION DU PROJET =====
+       Définit les espacements de la première section de l’étude de cas. */
     .case-hero {
       padding-block: 110px 30px;
     }
+    /* ===== STRUCTURE : COLONNES DU CONTENU =====
+       Organise les explications du projet en colonnes sur grand écran. */
     .case-columns {
       grid-template-columns: 1fr;
       gap: 28px;
       padding-block: 25px;
     }
+    /* ===== IMAGES : GRILLE DES PERSONNAGES =====
+       Dispose les portraits en colonnes ; les media queries adaptent ce nombre. */
     .portrait-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 18px;
@@ -556,7 +615,11 @@ const captions = [
       padding-block: 25px;
     }
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 400px). */
   @media (max-width: 400px) {
+    /* ===== IMAGES : GRILLE DES PERSONNAGES =====
+       Dispose les portraits en colonnes ; les media queries adaptent ce nombre. */
     .portrait-grid {
       grid-template-columns: 1fr;
     }

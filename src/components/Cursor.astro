@@ -1,5 +1,11 @@
+<!-- ===== ANIMATION : CURSEUR ETOILE ===== -->
+<!-- Associe un curseur SVG à des particules créées lors du mouvement de la souris. -->
 <div class="cursor-trail" aria-hidden="true"></div>
 <style is:global>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
+  /* ===== ACCESSIBILITE : PREFERENCES DE MOUVEMENT =====
+     Applique les règles suivantes sous la condition (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference). */
   @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
     html,
     body,
@@ -78,6 +84,8 @@
     background: currentColor;
     clip-path: polygon(50% 0%, 62% 36%, 100% 50%, 62% 64%, 50% 100%, 38% 64%, 0% 50%, 38% 36%);
   }
+  /* ===== ACCESSIBILITE : PREFERENCES DE MOUVEMENT =====
+     Applique les règles suivantes sous la condition (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce). */
   @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
     .cursor-trail {
       display: none;
@@ -85,6 +93,8 @@
   }
 </style>
 <script>
+  // ===== INTERACTION : SCRIPT COTE NAVIGATEUR =====
+  // Ce code agit sur le DOM après le chargement de la page.
   const layer = document.querySelector<HTMLElement>('.cursor-trail');
   const enabled = window.matchMedia(
     '(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)',
@@ -102,7 +112,11 @@
       particles.clear();
       lastSpawn = -Infinity;
     };
+    // ===== ANIMATION : PARTICULES DU CURSEUR =====
+    // Crée une étoile à la position de la souris et la supprime à la fin du mouvement.
     const spawn = (x: number, y: number) => {
+      // ===== PERFORMANCE : LIMITE DES PARTICULES =====
+      // Évite d’accumuler plus de 48 étoiles actives dans le DOM.
       if (particles.size >= 48) return;
       const element = document.createElement('span');
       element.className = 'cursor-sparkle';
@@ -149,6 +163,8 @@
           event.pointerType !== 'mouse'
         )
           return;
+        // ===== PERFORMANCE : FREQUENCE DE CREATION =====
+        // Espace les créations d’au moins 30 ms pour limiter le travail au déplacement de la souris.
         const now = performance.now();
         if (now - lastSpawn < 30) return;
         lastSpawn = now;

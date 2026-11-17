@@ -1,4 +1,6 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import Layout from '../../layouts/Layout.astro';
 import ProjectDocument from '../../components/ProjectDocument.astro';
 import PageOutro from '../../components/PageOutro.astro';
@@ -9,12 +11,17 @@ const assets = projectAssets.solaire;
 const figmaUrl =
   'https://www.figma.com/proto/ooHa9AIAa8cOl0zQOnbYVJ/Solaire?node-id=19-3&p=f&t=baMcFT1NzimR42Lx-1&scaling=scale-down&content-scaling=fixed&page-id=19%3A2&starting-point-node-id=19%3A3';
 ---
+<!-- ===== STRUCTURE : PAGE SOLAIRE ===== -->
+<!-- Étude de cas solaire : contexte, contribution et visuels du projet. -->
+
 
 <Layout
   title="Solaire — Identité visuelle & prototype UX/UI | Estelle Coulon"
   description="Solaire : conception d’un configurateur de lunettes en BUT MMI, de la journée type illustrée de Bernard à l’identité visuelle et au prototype interactif Figma."
 >
   <main id="contenu" class="solaire-case">
+    <!-- ===== PROJETS : INTRODUCTION DU PROJET ===== -->
+    <!-- Présente le projet, ses disciplines et les ressources disponibles. -->
     <section class="case-hero container" aria-labelledby="solaire-title">
       <a class="case-back" href="/projets">
         Tous les projets <span aria-hidden="true">/</span> Solaire
@@ -65,6 +72,8 @@ const figmaUrl =
       </div>
     </section>
 
+    <!-- ===== PROJETS : JOURNEE TYPE DU PERSONA ===== -->
+    <!-- Présente la journée de Bernard et sa place dans la recherche utilisateur. -->
     <section class="case-journey container" aria-labelledby="solaire-journey">
       <div>
         <p class="eyebrow">01 — Recherche UX</p>
@@ -107,6 +116,8 @@ const figmaUrl =
       </figure>
     </section>
 
+    <!-- ===== PROJETS : PRESENTATION ET ROLE ===== -->
+    <!-- Explique le contexte et la contribution personnelle. -->
     <section class="case-identity case-columns container" aria-labelledby="solaire-identity">
       <div>
         <p class="eyebrow">02 — Identité visuelle</p>
@@ -153,6 +164,8 @@ const figmaUrl =
 </Layout>
 
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .hero-grid {
     display: grid;
     grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.2fr);
@@ -223,6 +236,8 @@ const figmaUrl =
     overflow: clip;
     background: radial-gradient(ellipse 65% 25% at 100% 0%, #ff9d001a, transparent 85%);
   }
+  /* ===== STRUCTURE : INTRODUCTION DU PROJET =====
+     Définit les espacements de la première section de l’étude de cas. */
   .case-hero {
     padding-block: 145px 55px;
   }
@@ -394,6 +409,8 @@ const figmaUrl =
     width: 100%;
     height: auto;
   }
+  /* ===== RESPONSIVE : ADAPTATION DES ECRANS =====
+     Applique les règles suivantes sous la condition (max-width: 700px). */
   @media (max-width: 700px) {
     .hero-grid {
       grid-template-columns: 1fr;
@@ -411,6 +428,8 @@ const figmaUrl =
       top: -10px;
       right: 0;
     }
+    /* ===== STRUCTURE : INTRODUCTION DU PROJET =====
+       Définit les espacements de la première section de l’étude de cas. */
     .case-hero {
       padding-block: 110px 30px;
     }

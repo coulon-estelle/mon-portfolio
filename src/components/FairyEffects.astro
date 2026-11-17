@@ -1,4 +1,8 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
+// ===== DONNEES : ETOILES DECORATIVES =====
+// Calcule 28 positions et variations sans modifier les illustrations personnelles.
 const stars = Array.from({ length: 28 }, (_, i) => ({
   x: (i * 37 + 7) % 100,
   y: (i * 23 + 5) % 100,
@@ -8,6 +12,9 @@ const stars = Array.from({ length: 28 }, (_, i) => ({
   color: ['var(--pink)', 'var(--blue)', 'var(--purple)'][i % 3],
 }));
 ---
+<!-- ===== ANIMATION : AMBIANCE ET APPARITIONS ===== -->
+<!-- Crée les étoiles décoratives, les apparitions au scroll et le relief des cartes. -->
+
 
 <div class="fairy-atmosphere" aria-hidden="true">
   <span class="fairy-glow fairy-glow-pink"></span>
@@ -21,6 +28,8 @@ const stars = Array.from({ length: 28 }, (_, i) => ({
   ))}
 </div>
 <script>
+  // ===== INTERACTION : SCRIPT COTE NAVIGATEUR =====
+  // Ce code agit sur le DOM après le chargement de la page.
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
   const targets = document.querySelectorAll<HTMLElement>(
@@ -42,6 +51,8 @@ const stars = Array.from({ length: 28 }, (_, i) => ({
       !('IntersectionObserver' in window)
     )
       return;
+    // ===== ANIMATION : APPARITION AU SCROLL =====
+    // Ajoute la classe visible quand un élément entre dans le viewport, puis cesse de l’observer.
     observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -63,12 +74,16 @@ const stars = Array.from({ length: 28 }, (_, i) => ({
   };
   setup();
   // Un élément recevant le focus clavier doit rester immédiatement visible.
+  // ===== ACCESSIBILITE : CONTENU VISIBLE AU FOCUS =====
+  // Rend immédiatement visible le bloc contenant un élément atteint au clavier.
   document.addEventListener('focusin', (event) => {
     if (!(event.target instanceof Element)) return;
     event.target.closest('.fairy-reveal')?.classList.add('fairy-visible');
   });
   motion.addEventListener('change', setup);
   window.addEventListener('portfolio-preferences', setup);
+  // ===== INTERACTION : RELIEF DES CARTES AU SURVOL =====
+  // La position de la souris alimente les variables CSS d’inclinaison et de lumière.
   document.querySelectorAll<HTMLElement>('.project').forEach((card) => {
     let frame = 0;
     let pointerX = 0,
@@ -94,6 +109,8 @@ const stars = Array.from({ length: 28 }, (_, i) => ({
         pointerX = event.clientX;
         pointerY = event.clientY;
         if (frame) return;
+        // ===== PERFORMANCE : REGROUPEMENT DES MISES A JOUR =====
+        // Limite les calculs de relief à une mise à jour par frame d’affichage.
         frame = requestAnimationFrame(() => {
           const bounds = card.getBoundingClientRect();
           const x = (pointerX - bounds.left) / bounds.width;

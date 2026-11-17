@@ -1,6 +1,11 @@
 ---
+// ===== COMPOSANTS : PREPARATION ASTRO =====
+// Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import { site } from '../data/site';
 ---
+<!-- ===== NAVIGATION : TELECHARGEMENT DU CV ===== -->
+<!-- Propose le PDF avec un nom de téléchargement explicite. -->
+
 
 <div class="cv-download">
   <p>Vous souhaitez m’accueillir en alternance ?</p>
@@ -11,6 +16,8 @@ import { site } from '../data/site';
 </div>
 
 <style>
+  /* ===== STRUCTURE : STYLES DU COMPOSANT =====
+     Règles de présentation ; Astro les limite au composant, sauf :global ou is:global. */
   .cv-download {
     margin-top: 28px;
     padding-top: 24px;

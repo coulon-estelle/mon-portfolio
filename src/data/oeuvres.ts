@@ -1,3 +1,7 @@
+// ===== DONNEES : SOURCE OEUVRES =====
+// Centralise le contenu utilisé par les pages et les composants du portfolio.
+﻿// ===== DONNEES : MODELE D UNE OEUVRE =====
+﻿// TypeScript décrit le titre, la catégorie, les textes alternatifs et le matériel attendu.
 ﻿export interface Oeuvre {
   id: string;
   titre: string;
@@ -12,6 +16,8 @@
 }
 
 // Présentations et matériel rédigés à partir des précisions d’Estelle.
+// ===== IMAGES : CONTENU DE L ATELIER =====
+// Liste les œuvres personnelles et les informations affichées en grand.
 export const oeuvres: Oeuvre[] = [
   {
     id: 'poisson-lion',
