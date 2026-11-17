@@ -1,4 +1,4 @@
----
+﻿---
 // ===== COMPOSANTS : PREPARATION ASTRO =====
 // Les imports et les données de ce bloc sont traités par Astro, avant le HTML envoyé au navigateur.
 import '../styles/global.css';
@@ -42,7 +42,7 @@ const jsonLd = noindex
   : JSON.stringify(structuredData(Astro.url.pathname, title, description)).replace(/</g, '\\u003c');
 // ===== SEO : IMAGE DE PARTAGE DU LIEN =====
 // Les aperçus sociaux lisent une URL absolue vers le JPEG public, sans exécuter le JavaScript du site.
-const socialImage = new URL('/images/partage-portfolio.jpg', site.url).href;
+const socialImage = new URL('/images/illustrations/fees/fee-4.png', site.url).href;
 const socialImageAlt =
   'Estelle Coulon — artiste et design : une fée dessinée par Estelle, une lune et des étoiles sur un fond bordeaux et violet.';
 ---
