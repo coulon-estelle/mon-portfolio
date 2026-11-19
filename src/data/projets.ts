@@ -1,129 +1,42 @@
-// ===== DONNEES : SOURCE PROJETS =====
-// Centralise le contenu utilisé par les pages et les composants du portfolio.
+import { listEntries } from './database.mjs';
 import { projectAssets } from './project-assets';
-// ===== PROJETS : CATALOGUE DES PROJETS =====
-// Chaque objet fournit les informations de carte et son identifiant de page.
-export const projets = [
-  {
-    id: 'portfolio',
-    nom: 'Mon univers illustré',
-    categorie: 'Illustration · Identité personnelle',
-    annee: 'Projet personnel',
-    image: projectAssets.portfolio.fairies,
-    imageAlt: 'Quatre fées dessinées par Estelle Coulon sur une bannière rose à spirales',
-    style: 'portfolio',
-    accroche: 'Des dessins pour raconter mon univers.',
-    description:
-      'Les illustrations de mon portfolio, les étapes du dessin d’une fée et mes créations pour les réseaux sociaux : deux bannières et une photo de profil.',
-    livrables: 'Illustrations du portfolio · Bannières · Photo de profil',
-  },
-  {
-    id: 'dnd',
-    nom: 'D&D',
-    categorie: 'Illustration · Animation',
-    annee: 'Projet personnel',
-    image: projectAssets.dnd.offire,
-    imageAlt: 'Offire, un drakéïde rouge aux yeux turquoise, dessiné pour le projet D&D',
-    style: 'dnd',
-    accroche: 'Nos personnages prennent vie à l’écran.',
-    description:
-      'Des personnages dessinés sur ibis Paint pour nous représenter sur Twitch, et une première intro animée réalisée sur Procreate Dreams.',
-    livrables: 'Portraits de personnages · Introduction animée',
-  },
-  {
-    id: 'feelm',
-    nom: 'Feelm',
-    categorie: 'UI / UX · Plateforme VOD',
-    annee: 'BUT MMI',
-    image: projectAssets.feelm.mockup,
-    imageAlt: 'Maquette Feelm sur un ordinateur : sélection de films sur fond bordeaux',
-    style: 'feelm',
-    accroche: 'Voir des films ensemble et en discuter.',
-    description:
-      'Concept de plateforme VOD pour cinéphiles : séances programmées, clubs et forum de discussion.',
-    livrables: 'Conception UX/UI · Identité visuelle · Dossier de présentation',
-  },
-  {
-    id: 'solaire',
-    nom: 'Solaire',
-    categorie: 'Identité visuelle · UI / UX',
-    annee: 'BUT MMI',
-    image: projectAssets.solaire.mockup,
-    imageAlt: 'Prototype Solaire sur ordinateur : lunettes sur la plage et interface rose et jaune',
-    style: 'solaire',
-    accroche: 'Un regard sur les vacances, une expérience à personnaliser.',
-    description:
-      'Identité visuelle et prototype Figma d’un configurateur de lunettes, à partir d’un persona imposé.',
-    livrables: 'Recherche UX · Identité visuelle · Illustrations vectorielles · Prototype Figma',
-  },
-  {
-    id: 'tiktak',
-    nom: 'TiK•TaK',
-    categorie: 'UI / UX · Développement web',
-    annee: 'BUT MMI',
-    image: projectAssets.tiktak.moodboard,
-    imageAlt: 'Moodboard TiK•TaK : montre dorée, perles, cygnes et textures crème et rose poudré',
-    style: 'tiktak',
-    accroche: 'Une montre à composer, un style à soi.',
-    description:
-      'Un projet de site de montres personnalisables, présenté à travers sa maquette Figma et son interface web.',
-    livrables: 'Prototype Figma · Interface web · Configurateur de montres',
-  },
-  {
-    id: 'olyvia',
-    nom: 'Olyvia',
-    categorie: 'Identité visuelle · Site web',
-    annee: '2026',
-    image: projectAssets.olyvia.moodboard,
-    imageAlt:
-      'Moodboard Olyvia présentant les inspirations de son identité visuelle douce et naturelle',
-    style: 'olyvia',
-    accroche: 'Un regard doux sur une nouvelle étape.',
-    description:
-      'Une identité douce et naturelle pour un site d’information sur la ménopause. Dans ce projet collectif, j’ai créé le logo, ses déclinaisons et les supports de communication.',
-    livrables: 'Logo · Identité visuelle · Supports de communication · Goodies',
-  },
-  {
-    id: 'nunc',
-    nom: 'NŨNC',
-    categorie: 'Identité visuelle · Application',
-    annee: '2026',
-    image: projectAssets.nunc.moodboard,
-    imageAlt: 'Moodboard NŨNC présentant les inspirations et couleurs de l’application de soirées',
-    style: 'nunc',
-    accroche: 'Les bonnes soirées commencent ici.',
-    description:
-      'Une webapp pensée pour organiser des soirées entre amis et prévoir son retour. Une identité chaleureuse et expressive, déclinée en maquettes et supports graphiques.',
-    livrables: 'Identité visuelle · Maquettes · Supports graphiques',
-  },
-  {
-    id: 'lumimix',
-    nom: 'LUMIMIX',
-    categorie: 'Développement web · Festival électro',
-    annee: '2026',
-    image: projectAssets.lumimix.moodboard,
-    imageAlt: 'Moodboard LUMIMIX présentant les inspirations lumineuses d’un festival électro',
-    style: 'lumimix',
-    accroche: 'Faire vibrer la lumière et le son.',
-    description:
-      'Le développement d’un site de festival électro avec Astro, Tailwind CSS et PocketBase. J’ai adapté la maquette mobile en desktop et intégré les contenus dynamiques du festival.',
-    livrables: 'Adaptation desktop · Développement responsive · Intégration PocketBase',
-  },
-  {
-    id: 'bordeaux-surchauffe',
-    nom: 'Bordeaux Surchauffe',
-    categorie: 'Datavisualisation · Développement web',
-    annee: '2026',
-    image: projectAssets.bordeaux.moodboard,
-    imageAlt:
-      'Moodboard Bordeaux Surchauffe présentant les références graphiques du projet de datavisualisation',
-    style: 'bordeaux',
-    accroche: 'Comprendre la chaleur à l’échelle de sa commune.',
-    description:
-      'Un site réalisé en binôme pour comparer la chaleur dans les 28 communes de Bordeaux Métropole, avec des cartes et des graphiques.',
-    livrables: 'Récit en données · Cartographie · Visualisations · Site web',
-  },
-];
+import type { ImageMetadata } from 'astro';
+
+const importedCovers = import.meta.glob<ImageMetadata>('/public/images/projets/import-*.webp', {
+  eager: true,
+  import: 'default',
+});
+interface Project {
+  id: string;
+  nom: string;
+  categorie: string;
+  annee: string;
+  imageAlt: string;
+  style: string;
+  accroche: string;
+  description: string;
+  livrables: string;
+  cover: string | null;
+  generated: boolean;
+}
+
+const images = {
+  'portfolio': projectAssets.portfolio.fairies,
+  'dnd': projectAssets.dnd.offire,
+  'feelm': projectAssets.feelm.mockup,
+  'solaire': projectAssets.solaire.mockup,
+  'tiktak': projectAssets.tiktak.moodboard,
+  'olyvia': projectAssets.olyvia.moodboard,
+  'nunc': projectAssets.nunc.moodboard,
+  'lumimix': projectAssets.lumimix.moodboard,
+  'bordeaux-surchauffe': projectAssets.bordeaux.moodboard,
+};
+
+export const projets = (listEntries('projets') as Project[]).map((projet) => ({
+  ...projet,
+  image: (projet.cover ? importedCovers[`/public${projet.cover}`] : undefined)
+    ?? images[projet.id as keyof typeof images],
+}));
 
 // La galerie peut évoluer sans modifier la sélection de l’accueil.
 // ===== PROJETS : SELECTION PRINCIPALE =====

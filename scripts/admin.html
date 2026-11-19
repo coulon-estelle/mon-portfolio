@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Administration du portfolio</title>
+    <link rel="icon" href="/star.svg" type="image/svg+xml">
+    <style>
+      @font-face {
+        font-family: 'DM Sans';
+        src: url('/dm-sans.woff2') format('woff2');
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Space Grotesk';
+        src: url('/space-grotesk.woff2') format('woff2');
+        font-weight: 700;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Just Me Again Down Here';
+        src: url('/handwritten.woff2') format('woff2');
+        font-display: swap;
+      }
+
+      :root {
+        color-scheme: dark;
+        --bg: #25070e;
+        --ink: #f8ede9;
+        --pink: #eba7bf;
+        --purple: #d2b3f3;
+        --blue: #86cff5;
+        --muted: #d8bcc6;
+        --line: #eba7bf47;
+        --display: 'Just Me Again Down Here', cursive;
+        font: 1rem/1.5 'DM Sans', sans-serif;
+        color: var(--ink);
+        background: var(--bg);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background:
+          radial-gradient(ellipse at 85% 12%, #58346774, transparent 35rem),
+          radial-gradient(ellipse at 4% 48%, #6a1c4666, transparent 45rem),
+          var(--bg);
+      }
+
+      .topbar { border-bottom: 1px solid var(--line); }
+
+      main,
+      .topbar-inner {
+        width: min(57rem, calc(100% - clamp(2rem, 8vw, 7rem)));
+        margin-inline: auto;
+      }
+
+      .topbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 4.5rem;
+      }
+
+      .signature { font: 2.35rem/1 var(--display); }
+      .signature span, .star { color: var(--pink); }
+      main { padding-block: clamp(2rem, 6vw, 4rem); }
+
+      .intro {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: clamp(.75rem, 4vw, 3rem);
+        margin-bottom: 2rem;
+      }
+
+      h1 {
+        margin: 0;
+        font: 700 clamp(1.8rem, 6vw, 4.5rem)/.98 'Space Grotesk', sans-serif;
+        letter-spacing: -.055em;
+      }
+
+      h1 span {
+        display: block;
+        color: var(--pink);
+        font: 400 1.47em/.85 var(--display);
+        letter-spacing: 0;
+      }
+
+      .intro p,
+      .publication-note {
+        max-width: 50ch;
+        color: var(--muted);
+      }
+
+      .intro p { margin: 1.25rem 0 0; }
+
+      .fairy {
+        width: clamp(4.5rem, 22vw, 13rem);
+        aspect-ratio: 1;
+        background: url('/fairy.png') center / contain no-repeat;
+        filter: drop-shadow(0 .5rem 1.4rem #dca3f557);
+      }
+
+      form {
+        padding: clamp(1rem, 4vw, 2.35rem);
+        border: 1px solid var(--line);
+        border-radius: 1.35rem;
+        background: linear-gradient(145deg, #431830, #2e0e1a 65%);
+        box-shadow: 0 1.25rem 4rem #18030b55;
+      }
+
+      .selectors,
+      #fields {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem 1.2rem;
+      }
+
+      .selectors {
+        margin-bottom: 1.35rem;
+        padding-bottom: 1.35rem;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .project-actions { margin: 0 0 1.25rem; }
+      .project-actions button {
+        border: 1px solid var(--pink);
+        color: var(--ink);
+        background: transparent;
+      }
+      .project-actions button:hover:enabled { color: var(--bg); }
+
+      fieldset { min-width: 0; margin: 0 0 1.5rem; padding: 0; border: 0; }
+      label { display: grid; min-width: 0; align-content: start; gap: .4rem; }
+      label:has(textarea, input[type='file']) { grid-column: 1 / -1; }
+      label small { color: var(--muted); }
+
+      input,
+      select,
+      textarea,
+      button {
+        min-width: 0;
+        min-height: 2.75rem;
+        border-radius: .65rem;
+        font: inherit;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        border: 1px solid #aa758c;
+        padding: .55rem .75rem;
+        color: var(--ink);
+        background: #260e1b;
+      }
+
+      textarea { resize: vertical; }
+      input[type='file'] { padding: .65rem; border-style: dashed; }
+
+      button,
+      ::file-selector-button {
+        border: 0;
+        border-radius: 2rem;
+        padding: .55rem 1.1rem;
+        color: var(--bg);
+        background: var(--pink);
+        font: 700 .95rem/1.4 'Space Grotesk', sans-serif;
+        cursor: pointer;
+      }
+
+      ::file-selector-button { margin-inline-end: .65rem; background: var(--purple); }
+      button:hover:enabled { background: #ffd1e1; }
+      button:disabled { color: #f3d8e4; background: #72475d; cursor: default; }
+      :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+      [role='status'] { margin: 0; color: var(--purple); }
+      [role='status']:not(:empty) { margin-top: .75rem; }
+      .publication-note { margin: 1.15rem 0 0; font-size: .9rem; }
+
+      @media (max-width: 42rem) {
+        .selectors,
+        #fields {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+    </style>
+    <script type="module" src="/admin-ui.mjs"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <span class="signature">Estelle Coulon<span>.</span></span>
+        <span class="star" aria-hidden="true">✦</span>
+      </div>
+    </header>
+    <main>
+      <div class="intro">
+        <div>
+          <h1>Administration <span>du portfolio.</span></h1>
+          <p>Modifie les textes et les images des cartes projets et des œuvres de l’atelier.</p>
+        </div>
+        <div class="fairy" aria-hidden="true"></div>
+      </div>
+      <form>
+        <div class="selectors">
+          <label>Collection
+            <select id="collection">
+              <option value="projets">Projets</option>
+              <option value="oeuvres">Atelier</option>
+            </select>
+          </label>
+          <label>Élément à modifier <select id="entry"></select></label>
+        </div>
+        <div class="project-actions" id="project-actions" hidden>
+          <button type="button" id="new-project">Nouveau projet</button>
+        </div>
+        <fieldset id="fields" aria-label="Informations à modifier"></fieldset>
+        <button type="submit" disabled>Enregistrer</button>
+        <p role="status"></p>
+      </form>
+      <p class="publication-note">Les modifications sont enregistrées dans le projet. Pour les publier, utilise le déploiement habituel.</p>
+    </main>
+  </body>
+</html>

@@ -100,7 +100,9 @@ const categories: Record<string, string> = {
       </div>
       <div class="gallery-grid">
         {galerie.map((projet) => (
-          <div class="gallery-item" data-categories={categories[projet.id] || ''}>
+          <div class="gallery-item" data-categories={projet.generated
+            ? filters.find((filter) => filter.label === projet.categorie)?.id
+            : categories[projet.id]}>
             <ProjectCard projet={projet} />
           </div>
         ))}

@@ -30,3 +30,8 @@ playwright-report/
 
 # Anciens artefacts Netlify (hébergement actuel : Infomaniak)
 .netlify/
+
+# Fichiers temporaires SQLite
+src/data/portfolio.sqlite-journal
+src/data/portfolio.sqlite-wal
+src/data/portfolio.sqlite-shm

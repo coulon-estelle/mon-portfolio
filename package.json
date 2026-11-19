@@ -6,6 +6,7 @@
     "node": ">=22.23.4"
   },
   "scripts": {
+    "admin": "node --watch scripts/admin.mjs",
     "dev": "astro dev",
     "prebuild": "npm run generate:og",
     "generate:og": "node scripts/generate-discord-image.mjs",

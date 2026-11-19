@@ -46,6 +46,25 @@ Les technologies citées dans les études de cas décrivent les projets correspo
 
 ## Hébergement et contact
 
+### Back-office local
+
+Dans le dossier du portfolio, lance `npm run admin`, puis ouvre
+[le back-office](http://127.0.0.1:4324/). Choisis un projet ou une œuvre, modifie ses
+informations et clique sur **Enregistrer**. Tu peux aussi importer une couverture de projet
+ou remplacer l’image d’une œuvre (JPG, PNG ou WebP fixe, 10 Mo maximum). Le back-office
+convertit l’image en WebP et la range dans `public/images/projets/` ou `public/images/atelier/`.
+Les visuels à l’intérieur des fiches projet détaillées sont gérés dans le code.
+
+Dans la collection **Projets**, clique sur **Nouveau projet** pour créer une carte et
+une fiche à partir du formulaire. Ajoute une couverture et son texte alternatif.
+Astro génère l’adresse de la fiche au prochain build et l’ajoute au sitemap.
+
+Le back-office enregistre les projets et les œuvres dans `src/data/portfolio.sqlite`,
+avec le module SQLite intégré à Node.js. Astro lit cette base pendant la génération
+du site. Les fiches historiques gardent leur mise en page dédiée dans `src/pages/projets/`.
+Pour prévisualiser les changements, démarre ou relance `npm run dev`. Pour les publier,
+inclus la base SQLite et les images importées dans le commit de déploiement.
+
 Hébergeur confirmé : Infomaniak. Site statique : publier le contenu de `dist/`.
 Le workflow `.github/workflows/deploy.yml` utilise les secrets `VPS_HOST`, `VPS_USER`, `VPS_SSH_KEY` et `VPS_KNOWN_HOSTS`, le port SSH 23029 et la destination `/var/www/portfolio/`. Aucun déploiement n’est déclenché par les vérifications locales.
 

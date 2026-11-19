@@ -1,0 +1,62 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectImage from '../../components/ProjectImage.astro';
+import PageOutro from '../../components/PageOutro.astro';
+import { projets } from '../../data/projets';
+
+export function getStaticPaths() {
+  return projets.filter((projet) => projet.generated).map((projet) => ({
+    params: { id: projet.id },
+    props: { projet },
+  }));
+}
+
+interface Props {
+  projet: (typeof projets)[number];
+}
+const { projet } = Astro.props;
+const title = `${projet.nom} — Estelle Coulon`;
+const description = `${projet.nom} · ${projet.description.replace(/\s+/g, ' ')}`;
+---
+
+<Layout {title} {description}>
+  <main id="contenu">
+    <article class="project-detail container">
+      <a class="back" href="/projets/">← Tous les projets</a>
+      <p class="eyebrow">{projet.categorie} · {projet.annee}</p>
+      <h1>{projet.nom}</h1>
+      {projet.accroche && <p class="lead">{projet.accroche}</p>}
+      {projet.image && <ProjectImage src={projet.image} alt={projet.imageAlt} width={1200} eager />}
+      <section>
+        <h2>À propos du projet</h2>
+        {projet.description.split(/\r?\n\s*\r?\n/).map((paragraph) => <p>{paragraph}</p>)}
+      </section>
+      {projet.livrables && (
+        <section>
+          <h2>Livrables</h2>
+          <p>{projet.livrables}</p>
+        </section>
+      )}
+    </article>
+    <PageOutro
+      lead="La suite de mon portfolio"
+      heading="Découvrir mes autres projets."
+      href="/projets/"
+      label="Voir les projets"
+      variant={4}
+    />
+  </main>
+</Layout>
+
+<style>
+  .project-detail {
+    max-width: 1050px;
+    padding-block: clamp(8rem, 13vw, 11rem) clamp(3rem, 7vw, 6rem);
+  }
+  .back { display: inline-block; margin-bottom: 2rem; color: var(--pink); text-decoration: underline; }
+  h1 { margin: .4rem 0 1.25rem; font: 400 clamp(3.5rem, 10vw, 8rem)/.9 var(--font-display); overflow-wrap: anywhere; }
+  .lead { margin: 0 0 1.8rem; color: var(--pink); font-size: clamp(1.125rem, 3vw, 1.5rem); }
+  :global(.project-detail img) { display: block; width: 100%; height: auto; border-radius: 1rem; }
+  section { max-width: 65ch; margin-top: 2rem; overflow-wrap: anywhere; }
+  section p { white-space: pre-line; }
+</style>

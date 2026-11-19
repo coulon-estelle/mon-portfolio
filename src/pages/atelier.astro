@@ -10,7 +10,7 @@ import type { ImageMetadata } from 'astro';
 // ===== PERFORMANCE : MINIATURES WEBP DE L ATELIER =====
 // Optimise seulement les aperçus ; la fenêtre en grand conserve les fichiers originaux.
 const artImages = import.meta.glob<{ default: ImageMetadata }>(
-  '/public/images/atelier/*.{jpeg,jpg,png}',
+  '/public/images/atelier/*.{jpeg,jpg,png,webp}',
   { eager: true },
 );
 // ===== DONNEES : CATEGORIES DE L ATELIER =====
